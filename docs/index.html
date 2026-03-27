@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transmogrifier &mdash; Register-Aware Prompt Translation</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --fg: #c9d1d9;
+  --accent: #58a6ff;
+  --accent2: #7ee787;
+  --muted: #8b949e;
+  --surface: #161b22;
+  --border: #30363d;
+  --code-bg: #1c2128;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+h1 { color: var(--accent); font-size: 2.2rem; margin-bottom: 0.3rem; }
+h2 { color: var(--accent); font-size: 1.4rem; margin-top: 2.5rem; margin-bottom: 0.8rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; }
+h3 { color: var(--accent2); font-size: 1.1rem; margin-top: 1.5rem; margin-bottom: 0.5rem; }
+p { margin-bottom: 1rem; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code {
+  font-family: 'SF Mono', 'Fira Code', 'Fira Mono', Menlo, monospace;
+  background: var(--code-bg);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+pre {
+  background: var(--code-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+}
+pre code { background: none; padding: 0; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+th, td { padding: 0.5rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); }
+th { color: var(--accent); font-weight: 600; }
+.subtitle { color: var(--muted); font-size: 1.1rem; margin-bottom: 2rem; }
+.badge {
+  display: inline-block;
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+.badge-go { background: #238636; color: #fff; }
+.badge-caution { background: #9e6a03; color: #fff; }
+.badge-dead { background: #da3633; color: #fff; }
+.badge-invariant { background: var(--border); color: var(--muted); }
+.level-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.level-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+.level-card h3 { margin-top: 0; }
+.level-card .meta { color: var(--muted); font-size: 0.85rem; }
+@media (max-width: 700px) { .level-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>Transmogrifier</h1>
+<p class="subtitle">Register-aware prompt translation. Normalize linguistic register to maximize LLM output quality.</p>
+
+<p>
+  <a href="https://github.com/jmcentire/transmogrifier">GitHub</a> &middot;
+  <a href="https://github.com/jmcentire/transmogrifier/releases">Releases</a> &middot;
+  <a href="#install">Install</a> &middot;
+  <a href="#api">API</a>
+</p>
+
+<h2>The Problem</h2>
+
+<p>LLM output quality varies dramatically by the linguistic register of your input. Same question, different phrasing, different accuracy:</p>
+
+<table>
+<tr><th>Model</th><th>Spread</th><th>Best</th><th>Worst</th><th>Status</th></tr>
+<tr><td>Claude Opus 4</td><td>18.8pp</td><td>direct (93.8%)</td><td>casual (75.0%)</td><td><span class="badge badge-caution">sensitive</span></td></tr>
+<tr><td>Gemini 2.5 Flash</td><td>56.2pp</td><td>direct (56.2%)</td><td>narrative (0%)</td><td><span class="badge badge-dead">critical</span></td></tr>
+<tr><td>Claude Haiku 4.5</td><td>6.2pp</td><td>direct (93.8%)</td><td>casual (87.5%)</td><td><span class="badge badge-caution">mild</span></td></tr>
+<tr><td>GPT-4o Mini</td><td>0pp</td><td colspan="2">(invariant)</td><td><span class="badge badge-invariant">invariant</span></td></tr>
+</table>
+
+<p>Casual register costs Claude Opus ~19% of correct answers. Gemini loses over half. Transmogrifier detects the input register and normalizes it before it hits the model.</p>
+
+<h2>Three Levels</h2>
+
+<div class="level-grid">
+  <div class="level-card">
+    <h3>Level 1</h3>
+    <p>System prompt injection. Prepends a normalization instruction.</p>
+    <p class="meta">0ms &middot; no API calls &middot; 67-100% recovery</p>
+  </div>
+  <div class="level-card">
+    <h3>Level 2</h3>
+    <p>Rule-based rewriting. Strips filler, hedging, and framing via regex.</p>
+    <p class="meta">&lt;1ms &middot; no API calls &middot; preserves semantics</p>
+  </div>
+  <div class="level-card">
+    <h3>Level 3</h3>
+    <p>LLM translation. Separate-context rewrite for heavy-lift cases.</p>
+    <p class="meta">~200ms &middot; 1 API call &middot; only when spread &gt;10pp</p>
+  </div>
+</div>
+
+<h2 id="install">Install</h2>
+
+<pre><code>pip install git+https://github.com/jmcentire/transmogrifier.git</code></pre>
+
+<p>Optional extras:</p>
+<pre><code>pip install "transmogrifier[anthropic]"    # Claude backend (Level 3)
+pip install "transmogrifier[openai]"       # OpenAI backend
+pip install "transmogrifier[gemini]"       # Gemini backend
+pip install "transmogrifier[validation]"   # Semantic equivalence checking
+pip install "transmogrifier[all]"          # Everything</code></pre>
+
+<h2 id="api">API</h2>
+
+<h3>Python Library</h3>
+
+<pre><code>from transmogrifier.core import Transmogrifier
+
+t = Transmogrifier()
+result = t.translate("yo what's the deal with TCP", model="claude-opus-4")
+
+result.output_text        # "TCP" (rewritten)
+result.system_prompt      # Level 1 normalization instruction
+result.detected_register  # Register.casual
+result.target_register    # Register.direct
+result.elapsed_ms         # ~2ms
+result.skipped            # False</code></pre>
+
+<p>Invariant models are skipped automatically:</p>
+
+<pre><code>result = t.translate("yo what's TCP", model="gpt-4o-mini")
+result.skipped      # True
+result.skip_reason  # "invariant model (0.0pp spread)"</code></pre>
+
+<h3>CLI</h3>
+
+<pre><code># Detect register
+transmogrify detect "yo what's the deal with TCP"
+# {"register": "casual", "confidence": 1.0}
+
+# Translate
+transmogrify translate "yo what's activation fingerprinting" --model claude-opus-4
+
+# List profiles
+transmogrify profile list</code></pre>
+
+<h3>MCP Server</h3>
+
+<pre><code>claude mcp add --scope user --transport stdio transmogrifier -- transmog-mcp</code></pre>
+
+<p>Tools: <code>transmog_translate</code>, <code>transmog_detect</code>, <code>transmog_profiles</code></p>
+
+<h2>Key Findings</h2>
+
+<h3>System prompt normalization (Level 1) exceeds direct register on Gemini</h3>
+<p>Casual input + Level 1 system prompt scored <strong>68.8%</strong> on Gemini 2.5 Flash, beating raw direct register (56.2%) by 12.5pp. The normalization instruction provides a genuine quality boost beyond just recovering the register gap.</p>
+
+<h3>Same-context translation is catastrophic</h3>
+<p>Asking the model to "reinterpret this casually-worded question, then answer it" in a single turn scored <strong>0%</strong> on Gemini. Translation must happen in a separate context. This is architecturally enforced in Transmogrifier.</p>
+
+<h3>Register sensitivity is model-specific</h3>
+<p>GPT-4o Mini shows zero sensitivity. Claude Opus shows 18.8pp. Gemini shows 56.2pp. A one-size-fits-all approach wastes effort on invariant models and under-serves sensitive ones. Transmogrifier uses per-model profiles to adapt.</p>
+
+<h3>Larger models are more sensitive, not less</h3>
+<p>Claude Opus (18.8pp) is more register-sensitive than Claude Haiku (6.2pp). RLHF doesn't uniformly solve this &mdash; the effect is architecture and training dependent.</p>
+
+<h2>Registers</h2>
+
+<table>
+<tr><th>Register</th><th>Example</th><th>Detection Markers</th></tr>
+<tr><td><strong>direct</strong></td><td>What is TCP?</td><td>Short, unframed, no markers</td></tr>
+<tr><td><strong>casual</strong></td><td>yo so like, what's the deal with TCP</td><td>Slang, filler, contractions</td></tr>
+<tr><td><strong>technical</strong></td><td>Provide a precise technical answer: What is TCP?</td><td>Imperative verbs, structured</td></tr>
+<tr><td><strong>academic</strong></td><td>In the context of established knowledge, TCP...</td><td>Hedging, passive voice, latinate</td></tr>
+<tr><td><strong>narrative</strong></td><td>Explain this as if telling a story: How does TCP work?</td><td>Storytelling framing, analogies</td></tr>
+</table>
+
+<h2>Architecture</h2>
+
+<p><strong>Register Detector</strong> &rarr; <strong>Profile Lookup</strong> &rarr; <strong>Translation Router</strong> &rarr; <strong>Level 1 + Level 2</strong> (+ optional Level 3) &rarr; <strong>Result</strong></p>
+
+<p>Invariants:</p>
+<ul>
+<li>Separate context: Level 3 is never in the same message as task execution</li>
+<li>No data persistence: user prompts never written to disk</li>
+<li>Fail-safe passthrough: any error returns the original unchanged</li>
+<li>Zero-dependency L1+L2: no API calls, only pydantic + pyyaml + re</li>
+</ul>
+
+<h2>Integration</h2>
+
+<p>Designed as middleware for:</p>
+<ul>
+<li><a href="https://jmcentire.github.io/constrain/">Constrain</a> &mdash; before interview questions hit the LLM</li>
+<li><a href="https://jmcentire.github.io/pact/">Pact</a> &mdash; before task specs and code generation prompts</li>
+<li><a href="https://jmcentire.github.io/kindex/">Kindex</a> &mdash; before embedding queries for retrieval</li>
+</ul>
+
+<hr style="margin-top: 3rem; border-color: var(--border);">
+<p style="color: var(--muted); font-size: 0.85rem; margin-top: 1rem;">
+  Transmogrifier &middot; MIT License &middot; Jeremy McEntire &middot;
+  <a href="https://github.com/jmcentire/transmogrifier">Source</a>
+</p>
+
+</body>
+</html>
