@@ -1,0 +1,36 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "transmogrifier"
+version = "0.1.0"
+description = "Register-aware prompt translation — normalize linguistic register to maximize LLM output quality"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Jeremy McEntire", email = "jmc@cageandmirror.com" }]
+readme = "README.md"
+dependencies = [
+    "pydantic>=2.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40"]
+openai = ["openai>=1.0"]
+gemini = ["google-genai>=1.0"]
+mcp = ["mcp[cli]>=1.26.0"]
+kindex = ["kindex"]
+validation = ["sentence-transformers>=2.0"]
+dev = ["pytest>=8.0"]
+all = ["transmogrifier[anthropic,openai,gemini,mcp,kindex,validation,dev]"]
+
+[project.scripts]
+transmogrify = "transmogrifier.cli:main"
+transmog-mcp = "transmogrifier.mcp_server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/transmogrifier"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
