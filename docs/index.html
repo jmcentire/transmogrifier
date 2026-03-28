@@ -160,11 +160,22 @@ result.skip_reason  # "invariant model (0.0pp spread)"</code></pre>
 transmogrify detect "yo what's the deal with TCP"
 # {"register": "casual", "confidence": 1.0}
 
-# Translate
-transmogrify translate "yo what's activation fingerprinting" --model claude-opus-4
+# Classify task type
+transmogrify classify "Write a Python function to sort a list"
+# {"task_type": "code", "confidence": 1.0}
 
-# List profiles
-transmogrify profile list</code></pre>
+# Translate (task-aware routing)
+transmogrify translate "yo what's the difference between TCP and UDP" --model gemini-2-5-flash
+# Detected: casual | Task: analysis | Target: technical (per-task optimal)
+
+# List profiles with per-task breakdown
+transmogrify profile list
+
+# Show detailed profile
+transmogrify profile show claude-opus-4
+
+# Calibrate a new model (50 tasks x 5 registers = 250 API calls)
+transmogrify profile calibrate my-model --provider anthropic</code></pre>
 
 <h3>MCP Server</h3>
 
@@ -174,14 +185,26 @@ transmogrify profile list</code></pre>
 
 <h2>Key Findings</h2>
 
+<h3>Register sensitivity is model-specific</h3>
+<p>GPT-4o Mini shows zero sensitivity. Claude Opus shows 18.8pp. Gemini shows 56.2pp. A one-size-fits-all approach wastes effort on invariant models and under-serves sensitive ones. Transmogrifier uses per-model profiles to adapt.</p>
+
+<h3>Register x task interaction is non-uniform (v0.2.0)</h3>
+<p><strong>Academic register halves reasoning accuracy on Claude Opus</strong> (40% vs 80% direct). Meanwhile, <strong>Gemini scores 0% on analysis with direct register but 33% with technical</strong>. The optimal register depends on both model and task type. Transmogrifier v0.2.0 includes a task classifier (factual, reasoning, code, analysis, creative, instruction) and routes to the per-(model, task) optimal register.</p>
+
+<table>
+<tr><th>Model</th><th>Category</th><th>Best Register</th><th>Spread</th></tr>
+<tr><td>Claude Opus</td><td>reasoning</td><td>direct (80%)</td><td>40pp (academic=40%)</td></tr>
+<tr><td>Claude Opus</td><td>factual/code/analysis</td><td>(all invariant)</td><td>0pp</td></tr>
+<tr><td>Gemini Flash</td><td>factual</td><td>direct/technical (100%)</td><td>100pp (narrative=0%)</td></tr>
+<tr><td>Gemini Flash</td><td>analysis</td><td>technical/academic (33%)</td><td>33pp (direct=0%)</td></tr>
+<tr><td>Gemini Flash</td><td>overall</td><td>technical (62.5%)</td><td>62.5pp</td></tr>
+</table>
+
 <h3>System prompt normalization (Level 1) exceeds direct register on Gemini</h3>
 <p>Casual input + Level 1 system prompt scored <strong>68.8%</strong> on Gemini 2.5 Flash, beating raw direct register (56.2%) by 12.5pp. The normalization instruction provides a genuine quality boost beyond just recovering the register gap.</p>
 
 <h3>Same-context translation is catastrophic</h3>
 <p>Asking the model to "reinterpret this casually-worded question, then answer it" in a single turn scored <strong>0%</strong> on Gemini. Translation must happen in a separate context. This is architecturally enforced in Transmogrifier.</p>
-
-<h3>Register sensitivity is model-specific</h3>
-<p>GPT-4o Mini shows zero sensitivity. Claude Opus shows 18.8pp. Gemini shows 56.2pp. A one-size-fits-all approach wastes effort on invariant models and under-serves sensitive ones. Transmogrifier uses per-model profiles to adapt.</p>
 
 <h3>Larger models are more sensitive, not less</h3>
 <p>Claude Opus (18.8pp) is more register-sensitive than Claude Haiku (6.2pp). RLHF doesn't uniformly solve this &mdash; the effect is architecture and training dependent.</p>
