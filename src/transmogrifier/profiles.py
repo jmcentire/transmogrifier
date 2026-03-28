@@ -17,13 +17,34 @@ class RegisterAccuracy(BaseModel):
     register: str  # noqa: shadows BaseModel.register (benign)
     accuracy: float
     sample_size: int = 16
+    task_type: str = ""  # empty = aggregate across all tasks
+
+
+class TaskRegisterProfile(BaseModel):
+    """Per-task-type register accuracy breakdown."""
+    task_type: str
+    accuracies: list[RegisterAccuracy]
+
+    @property
+    def best_register(self) -> str:
+        if not self.accuracies:
+            return "direct"
+        return max(self.accuracies, key=lambda a: a.accuracy).register
+
+    @property
+    def spread_pp(self) -> float:
+        if not self.accuracies:
+            return 0.0
+        accs = [a.accuracy for a in self.accuracies]
+        return (max(accs) - min(accs)) * 100
 
 
 class ModelProfile(BaseModel):
     model_name: str
     model_version: str = ""
     provider: str = ""
-    accuracies: list[RegisterAccuracy]
+    accuracies: list[RegisterAccuracy]  # aggregate (backward compatible)
+    by_task: list[TaskRegisterProfile] = []  # per-task breakdown (new)
     calibrated_at: str = ""
     ttl_hours: int = 720
     calibration_version: str = "1.0"
@@ -55,6 +76,23 @@ class ModelProfile(BaseModel):
             return "direct"
         return min(self.accuracies, key=lambda a: a.accuracy).register
 
+    def best_register_for_task(self, task_type: str) -> str:
+        """Get optimal register for a specific task type.
+
+        Falls back to aggregate best_register if no per-task data.
+        """
+        for tp in self.by_task:
+            if tp.task_type == task_type:
+                return tp.best_register
+        return self.best_register
+
+    def spread_for_task(self, task_type: str) -> float:
+        """Get register spread for a specific task type."""
+        for tp in self.by_task:
+            if tp.task_type == task_type:
+                return tp.spread_pp
+        return self.spread_pp
+
     @property
     def is_expired(self) -> bool:
         if not self.calibrated_at:
@@ -83,6 +121,36 @@ _PRESEEDED: dict[str, ModelProfile] = {
             RegisterAccuracy(register="academic", accuracy=0.875),
             RegisterAccuracy(register="narrative", accuracy=0.875),
             RegisterAccuracy(register="casual", accuracy=0.750),
+        ],
+        by_task=[
+            TaskRegisterProfile(task_type="factual", accuracies=[
+                RegisterAccuracy(register="direct", accuracy=1.0, sample_size=5),
+                RegisterAccuracy(register="casual", accuracy=1.0, sample_size=5),
+                RegisterAccuracy(register="technical", accuracy=1.0, sample_size=5),
+                RegisterAccuracy(register="academic", accuracy=1.0, sample_size=5),
+                RegisterAccuracy(register="narrative", accuracy=1.0, sample_size=5),
+            ]),
+            TaskRegisterProfile(task_type="reasoning", accuracies=[
+                RegisterAccuracy(register="direct", accuracy=0.8, sample_size=5),
+                RegisterAccuracy(register="casual", accuracy=0.6, sample_size=5),
+                RegisterAccuracy(register="technical", accuracy=0.6, sample_size=5),
+                RegisterAccuracy(register="academic", accuracy=0.4, sample_size=5),
+                RegisterAccuracy(register="narrative", accuracy=0.6, sample_size=5),
+            ]),
+            TaskRegisterProfile(task_type="code", accuracies=[
+                RegisterAccuracy(register="direct", accuracy=1.0, sample_size=3),
+                RegisterAccuracy(register="casual", accuracy=1.0, sample_size=3),
+                RegisterAccuracy(register="technical", accuracy=1.0, sample_size=3),
+                RegisterAccuracy(register="academic", accuracy=1.0, sample_size=3),
+                RegisterAccuracy(register="narrative", accuracy=1.0, sample_size=3),
+            ]),
+            TaskRegisterProfile(task_type="analysis", accuracies=[
+                RegisterAccuracy(register="direct", accuracy=1.0, sample_size=3),
+                RegisterAccuracy(register="casual", accuracy=1.0, sample_size=3),
+                RegisterAccuracy(register="technical", accuracy=1.0, sample_size=3),
+                RegisterAccuracy(register="academic", accuracy=1.0, sample_size=3),
+                RegisterAccuracy(register="narrative", accuracy=1.0, sample_size=3),
+            ]),
         ],
     ),
     "claude-haiku-4-5": ModelProfile(
@@ -118,10 +186,40 @@ _PRESEEDED: dict[str, ModelProfile] = {
         calibrated_at="2026-03-27T00:00:00Z",
         accuracies=[
             RegisterAccuracy(register="direct", accuracy=0.562),
-            RegisterAccuracy(register="technical", accuracy=0.562),
-            RegisterAccuracy(register="academic", accuracy=0.312),
+            RegisterAccuracy(register="technical", accuracy=0.625),
+            RegisterAccuracy(register="academic", accuracy=0.375),
             RegisterAccuracy(register="narrative", accuracy=0.000),
             RegisterAccuracy(register="casual", accuracy=0.125),
+        ],
+        by_task=[
+            TaskRegisterProfile(task_type="factual", accuracies=[
+                RegisterAccuracy(register="direct", accuracy=1.0, sample_size=5),
+                RegisterAccuracy(register="casual", accuracy=0.2, sample_size=5),
+                RegisterAccuracy(register="technical", accuracy=1.0, sample_size=5),
+                RegisterAccuracy(register="academic", accuracy=0.4, sample_size=5),
+                RegisterAccuracy(register="narrative", accuracy=0.0, sample_size=5),
+            ]),
+            TaskRegisterProfile(task_type="reasoning", accuracies=[
+                RegisterAccuracy(register="direct", accuracy=0.4, sample_size=5),
+                RegisterAccuracy(register="casual", accuracy=0.0, sample_size=5),
+                RegisterAccuracy(register="technical", accuracy=0.4, sample_size=5),
+                RegisterAccuracy(register="academic", accuracy=0.2, sample_size=5),
+                RegisterAccuracy(register="narrative", accuracy=0.0, sample_size=5),
+            ]),
+            TaskRegisterProfile(task_type="code", accuracies=[
+                RegisterAccuracy(register="direct", accuracy=0.667, sample_size=3),
+                RegisterAccuracy(register="casual", accuracy=0.333, sample_size=3),
+                RegisterAccuracy(register="technical", accuracy=0.667, sample_size=3),
+                RegisterAccuracy(register="academic", accuracy=0.667, sample_size=3),
+                RegisterAccuracy(register="narrative", accuracy=0.0, sample_size=3),
+            ]),
+            TaskRegisterProfile(task_type="analysis", accuracies=[
+                RegisterAccuracy(register="direct", accuracy=0.0, sample_size=3),
+                RegisterAccuracy(register="casual", accuracy=0.0, sample_size=3),
+                RegisterAccuracy(register="technical", accuracy=0.333, sample_size=3),
+                RegisterAccuracy(register="academic", accuracy=0.333, sample_size=3),
+                RegisterAccuracy(register="narrative", accuracy=0.0, sample_size=3),
+            ]),
         ],
     ),
 }

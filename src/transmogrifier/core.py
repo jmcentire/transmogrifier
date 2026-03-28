@@ -12,6 +12,7 @@ from .detector import RegisterDetector
 from .profiles import ProfileCache
 from .rules import RuleEngine
 from .system_prompts import get_system_prompt
+from .task_classifier import TaskClassifier, TaskType
 
 
 class Register(str, enum.Enum):
@@ -33,6 +34,7 @@ class TranslationResult(BaseModel):
     output_text: str
     detected_register: Register
     target_register: Register
+    detected_task: str = ""
     level_applied: TranslationLevel
     system_prompt: str | None = None
     semantic_similarity: float | None = None
@@ -48,6 +50,7 @@ class TranslationConfig(BaseModel):
     semantic_threshold: float = 0.95
     spread_threshold_pp: float = 10.0
     passthrough_on_failure: bool = True
+    task_aware: bool = True  # use per-task register when available
 
 
 class Transmogrifier:
@@ -66,6 +69,7 @@ class Transmogrifier:
         config: TranslationConfig | None = None,
     ) -> None:
         self._detector = RegisterDetector()
+        self._task_classifier = TaskClassifier()
         self._profile_cache = profile_cache or ProfileCache()
         self._rule_engine = RuleEngine()
         self._config = config or TranslationConfig()
@@ -81,28 +85,40 @@ class Transmogrifier:
         config = config or self._config
 
         detected, confidence = self._detector.detect(text)
+        task_type, task_conf = self._task_classifier.classify(text)
         profile = self._profile_cache.get(model) if model else None
 
-        # Skip for invariant models
+        # Skip for invariant models — but check per-task too
         if profile and profile.is_invariant:
-            return TranslationResult(
-                input_text=text,
-                output_text=text,
-                detected_register=detected,
-                target_register=detected,
-                level_applied=TranslationLevel.system_prompt,
-                skipped=True,
-                skip_reason=f"invariant model ({profile.spread_pp:.1f}pp spread)",
-                elapsed_ms=(time.perf_counter() - t0) * 1000,
-            )
+            # Even if aggregate is invariant, per-task might not be
+            task_spread = profile.spread_for_task(task_type.value) if config.task_aware else 0
+            if task_spread < 2.0:
+                return TranslationResult(
+                    input_text=text,
+                    output_text=text,
+                    detected_register=detected,
+                    target_register=detected,
+                    detected_task=task_type.value,
+                    level_applied=TranslationLevel.system_prompt,
+                    skipped=True,
+                    skip_reason=f"invariant model ({profile.spread_pp:.1f}pp spread)",
+                    elapsed_ms=(time.perf_counter() - t0) * 1000,
+                )
 
         # Determine target register
         if config.target_register:
             target = config.target_register
+        elif profile and config.task_aware and task_type != TaskType.unknown:
+            # Use per-task optimal register if available
+            target = profile.best_register_for_task(task_type.value)
         elif profile:
             target = profile.best_register
         else:
             target = Register.direct
+
+        # Ensure target is a Register enum
+        if isinstance(target, str):
+            target = Register(target)
 
         # Level 1: always generate system prompt
         sys_prompt = get_system_prompt(detected, target)
@@ -120,6 +136,7 @@ class Transmogrifier:
             output_text=output_text,
             detected_register=detected,
             target_register=target,
+            detected_task=task_type.value,
             level_applied=level,
             system_prompt=sys_prompt,
             elapsed_ms=elapsed,
