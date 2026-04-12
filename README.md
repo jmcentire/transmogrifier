@@ -27,7 +27,6 @@ With optional backends for Level 3 LLM-based translation:
 pip install "transmogrifier[anthropic]"    # Claude backend
 pip install "transmogrifier[openai]"       # OpenAI backend
 pip install "transmogrifier[gemini]"       # Gemini backend
-pip install "transmogrifier[validation]"   # Semantic equivalence checking
 pip install "transmogrifier[all]"          # Everything
 ```
 
@@ -105,7 +104,6 @@ Separate-context LLM call for heavy-lift register translation. Never same-contex
 - **Register Detector**: Heuristic classifier using surface-form markers. 5 registers: direct, casual, technical, academic, narrative.
 - **Model Profile Cache**: Pre-seeded with empirical data from 4 models. JSON files at `~/.transmogrifier/profiles/`. Versioned and TTL'd.
 - **Translation Router**: Selects Level 1/2/3 based on model sensitivity profile and configuration.
-- **Semantic Validator** (optional): Embedding similarity check (>0.95 threshold) to catch semantic drift during translation.
 
 ## Key Invariants
 
