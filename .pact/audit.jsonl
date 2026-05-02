@@ -1,0 +1,94 @@
+{"timestamp": "2026-03-27T22:25:07.901092", "action": "adopt_smoke_tests", "detail": "15 smoke test files generated"}
+{"timestamp": "2026-03-27T22:25:49.576407", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_calibrate", "component_id": "src_transmogrifier_calibrate"}
+{"timestamp": "2026-03-27T22:29:53.820899", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_calibrate: 26 cases", "component_id": "src_transmogrifier_calibrate"}
+{"timestamp": "2026-03-27T22:30:39.349226", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_cli", "component_id": "src_transmogrifier_cli"}
+{"timestamp": "2026-03-27T22:36:54.760747", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_cli: 41 cases", "component_id": "src_transmogrifier_cli"}
+{"timestamp": "2026-03-27T22:37:34.118676", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_core", "component_id": "src_transmogrifier_core"}
+{"timestamp": "2026-03-27T22:43:24.757464", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_core: 28 cases", "component_id": "src_transmogrifier_core"}
+{"timestamp": "2026-03-27T22:43:59.263189", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_detector", "component_id": "src_transmogrifier_detector"}
+{"timestamp": "2026-03-27T22:51:17.845415", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_detector: 27 cases", "component_id": "src_transmogrifier_detector"}
+{"timestamp": "2026-03-27T22:51:43.311828", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_kindex_integration", "component_id": "src_transmogrifier_kindex_integration"}
+{"timestamp": "2026-03-27T22:55:13.172593", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_kindex_integration: 17 cases", "component_id": "src_transmogrifier_kindex_integration"}
+{"timestamp": "2026-03-27T22:55:45.521364", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_mcp_server", "component_id": "src_transmogrifier_mcp_server"}
+{"timestamp": "2026-03-27T23:05:14.436792", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_mcp_server: 26 cases", "component_id": "src_transmogrifier_mcp_server"}
+{"timestamp": "2026-03-27T23:06:23.887657", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_profiles", "component_id": "src_transmogrifier_profiles"}
+{"timestamp": "2026-03-27T23:12:25.937431", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_profiles: 49 cases", "component_id": "src_transmogrifier_profiles"}
+{"timestamp": "2026-03-27T23:12:45.576316", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_rules", "component_id": "src_transmogrifier_rules"}
+{"timestamp": "2026-03-27T23:19:59.703146", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_rules: 25 cases", "component_id": "src_transmogrifier_rules"}
+{"timestamp": "2026-03-27T23:20:22.665349", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_system_prompts", "component_id": "src_transmogrifier_system_prompts"}
+{"timestamp": "2026-03-27T23:26:28.886017", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_system_prompts: 34 cases", "component_id": "src_transmogrifier_system_prompts"}
+{"timestamp": "2026-03-27T23:26:47.254714", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_task_classifier", "component_id": "src_transmogrifier_task_classifier"}
+{"timestamp": "2026-03-27T23:36:01.979873", "action": "adopt_smoke_tests", "detail": "23 smoke test files generated"}
+{"timestamp": "2026-03-27T23:36:22.817689", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_task_classifier_interface", "component_id": "contracts_src_transmogrifier_task_classifier_interface"}
+{"timestamp": "2026-03-28T00:11:34.680498", "action": "adopt_smoke_tests", "detail": "24 smoke test files generated"}
+{"timestamp": "2026-03-28T00:11:51.735451", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_task_classifier_interface", "component_id": "contracts_src_transmogrifier_task_classifier_interface"}
+{"timestamp": "2026-03-28T00:25:28.659397", "action": "adopt_smoke_tests", "detail": "24 smoke test files generated"}
+{"timestamp": "2026-03-28T00:25:44.409802", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_task_classifier_interface", "component_id": "contracts_src_transmogrifier_task_classifier_interface"}
+{"timestamp": "2026-03-28T00:37:31.763073", "action": "adopt_smoke_tests", "detail": "24 smoke test files generated"}
+{"timestamp": "2026-03-28T00:37:49.729539", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_task_classifier_interface", "component_id": "contracts_src_transmogrifier_task_classifier_interface"}
+{"timestamp": "2026-03-28T00:42:40.275656", "action": "adopt_smoke_tests", "detail": "24 smoke test files generated"}
+{"timestamp": "2026-03-28T00:42:57.148068", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_task_classifier_interface", "component_id": "contracts_src_transmogrifier_task_classifier_interface"}
+{"timestamp": "2026-03-28T00:48:52.345934", "action": "adopt_smoke_tests", "detail": "24 smoke test files generated"}
+{"timestamp": "2026-03-28T00:49:09.194969", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_task_classifier_interface", "component_id": "contracts_src_transmogrifier_task_classifier_interface"}
+{"timestamp": "2026-03-28T00:55:43.936579", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_task_classifier_interface: 19 cases", "component_id": "contracts_src_transmogrifier_task_classifier_interface"}
+{"timestamp": "2026-03-28T00:55:57.185377", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_system_prompts_interface", "component_id": "contracts_src_transmogrifier_system_prompts_interface"}
+{"timestamp": "2026-03-28T01:01:10.097899", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_system_prompts_interface: 27 cases", "component_id": "contracts_src_transmogrifier_system_prompts_interface"}
+{"timestamp": "2026-03-28T01:01:45.370470", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_cli_interface", "component_id": "contracts_src_transmogrifier_cli_interface"}
+{"timestamp": "2026-03-28T01:05:23.710455", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_cli_interface: 24 cases", "component_id": "contracts_src_transmogrifier_cli_interface"}
+{"timestamp": "2026-03-28T01:05:40.945139", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_rules_interface", "component_id": "contracts_src_transmogrifier_rules_interface"}
+{"timestamp": "2026-03-28T01:16:28.698362", "action": "adopt_smoke_tests", "detail": "27 smoke test files generated"}
+{"timestamp": "2026-03-28T01:16:44.891120", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_task_classifier_interface", "component_id": "contracts_src_transmogrifier_task_classifier_interface"}
+{"timestamp": "2026-03-28T01:20:22.936207", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_task_classifier_interface: 0 cases", "component_id": "contracts_src_transmogrifier_task_classifier_interface"}
+{"timestamp": "2026-03-28T01:20:38.338998", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_system_prompts_interface", "component_id": "contracts_src_transmogrifier_system_prompts_interface"}
+{"timestamp": "2026-03-28T01:25:48.189713", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_system_prompts_interface: 0 cases", "component_id": "contracts_src_transmogrifier_system_prompts_interface"}
+{"timestamp": "2026-03-28T01:26:16.881079", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_cli_interface", "component_id": "contracts_src_transmogrifier_cli_interface"}
+{"timestamp": "2026-03-28T01:32:25.131245", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_cli_interface: 0 cases", "component_id": "contracts_src_transmogrifier_cli_interface"}
+{"timestamp": "2026-03-28T01:32:42.110162", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_rules_interface", "component_id": "contracts_src_transmogrifier_rules_interface"}
+{"timestamp": "2026-03-28T01:39:06.809100", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_rules_interface: 0 cases", "component_id": "contracts_src_transmogrifier_rules_interface"}
+{"timestamp": "2026-03-28T01:39:29.364145", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_mcp_server_interface", "component_id": "contracts_src_transmogrifier_mcp_server_interface"}
+{"timestamp": "2026-03-28T01:44:02.499868", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_mcp_server_interface: 0 cases", "component_id": "contracts_src_transmogrifier_mcp_server_interface"}
+{"timestamp": "2026-03-28T01:44:21.738256", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_detector_interface", "component_id": "contracts_src_transmogrifier_detector_interface"}
+{"timestamp": "2026-03-28T01:48:20.965052", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_detector_interface: 0 cases", "component_id": "contracts_src_transmogrifier_detector_interface"}
+{"timestamp": "2026-03-28T01:48:38.208091", "action": "adopt_contract", "detail": "Contract for contracts_contracts_src_transmogrifier_rules_interface_interface", "component_id": "contracts_contracts_src_transmogrifier_rules_interface_interface"}
+{"timestamp": "2026-03-28T01:53:20.102521", "action": "adopt_tests", "detail": "Tests for contracts_contracts_src_transmogrifier_rules_interface_interface: 0 cases", "component_id": "contracts_contracts_src_transmogrifier_rules_interface_interface"}
+{"timestamp": "2026-03-28T01:53:29.234984", "action": "adopt_contract", "detail": "Contract for contracts_contracts_src_transmogrifier_task_classifier_interface_interface", "component_id": "contracts_contracts_src_transmogrifier_task_classifier_interface_interface"}
+{"timestamp": "2026-03-28T01:57:28.423713", "action": "adopt_tests", "detail": "Tests for contracts_contracts_src_transmogrifier_task_classifier_interface_interface: 17 cases", "component_id": "contracts_contracts_src_transmogrifier_task_classifier_interface_interface"}
+{"timestamp": "2026-03-28T01:57:48.698577", "action": "adopt_contract", "detail": "Contract for contracts_contracts_src_transmogrifier_system_prompts_interface_interface", "component_id": "contracts_contracts_src_transmogrifier_system_prompts_interface_interface"}
+{"timestamp": "2026-03-28T02:01:19.103994", "action": "adopt_tests", "detail": "Tests for contracts_contracts_src_transmogrifier_system_prompts_interface_interface: 26 cases", "component_id": "contracts_contracts_src_transmogrifier_system_prompts_interface_interface"}
+{"timestamp": "2026-03-28T02:02:02.263056", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_core_interface", "component_id": "contracts_src_transmogrifier_core_interface"}
+{"timestamp": "2026-03-28T02:06:33.403490", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_core_interface: 0 cases", "component_id": "contracts_src_transmogrifier_core_interface"}
+{"timestamp": "2026-03-28T02:07:16.633862", "action": "adopt_contract", "detail": "Contract for contracts_contracts_src_transmogrifier_cli_interface_interface", "component_id": "contracts_contracts_src_transmogrifier_cli_interface_interface"}
+{"timestamp": "2026-03-28T02:12:49.325589", "action": "adopt_tests", "detail": "Tests for contracts_contracts_src_transmogrifier_cli_interface_interface: 0 cases", "component_id": "contracts_contracts_src_transmogrifier_cli_interface_interface"}
+{"timestamp": "2026-03-28T02:13:13.301899", "action": "adopt_contract", "detail": "Contract for contracts_src_transmogrifier_kindex_integration_interface", "component_id": "contracts_src_transmogrifier_kindex_integration_interface"}
+{"timestamp": "2026-03-28T02:17:59.707557", "action": "adopt_tests", "detail": "Tests for contracts_src_transmogrifier_kindex_integration_interface: 20 cases", "component_id": "contracts_src_transmogrifier_kindex_integration_interface"}
+{"timestamp": "2026-03-28T02:18:37.820707", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_calibrate", "component_id": "src_transmogrifier_calibrate"}
+{"timestamp": "2026-03-28T02:23:24.471464", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_calibrate: 26 cases", "component_id": "src_transmogrifier_calibrate"}
+{"timestamp": "2026-03-28T02:24:18.143971", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_cli", "component_id": "src_transmogrifier_cli"}
+{"timestamp": "2026-03-28T02:30:41.739748", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_cli: 36 cases", "component_id": "src_transmogrifier_cli"}
+{"timestamp": "2026-03-28T02:31:25.829195", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_core", "component_id": "src_transmogrifier_core"}
+{"timestamp": "2026-03-28T02:37:02.965633", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_core: 30 cases", "component_id": "src_transmogrifier_core"}
+{"timestamp": "2026-03-28T02:37:33.439446", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_detector", "component_id": "src_transmogrifier_detector"}
+{"timestamp": "2026-03-28T02:42:59.617387", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_detector: 0 cases", "component_id": "src_transmogrifier_detector"}
+{"timestamp": "2026-03-28T02:43:26.743712", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_kindex_integration", "component_id": "src_transmogrifier_kindex_integration"}
+{"timestamp": "2026-03-28T02:47:32.521421", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_kindex_integration: 15 cases", "component_id": "src_transmogrifier_kindex_integration"}
+{"timestamp": "2026-03-28T02:48:15.016152", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_mcp_server", "component_id": "src_transmogrifier_mcp_server"}
+{"timestamp": "2026-03-28T02:53:19.496872", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_mcp_server: 0 cases", "component_id": "src_transmogrifier_mcp_server"}
+{"timestamp": "2026-03-28T02:54:25.968878", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_profiles", "component_id": "src_transmogrifier_profiles"}
+{"timestamp": "2026-03-28T03:01:37.561399", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_profiles: 52 cases", "component_id": "src_transmogrifier_profiles"}
+{"timestamp": "2026-03-28T03:01:56.951231", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_rules", "component_id": "src_transmogrifier_rules"}
+{"timestamp": "2026-03-28T03:05:34.830807", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_rules: 25 cases", "component_id": "src_transmogrifier_rules"}
+{"timestamp": "2026-03-28T03:05:53.742289", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_system_prompts", "component_id": "src_transmogrifier_system_prompts"}
+{"timestamp": "2026-03-28T03:13:01.010967", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_system_prompts: 50 cases", "component_id": "src_transmogrifier_system_prompts"}
+{"timestamp": "2026-03-28T03:13:19.278059", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_task_classifier", "component_id": "src_transmogrifier_task_classifier"}
+{"timestamp": "2026-03-28T03:17:46.738086", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_task_classifier: 0 cases", "component_id": "src_transmogrifier_task_classifier"}
+{"timestamp": "2026-03-28T03:18:19.183281", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_validator", "component_id": "src_transmogrifier_validator"}
+{"timestamp": "2026-03-28T03:21:13.233327", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_validator: 0 cases", "component_id": "src_transmogrifier_validator"}
+{"timestamp": "2026-03-28T03:21:33.519081", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_backends___init__", "component_id": "src_transmogrifier_backends___init__"}
+{"timestamp": "2026-03-28T03:27:34.396973", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_backends___init__: 24 cases", "component_id": "src_transmogrifier_backends___init__"}
+{"timestamp": "2026-03-28T03:28:04.827964", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_backends_anthropic", "component_id": "src_transmogrifier_backends_anthropic"}
+{"timestamp": "2026-03-28T03:32:19.723147", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_backends_anthropic: 23 cases", "component_id": "src_transmogrifier_backends_anthropic"}
+{"timestamp": "2026-03-28T03:32:52.409626", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_backends_gemini", "component_id": "src_transmogrifier_backends_gemini"}
+{"timestamp": "2026-03-28T03:35:22.808852", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_backends_gemini: 22 cases", "component_id": "src_transmogrifier_backends_gemini"}
+{"timestamp": "2026-03-28T03:35:55.034777", "action": "adopt_contract", "detail": "Contract for src_transmogrifier_backends_openai", "component_id": "src_transmogrifier_backends_openai"}
+{"timestamp": "2026-03-28T03:38:40.908273", "action": "adopt_tests", "detail": "Tests for src_transmogrifier_backends_openai: 20 cases", "component_id": "src_transmogrifier_backends_openai"}
+{"timestamp": "2026-03-28T03:38:40.919749", "action": "adopt_complete", "detail": "27 contracts, 27 tests, $8.7266"}

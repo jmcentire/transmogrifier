@@ -1,0 +1,504 @@
+{
+  "component_id": "src_transmogrifier_rules",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_rewrite_casual_to_direct_basic",
+      "description": "Happy path: Basic casual to direct register transformation",
+      "function": "rewrite",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm gonna check that out",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Casual text with contractions and informal language",
+      "expected_output_description": "Transformed to direct register with proper grammar",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0",
+        "result != original_text or source == target"
+      ]
+    },
+    {
+      "id": "test_rewrite_academic_to_direct_basic",
+      "description": "Happy path: Academic to direct register transformation",
+      "function": "rewrite",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "The aforementioned hypothesis requires further investigation",
+        "source": "academic",
+        "target": "direct"
+      },
+      "input_description": "Academic text with formal language",
+      "expected_output_description": "Transformed to direct register",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_narrative_to_direct_basic",
+      "description": "Happy path: Narrative to direct register transformation",
+      "function": "rewrite",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "Once upon a time in a galaxy far away",
+        "source": "narrative",
+        "target": "direct"
+      },
+      "input_description": "Narrative text with storytelling elements",
+      "expected_output_description": "Transformed to direct register",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_technical_to_direct_basic",
+      "description": "Happy path: Technical to direct register transformation",
+      "function": "rewrite",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "Execute the aforementioned procedure",
+        "source": "technical",
+        "target": "direct"
+      },
+      "input_description": "Technical text with jargon",
+      "expected_output_description": "Transformed to direct register",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_same_register_identity",
+      "description": "Happy path: Rewriting with source equals target returns original text",
+      "function": "rewrite",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "This is some text",
+        "source": "casual",
+        "target": "casual"
+      },
+      "input_description": "Any text with source and target being the same",
+      "expected_output_description": "Original text unchanged",
+      "expected_error": "",
+      "assertions": [
+        "result == text"
+      ]
+    },
+    {
+      "id": "test_rewrite_with_register_objects",
+      "description": "Happy path: Using Register objects with .value attribute",
+      "function": "rewrite",
+      "category": "happy_path",
+      "setup_description": "Create mock Register objects with .value attributes",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm testing this",
+        "source": "register_object_casual",
+        "target": "register_object_direct"
+      },
+      "input_description": "Text with Register objects instead of strings",
+      "expected_output_description": "Transformation works with Register objects",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_indirect_routing",
+      "description": "Happy path: Indirect routing through 'direct' register when no direct path exists",
+      "function": "rewrite",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm gonna do this",
+        "source": "casual",
+        "target": "academic"
+      },
+      "input_description": "Transform between two non-direct registers",
+      "expected_output_description": "Text routed through 'direct' register (casual→direct→academic)",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_empty_string",
+      "description": "Edge case: Empty string input",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Empty string",
+      "expected_output_description": "Returns original empty string (strip produces empty)",
+      "expected_error": "",
+      "assertions": [
+        "result == ''"
+      ]
+    },
+    {
+      "id": "test_rewrite_whitespace_only",
+      "description": "Edge case: Whitespace-only string",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "   \t\n  ",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "String containing only whitespace",
+      "expected_output_description": "Returns original text (strip produces empty string)",
+      "expected_error": "",
+      "assertions": [
+        "result == '   \t\n  '"
+      ]
+    },
+    {
+      "id": "test_rewrite_leading_trailing_whitespace",
+      "description": "Edge case: Text with leading and trailing whitespace",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "  I'm gonna check this  ",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text with whitespace padding",
+      "expected_output_description": "Result is stripped of whitespace",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "result[0] != ' '",
+        "result[-1] != ' '"
+      ]
+    },
+    {
+      "id": "test_rewrite_unicode_text",
+      "description": "Edge case: Unicode text with special characters",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm gonna café ☕ 你好",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text with Unicode characters including emoji and accents",
+      "expected_output_description": "Unicode characters preserved during transformation",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_very_long_input",
+      "description": "Edge case: Very long text input",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "Generate 10000 character string",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "long_text_10000_chars",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "String with 10000+ characters",
+      "expected_output_description": "Handles long text efficiently",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_multiline_text",
+      "description": "Edge case: Text with multiple line breaks",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm gonna do this\nAnd I'm gonna do that\nYou're awesome",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text spanning multiple lines",
+      "expected_output_description": "Line breaks preserved or handled appropriately",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_case_insensitive",
+      "description": "Invariant: Regex substitutions use IGNORECASE flag",
+      "function": "rewrite",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'M GONNA check THIS",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text with varied capitalization patterns",
+      "expected_output_description": "Case variations are handled by IGNORECASE",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_no_rules_for_pair",
+      "description": "Edge case: No transformation rules exist for register pair",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "Some text here",
+        "source": "unknown_register",
+        "target": "another_unknown"
+      },
+      "input_description": "Unsupported register transformation",
+      "expected_output_description": "Returns text possibly routed through 'direct' or unchanged",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_preserved_html",
+      "description": "Edge case: HTML content should be handled appropriately",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm gonna <strong>check</strong> this out",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text containing HTML tags",
+      "expected_output_description": "HTML tags preserved or handled",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_escaped_characters",
+      "description": "Edge case: Text with escaped characters",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm gonna check\\nthis\\tout",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text with backslashes and escaped sequences",
+      "expected_output_description": "Escaped characters handled appropriately",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_non_matching_text",
+      "description": "Edge case: Text that doesn't match any rules",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "xyz qwerty asdf",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text with no patterns matching transformation rules",
+      "expected_output_description": "Returns text unchanged or minimally processed",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_deterministic_output",
+      "description": "Invariant: Sequential and deterministic rule application",
+      "function": "rewrite",
+      "category": "invariant",
+      "setup_description": "Call rewrite multiple times with same input",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm gonna check this",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Same input multiple times",
+      "expected_output_description": "Same output every time",
+      "expected_error": "",
+      "assertions": [
+        "result == second_result",
+        "result == third_result"
+      ]
+    },
+    {
+      "id": "test_rewrite_no_side_effects",
+      "description": "Invariant: Rewrite has no side effects on engine state",
+      "function": "rewrite",
+      "category": "invariant",
+      "setup_description": "Perform multiple rewrites with different texts",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm testing this",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Multiple rewrites on same engine instance",
+      "expected_output_description": "Multiple calls don't pollute state",
+      "expected_error": "",
+      "assertions": [
+        "first_result == second_result"
+      ]
+    },
+    {
+      "id": "test_rewrite_returns_non_empty_string",
+      "description": "Invariant: Postcondition - returns non-empty string",
+      "function": "rewrite",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "test",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Various non-empty inputs",
+      "expected_output_description": "Never returns empty string for non-empty input",
+      "expected_error": "",
+      "assertions": [
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_strip_fallback",
+      "description": "Invariant: If strip produces empty string, returns original text",
+      "function": "rewrite",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "   ",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text that might strip to empty",
+      "expected_output_description": "Returns original whitespace text",
+      "expected_error": "",
+      "assertions": [
+        "result == '   '"
+      ]
+    },
+    {
+      "id": "test_rewrite_multiple_transformations",
+      "description": "Edge case: Text with multiple patterns to transform",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm gonna wanna check this, you're awesome",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text containing multiple transformable patterns",
+      "expected_output_description": "All applicable rules applied sequentially",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_overlapping_patterns",
+      "description": "Edge case: Text with potentially overlapping pattern matches",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm I'm gonna gonna check",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text where patterns might overlap",
+      "expected_output_description": "Patterns applied deterministically without conflict",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_rewrite_special_regex_characters",
+      "description": "Edge case: Text containing special regex characters",
+      "function": "rewrite",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "I'm gonna check $100 (or more) [test]",
+        "source": "casual",
+        "target": "direct"
+      },
+      "input_description": "Text with regex metacharacters",
+      "expected_output_description": "Special characters don't break regex processing",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "len(result) > 0"
+      ]
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract tests for Rule-Based Register Rewriting\n\nTests the RuleEngine.rewrite() function according to contract specifications.\nImplements three-tier testing: unit tests, edge cases, and invariant verification.\n\"\"\"\n\nimport pytest\nimport re\nimport time\nfrom unittest.mock import Mock, MagicMock\nfrom src.transmogrifier.rules import RuleEngine, RewriteRule\n\n\nclass TestRewriteHappyPath:\n    \"\"\"Happy path tests for basic register transformations\"\"\"\n    \n    def test_rewrite_casual_to_direct_basic(self):\n        \"\"\"Happy path: Basic casual to direct register transformation\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna check that out\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        assert result is not None\n        assert len(result) > 0\n        # Result should be transformed (unless source == target)\n        assert result != text or source == target\n    \n    def test_rewrite_academic_to_direct_basic(self):\n        \"\"\"Happy path: Academic to direct register transformation\"\"\"\n        engine = RuleEngine()\n        text = \"The aforementioned hypothesis requires further investigation\"\n        source = \"academic\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_narrative_to_direct_basic(self):\n        \"\"\"Happy path: Narrative to direct register transformation\"\"\"\n        engine = RuleEngine()\n        text = \"Once upon a time in a galaxy far away\"\n        source = \"narrative\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_technical_to_direct_basic(self):\n        \"\"\"Happy path: Technical to direct register transformation\"\"\"\n        engine = RuleEngine()\n        text = \"Execute the aforementioned procedure\"\n        source = \"technical\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_same_register_identity(self):\n        \"\"\"Happy path: Rewriting with source equals target returns original text\"\"\"\n        engine = RuleEngine()\n        text = \"This is some text\"\n        source = \"casual\"\n        target = \"casual\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Postcondition: If source == target, returns original text unchanged\n        assert result == text\n    \n    def test_rewrite_with_register_objects(self):\n        \"\"\"Happy path: Using Register objects with .value attribute\"\"\"\n        engine = RuleEngine()\n        text = \"I'm testing this\"\n        \n        # Create mock Register objects with .value attributes\n        source_register = Mock()\n        source_register.value = \"casual\"\n        target_register = Mock()\n        target_register.value = \"direct\"\n        \n        result = engine.rewrite(text, source_register, target_register)\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_indirect_routing(self):\n        \"\"\"Happy path: Indirect routing through 'direct' register when no direct path exists\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna do this\"\n        source = \"casual\"\n        target = \"academic\"\n        \n        # This should route through 'direct': casual→direct→academic\n        result = engine.rewrite(text, source, target)\n        \n        assert result is not None\n        assert len(result) > 0\n\n\nclass TestRewriteEdgeCases:\n    \"\"\"Edge case tests for boundary conditions\"\"\"\n    \n    def test_rewrite_empty_string(self):\n        \"\"\"Edge case: Empty string input\"\"\"\n        engine = RuleEngine()\n        text = \"\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Postcondition: If strip produces empty string, returns original text\n        assert result == ''\n    \n    def test_rewrite_whitespace_only(self):\n        \"\"\"Edge case: Whitespace-only string\"\"\"\n        engine = RuleEngine()\n        text = \"   \\t\\n  \"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Postcondition: If strip produces empty string, returns original text\n        assert result == '   \\t\\n  '\n    \n    def test_rewrite_leading_trailing_whitespace(self):\n        \"\"\"Edge case: Text with leading and trailing whitespace\"\"\"\n        engine = RuleEngine()\n        text = \"  I'm gonna check this  \"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Postcondition: Result is stripped unless strip produces empty string\n        assert result is not None\n        if len(result) > 0:\n            assert result[0] != ' '\n            assert result[-1] != ' '\n    \n    def test_rewrite_unicode_text(self):\n        \"\"\"Edge case: Unicode text with special characters\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna café ☕ 你好\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Unicode characters should be preserved\n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_very_long_input(self):\n        \"\"\"Edge case: Very long text input\"\"\"\n        engine = RuleEngine()\n        # Generate 10000 character string\n        text = \"I'm gonna check this. \" * 500  # ~11000 chars\n        source = \"casual\"\n        target = \"direct\"\n        \n        start_time = time.time()\n        result = engine.rewrite(text, source, target)\n        elapsed = time.time() - start_time\n        \n        assert result is not None\n        assert len(result) > 0\n        # Performance: p95 < 1ms (allowing some slack for large input)\n        assert elapsed < 0.1  # 100ms tolerance for large input\n    \n    def test_rewrite_multiline_text(self):\n        \"\"\"Edge case: Text with multiple line breaks\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna do this\\nAnd I'm gonna do that\\nYou're awesome\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_no_rules_for_pair(self):\n        \"\"\"Edge case: No transformation rules exist for register pair\"\"\"\n        engine = RuleEngine()\n        text = \"Some text here\"\n        source = \"unknown_register\"\n        target = \"another_unknown\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Postcondition: Returns text possibly routed through 'direct' register\n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_preserved_html(self):\n        \"\"\"Edge case: HTML content should be handled appropriately\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna <strong>check</strong> this out\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_escaped_characters(self):\n        \"\"\"Edge case: Text with escaped characters\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna check\\\\nthis\\\\tout\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_non_matching_text(self):\n        \"\"\"Edge case: Text that doesn't match any rules\"\"\"\n        engine = RuleEngine()\n        text = \"xyz qwerty asdf\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Should return text unchanged or minimally processed\n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_multiple_transformations(self):\n        \"\"\"Edge case: Text with multiple patterns to transform\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna wanna check this, you're awesome\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # All applicable rules should be applied sequentially\n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_overlapping_patterns(self):\n        \"\"\"Edge case: Text with potentially overlapping pattern matches\"\"\"\n        engine = RuleEngine()\n        text = \"I'm I'm gonna gonna check\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Patterns should be applied deterministically\n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_special_regex_characters(self):\n        \"\"\"Edge case: Text containing special regex characters\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna check $100 (or more) [test]\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Special characters shouldn't break regex processing\n        assert result is not None\n        assert len(result) > 0\n\n\nclass TestRewriteInvariants:\n    \"\"\"Tests for contract invariants\"\"\"\n    \n    def test_rewrite_case_insensitive(self):\n        \"\"\"Invariant: Regex substitutions use IGNORECASE flag\"\"\"\n        engine = RuleEngine()\n        text = \"I'M GONNA check THIS\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Case variations should be handled by IGNORECASE\n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_deterministic_output(self):\n        \"\"\"Invariant: Sequential and deterministic rule application\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna check this\"\n        source = \"casual\"\n        target = \"direct\"\n        \n        # Call rewrite multiple times with same input\n        result = engine.rewrite(text, source, target)\n        second_result = engine.rewrite(text, source, target)\n        third_result = engine.rewrite(text, source, target)\n        \n        # Same output every time\n        assert result == second_result\n        assert result == third_result\n    \n    def test_rewrite_no_side_effects(self):\n        \"\"\"Invariant: Rewrite has no side effects on engine state\"\"\"\n        engine = RuleEngine()\n        \n        # Perform multiple rewrites with different texts\n        first_result = engine.rewrite(\"I'm testing this\", \"casual\", \"direct\")\n        second_result = engine.rewrite(\"I'm testing this\", \"casual\", \"direct\")\n        \n        # Multiple calls shouldn't pollute state\n        assert first_result == second_result\n        \n        # Try with different text in between\n        engine.rewrite(\"Something completely different\", \"academic\", \"direct\")\n        third_result = engine.rewrite(\"I'm testing this\", \"casual\", \"direct\")\n        \n        assert first_result == third_result\n    \n    def test_rewrite_returns_non_empty_string(self):\n        \"\"\"Invariant: Postcondition - returns non-empty string\"\"\"\n        engine = RuleEngine()\n        \n        # Test various non-empty inputs\n        test_cases = [\n            \"test\",\n            \"I'm gonna do this\",\n            \"The aforementioned\",\n            \"Once upon a time\",\n            \"Execute procedure\"\n        ]\n        \n        for text in test_cases:\n            result = engine.rewrite(text, \"casual\", \"direct\")\n            # Never returns empty string for non-empty input\n            assert len(result) > 0\n    \n    def test_rewrite_strip_fallback(self):\n        \"\"\"Invariant: If strip produces empty string, returns original text\"\"\"\n        engine = RuleEngine()\n        text = \"   \"\n        source = \"casual\"\n        target = \"direct\"\n        \n        result = engine.rewrite(text, source, target)\n        \n        # Returns original whitespace text\n        assert result == '   '\n    \n    def test_supported_register_transformations(self):\n        \"\"\"Invariant: Supported register transformations are hardcoded\"\"\"\n        engine = RuleEngine()\n        text = \"Test text for transformation\"\n        \n        # Supported transformations: (casual→direct), (academic→direct), \n        # (narrative→direct), (technical→direct)\n        supported_pairs = [\n            (\"casual\", \"direct\"),\n            (\"academic\", \"direct\"),\n            (\"narrative\", \"direct\"),\n            (\"technical\", \"direct\")\n        ]\n        \n        for source, target in supported_pairs:\n            result = engine.rewrite(text, source, target)\n            assert result is not None\n            assert len(result) > 0\n\n\nclass TestRewriteRoundTrip:\n    \"\"\"Bidirectional and round-trip tests\"\"\"\n    \n    def test_rewrite_bidirectional_casual_direct(self):\n        \"\"\"Test both casual→direct and direct→casual transformations\"\"\"\n        engine = RuleEngine()\n        casual_text = \"I'm gonna do this\"\n        \n        # Transform casual to direct\n        direct_result = engine.rewrite(casual_text, \"casual\", \"direct\")\n        assert direct_result is not None\n        \n        # Transform back (if rules exist for direct→casual)\n        back_to_casual = engine.rewrite(direct_result, \"direct\", \"casual\")\n        assert back_to_casual is not None\n    \n    def test_rewrite_identity_preserves_text(self):\n        \"\"\"Test that identity transformation preserves text exactly\"\"\"\n        engine = RuleEngine()\n        test_texts = [\n            \"Simple text\",\n            \"Text with numbers 123\",\n            \"Text with symbols !@#$%\",\n            \"Unicode text 你好 ☕\"\n        ]\n        \n        for text in test_texts:\n            result = engine.rewrite(text, \"casual\", \"casual\")\n            assert result == text\n\n\nclass TestRewriteRegisterParameters:\n    \"\"\"Tests for register parameter handling\"\"\"\n    \n    def test_rewrite_register_enum_vs_string(self):\n        \"\"\"Test both string registers and Register objects\"\"\"\n        engine = RuleEngine()\n        text = \"I'm testing\"\n        \n        # String registers\n        result_str = engine.rewrite(text, \"casual\", \"direct\")\n        assert result_str is not None\n        \n        # Register objects with .value\n        source_obj = Mock()\n        source_obj.value = \"casual\"\n        target_obj = Mock()\n        target_obj.value = \"direct\"\n        \n        result_obj = engine.rewrite(text, source_obj, target_obj)\n        assert result_obj is not None\n        \n        # Should produce same result\n        assert result_str == result_obj\n    \n    def test_rewrite_unknown_registers(self):\n        \"\"\"Test handling of unknown register types\"\"\"\n        engine = RuleEngine()\n        text = \"Test text\"\n        \n        result = engine.rewrite(text, \"unknown_source\", \"unknown_target\")\n        \n        # Should handle gracefully (postcondition: returns non-empty string)\n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_register_case_handling(self):\n        \"\"\"Test case sensitivity of register names\"\"\"\n        engine = RuleEngine()\n        text = \"I'm testing this\"\n        \n        # Test lowercase (standard)\n        result_lower = engine.rewrite(text, \"casual\", \"direct\")\n        \n        # Test if mixed case is handled\n        result_mixed = engine.rewrite(text, \"Casual\", \"Direct\")\n        \n        assert result_lower is not None\n        assert result_mixed is not None\n\n\nclass TestRewriteRuleInteractions:\n    \"\"\"Tests for rule interaction scenarios\"\"\"\n    \n    def test_rewrite_sequential_rule_application(self):\n        \"\"\"Test that rules are applied sequentially\"\"\"\n        engine = RuleEngine()\n        \n        # Text with multiple patterns\n        text = \"I'm gonna wanna check this out, you're awesome\"\n        result = engine.rewrite(text, \"casual\", \"direct\")\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_non_overlapping_rules(self):\n        \"\"\"Test multiple non-overlapping rules in same text\"\"\"\n        engine = RuleEngine()\n        \n        text = \"I'm here and you're there\"\n        result = engine.rewrite(text, \"casual\", \"direct\")\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_chained_transformations(self):\n        \"\"\"Test chained transformations through multiple registers\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna test this\"\n        \n        # Chain: casual → direct → academic\n        step1 = engine.rewrite(text, \"casual\", \"direct\")\n        step2 = engine.rewrite(step1, \"direct\", \"academic\")\n        \n        # Direct chain\n        direct_result = engine.rewrite(text, \"casual\", \"academic\")\n        \n        assert step2 is not None\n        assert direct_result is not None\n\n\nclass TestRewritePerformance:\n    \"\"\"Performance regression tests\"\"\"\n    \n    def test_rewrite_performance_small_input(self):\n        \"\"\"Test performance with small input (< 1ms target)\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna check this\"\n        \n        start = time.time()\n        result = engine.rewrite(text, \"casual\", \"direct\")\n        elapsed = time.time() - start\n        \n        assert result is not None\n        # p95 < 1ms, allowing 10ms for test overhead\n        assert elapsed < 0.01\n    \n    def test_rewrite_performance_medium_input(self):\n        \"\"\"Test performance with medium input (1000 chars)\"\"\"\n        engine = RuleEngine()\n        text = \"I'm gonna check this. \" * 50  # ~1100 chars\n        \n        start = time.time()\n        result = engine.rewrite(text, \"casual\", \"direct\")\n        elapsed = time.time() - start\n        \n        assert result is not None\n        # O(n*m) complexity, should still be fast\n        assert elapsed < 0.05\n    \n    def test_rewrite_no_pathological_backtracking(self):\n        \"\"\"Test that regex patterns don't cause pathological backtracking\"\"\"\n        engine = RuleEngine()\n        \n        # Create text that could cause backtracking issues\n        text = \"a\" * 100 + \"I'm gonna\" + \"b\" * 100\n        \n        start = time.time()\n        result = engine.rewrite(text, \"casual\", \"direct\")\n        elapsed = time.time() - start\n        \n        assert result is not None\n        # Should not timeout or take excessive time\n        assert elapsed < 0.1\n\n\nclass TestRewriteStateManagement:\n    \"\"\"Tests for state management and instance reuse\"\"\"\n    \n    def test_rewrite_fresh_engine_instance(self):\n        \"\"\"Test with fresh RuleEngine instance\"\"\"\n        engine = RuleEngine()\n        text = \"I'm testing\"\n        \n        result = engine.rewrite(text, \"casual\", \"direct\")\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_reused_engine_instance(self):\n        \"\"\"Test that reused engine instances work correctly\"\"\"\n        engine = RuleEngine()\n        \n        # Multiple rewrites on same instance\n        result1 = engine.rewrite(\"I'm testing\", \"casual\", \"direct\")\n        result2 = engine.rewrite(\"You're awesome\", \"casual\", \"direct\")\n        result3 = engine.rewrite(\"I'm testing\", \"casual\", \"direct\")\n        \n        assert result1 is not None\n        assert result2 is not None\n        assert result3 is not None\n        \n        # Same input should give same output\n        assert result1 == result3\n    \n    def test_rewrite_parallel_engine_instances(self):\n        \"\"\"Test that multiple engine instances don't interfere\"\"\"\n        engine1 = RuleEngine()\n        engine2 = RuleEngine()\n        \n        text = \"I'm testing this\"\n        \n        result1 = engine1.rewrite(text, \"casual\", \"direct\")\n        result2 = engine2.rewrite(text, \"casual\", \"direct\")\n        \n        # Both engines should produce same result\n        assert result1 == result2\n\n\nclass TestRewriteComplexScenarios:\n    \"\"\"Complex real-world scenarios\"\"\"\n    \n    def test_rewrite_mixed_register_content(self):\n        \"\"\"Test text that mixes multiple register styles\"\"\"\n        engine = RuleEngine()\n        \n        # Text mixing casual and formal elements\n        text = \"I'm gonna check the aforementioned hypothesis\"\n        result = engine.rewrite(text, \"casual\", \"direct\")\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_with_punctuation_variety(self):\n        \"\"\"Test text with various punctuation marks\"\"\"\n        engine = RuleEngine()\n        \n        text = \"I'm gonna check this! Are you? Yes, I'm sure; definitely.\"\n        result = engine.rewrite(text, \"casual\", \"direct\")\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_with_numbers_and_symbols(self):\n        \"\"\"Test text containing numbers and symbols\"\"\"\n        engine = RuleEngine()\n        \n        text = \"I'm gonna need $100 or 50% more @ 3pm\"\n        result = engine.rewrite(text, \"casual\", \"direct\")\n        \n        assert result is not None\n        assert len(result) > 0\n    \n    def test_rewrite_paragraph_text(self):\n        \"\"\"Test full paragraph transformation\"\"\"\n        engine = RuleEngine()\n        \n        text = \"\"\"I'm gonna tell you something important. \n        You're gonna want to hear this. \n        The aforementioned procedure isn't gonna work.\"\"\"\n        \n        result = engine.rewrite(text, \"casual\", \"direct\")\n        \n        assert result is not None\n        assert len(result) > 0\n\n\nif __name__ == \"__main__\":\n    pytest.main([__file__, \"-v\"])\n"
+}

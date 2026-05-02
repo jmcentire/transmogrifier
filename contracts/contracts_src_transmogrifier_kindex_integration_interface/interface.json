@@ -1,0 +1,150 @@
+{
+  "component_id": "contracts_src_transmogrifier_kindex_integration_interface",
+  "name": "Kindex Integration Module",
+  "description": "Optional Kindex integration with graceful degradation. Lazily initializes and manages a singleton Kindex Store instance, returning false/logging if kindex is unavailable rather than raising exceptions. Maintains global state for the store instance and tracks initialization attempts.",
+  "version": 1,
+  "types": [],
+  "functions": [
+    {
+      "name": "is_available",
+      "description": "Checks if Kindex is available. Lazily initializes the store on first call, then caches the result. Subsequent calls return cached availability status.",
+      "inputs": [],
+      "output_type": "bool",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "_checked is set to True after first invocation",
+        "Returns True if _store was successfully initialized, False otherwise",
+        "Result is idempotent after first call (cached)"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Mutates global _checked to True",
+        "May mutate global _store via _init_store()",
+        "May log debug message if kindex initialization fails"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "_checked",
+          "description": "Sets global _checked to True"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "_store",
+          "description": "May initialize global _store via _init_store()"
+        },
+        {
+          "kind": "logging",
+          "target": "debug",
+          "description": "May log debug message if kindex initialization fails"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "_init_store",
+      "description": "Attempts to import kindex dependencies, load config, and initialize the global Store singleton. Returns True on success, False on any exception (with debug logging).",
+      "inputs": [],
+      "output_type": "bool",
+      "error_cases": [
+        {
+          "name": "import_or_initialization_failure",
+          "condition": "Any exception during kindex import, load_config(), or Store() initialization",
+          "error_type": "Exception",
+          "error_data": {
+            "handling": "Caught, logged at debug level, returns False"
+          }
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "If returns True: _store is initialized to a Store instance",
+        "If returns False: _store remains None and exception is logged"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Mutates global _store on success",
+        "Logs debug message on exception"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "_store",
+          "description": "Initializes global _store to Store instance on success"
+        },
+        {
+          "kind": "logging",
+          "target": "debug",
+          "description": "Logs exception on failure"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "close",
+      "description": "Closes the Kindex store if initialized and resets module state. Safe to call multiple times or when store is not initialized.",
+      "inputs": [],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "_store is set to None",
+        "_checked is set to False",
+        "If _store was not None: _store.close() was called"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [
+        "Calls _store.close() if _store is not None",
+        "Resets global _store to None",
+        "Resets global _checked to False"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "_store.close()",
+          "description": "Calls close() method if _store is not None"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "_store",
+          "description": "Resets to None"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "_checked",
+          "description": "Resets to False"
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "logging",
+    "kindex.config",
+    "kindex.store"
+  ],
+  "dependency_contracts": {},
+  "invariants": [
+    "_store is either None or a kindex.store.Store instance",
+    "_checked tracks whether initialization has been attempted",
+    "If _checked is True and _store is None, kindex is unavailable",
+    "If _checked is True and _store is not None, kindex is available",
+    "Module maintains singleton Store instance (at most one)"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [],
+    "writes": [],
+    "rationale": "",
+    "side_effects": []
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

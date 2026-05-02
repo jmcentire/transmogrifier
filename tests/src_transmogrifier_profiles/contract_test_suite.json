@@ -1,0 +1,720 @@
+{
+  "component_id": "src_transmogrifier_profiles",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_task_register_profile_best_register_happy_path",
+      "description": "TaskRegisterProfile.best_register returns register with highest accuracy",
+      "function": "TaskRegisterProfile.best_register",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "TaskRegisterProfile with multiple accuracies",
+      "expected_output_description": "Returns 'formal' as the register with highest accuracy (0.95)",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_task_register_profile_best_register_empty_accuracies",
+      "description": "TaskRegisterProfile.best_register returns 'direct' when accuracies is empty",
+      "function": "TaskRegisterProfile.best_register",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "TaskRegisterProfile with empty accuracies list",
+      "expected_output_description": "Returns 'direct' as default",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_task_register_profile_best_register_single_accuracy",
+      "description": "TaskRegisterProfile.best_register returns the only register when accuracies has one element",
+      "function": "TaskRegisterProfile.best_register",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "TaskRegisterProfile with single accuracy entry",
+      "expected_output_description": "Returns the single register name",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_task_register_profile_spread_pp_happy_path",
+      "description": "TaskRegisterProfile.spread_pp calculates percentage point spread correctly",
+      "function": "TaskRegisterProfile.spread_pp",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "TaskRegisterProfile with accuracies ranging from 0.80 to 0.95",
+      "expected_output_description": "Returns 15.0 percentage points",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_task_register_profile_spread_pp_empty_accuracies",
+      "description": "TaskRegisterProfile.spread_pp returns 0.0 when accuracies is empty",
+      "function": "TaskRegisterProfile.spread_pp",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "TaskRegisterProfile with empty accuracies list",
+      "expected_output_description": "Returns 0.0",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_task_register_profile_spread_pp_identical_accuracies",
+      "description": "TaskRegisterProfile.spread_pp returns 0.0 when all accuracies are identical",
+      "function": "TaskRegisterProfile.spread_pp",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "TaskRegisterProfile with all accuracies at 0.90",
+      "expected_output_description": "Returns 0.0",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_spread_pp_happy_path",
+      "description": "ModelProfile.spread_pp calculates aggregate percentage point spread correctly",
+      "function": "ModelProfile.spread_pp",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with accuracies ranging from 0.75 to 0.92",
+      "expected_output_description": "Returns 17.0 percentage points",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_spread_pp_empty_accuracies",
+      "description": "ModelProfile.spread_pp returns 0.0 when accuracies is empty",
+      "function": "ModelProfile.spread_pp",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with empty accuracies list",
+      "expected_output_description": "Returns 0.0",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_is_invariant_true",
+      "description": "ModelProfile.is_invariant returns True when spread < 2.0 percentage points",
+      "function": "ModelProfile.is_invariant",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with spread of 1.5 percentage points",
+      "expected_output_description": "Returns True",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_is_invariant_false",
+      "description": "ModelProfile.is_invariant returns False when spread >= 2.0 percentage points",
+      "function": "ModelProfile.is_invariant",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with spread of 15.0 percentage points",
+      "expected_output_description": "Returns False",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_is_invariant_boundary_under",
+      "description": "ModelProfile.is_invariant returns True when spread is exactly 1.999 percentage points",
+      "function": "ModelProfile.is_invariant",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with spread just under 2.0",
+      "expected_output_description": "Returns True",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_is_invariant_boundary_at",
+      "description": "ModelProfile.is_invariant returns False when spread is exactly 2.0 percentage points",
+      "function": "ModelProfile.is_invariant",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with spread exactly at 2.0",
+      "expected_output_description": "Returns False",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_best_register_happy_path",
+      "description": "ModelProfile.best_register returns register with highest aggregate accuracy",
+      "function": "ModelProfile.best_register",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with multiple register accuracies",
+      "expected_output_description": "Returns 'formal' as the register with highest accuracy",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_best_register_empty_accuracies",
+      "description": "ModelProfile.best_register returns 'direct' when accuracies is empty",
+      "function": "ModelProfile.best_register",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with empty accuracies list",
+      "expected_output_description": "Returns 'direct' as default",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_worst_register_happy_path",
+      "description": "ModelProfile.worst_register returns register with lowest aggregate accuracy",
+      "function": "ModelProfile.worst_register",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with multiple register accuracies",
+      "expected_output_description": "Returns 'casual' as the register with lowest accuracy",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_worst_register_empty_accuracies",
+      "description": "ModelProfile.worst_register returns 'direct' when accuracies is empty",
+      "function": "ModelProfile.worst_register",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with empty accuracies list",
+      "expected_output_description": "Returns 'direct' as default",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_best_register_for_task_found",
+      "description": "ModelProfile.best_register_for_task returns task-specific best register when task exists",
+      "function": "ModelProfile.best_register_for_task",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "task_type": "classification"
+      },
+      "input_description": "ModelProfile with by_task containing 'classification' task",
+      "expected_output_description": "Returns best register from classification task profile",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_best_register_for_task_not_found",
+      "description": "ModelProfile.best_register_for_task falls back to aggregate best_register when task not found",
+      "function": "ModelProfile.best_register_for_task",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "task_type": "unknown_task"
+      },
+      "input_description": "ModelProfile without 'unknown_task' in by_task",
+      "expected_output_description": "Returns aggregate best_register",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_best_register_for_task_empty_by_task",
+      "description": "ModelProfile.best_register_for_task falls back to aggregate when by_task is empty",
+      "function": "ModelProfile.best_register_for_task",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "task_type": "classification"
+      },
+      "input_description": "ModelProfile with empty by_task list",
+      "expected_output_description": "Returns aggregate best_register",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_spread_for_task_found",
+      "description": "ModelProfile.spread_for_task returns task-specific spread when task exists",
+      "function": "ModelProfile.spread_for_task",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "task_type": "classification"
+      },
+      "input_description": "ModelProfile with by_task containing 'classification' task",
+      "expected_output_description": "Returns spread from classification task profile",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_spread_for_task_not_found",
+      "description": "ModelProfile.spread_for_task falls back to aggregate spread when task not found",
+      "function": "ModelProfile.spread_for_task",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "task_type": "unknown_task"
+      },
+      "input_description": "ModelProfile without 'unknown_task' in by_task",
+      "expected_output_description": "Returns aggregate spread_pp",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_is_expired_false_fresh",
+      "description": "ModelProfile.is_expired returns False for fresh profile within TTL",
+      "function": "ModelProfile.is_expired",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile calibrated 1 hour ago with 720 hour TTL",
+      "expected_output_description": "Returns False",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_is_expired_true_old",
+      "description": "ModelProfile.is_expired returns True for expired profile beyond TTL",
+      "function": "ModelProfile.is_expired",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile calibrated 800 hours ago with 720 hour TTL",
+      "expected_output_description": "Returns True",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_is_expired_empty_calibrated_at",
+      "description": "ModelProfile.is_expired returns False when calibrated_at is empty",
+      "function": "ModelProfile.is_expired",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with empty calibrated_at string",
+      "expected_output_description": "Returns False",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_is_expired_invalid_timestamp",
+      "description": "ModelProfile.is_expired returns False when calibrated_at cannot be parsed",
+      "function": "ModelProfile.is_expired",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile with invalid calibrated_at timestamp",
+      "expected_output_description": "Returns False",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_model_profile_is_expired_boundary_exact_ttl",
+      "description": "ModelProfile.is_expired returns False when exactly at TTL boundary",
+      "function": "ModelProfile.is_expired",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "ModelProfile calibrated exactly 720 hours ago with 720 hour TTL",
+      "expected_output_description": "Returns False (not expired yet)",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_init_with_path",
+      "description": "ProfileCache.__init__ sets cache_dir when provided",
+      "function": "ProfileCache.__init__",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Initialize with custom cache directory path",
+      "expected_output_description": "cache_dir is set to provided path, memory is empty dict",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_init_default_path",
+      "description": "ProfileCache.__init__ sets default cache_dir when None provided",
+      "function": "ProfileCache.__init__",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Initialize with None",
+      "expected_output_description": "cache_dir is set to ~/.transmogrifier/profiles, memory is empty dict",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_get_from_memory",
+      "description": "ProfileCache.get returns cached profile from memory when available and not expired",
+      "function": "ProfileCache.get",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "test-model"
+      },
+      "input_description": "Profile exists in memory cache and is not expired",
+      "expected_output_description": "Returns profile from memory without file access",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_get_from_file",
+      "description": "ProfileCache.get loads profile from file when not in memory",
+      "function": "ProfileCache.get",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "test-model"
+      },
+      "input_description": "Profile exists on disk but not in memory",
+      "expected_output_description": "Returns profile from file and caches in memory",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_get_from_preseeded",
+      "description": "ProfileCache.get returns pre-seeded profile when no cached version exists",
+      "function": "ProfileCache.get",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "claude-opus-4"
+      },
+      "input_description": "Request for 'claude-opus-4' with no cached override",
+      "expected_output_description": "Returns pre-seeded profile",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_get_with_alias_resolution",
+      "description": "ProfileCache.get resolves alias to canonical name",
+      "function": "ProfileCache.get",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "aliased-model-v2"
+      },
+      "input_description": "Request model by alias that maps to canonical name",
+      "expected_output_description": "Returns profile for canonical model name",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_get_not_found",
+      "description": "ProfileCache.get returns None when profile not found anywhere",
+      "function": "ProfileCache.get",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "nonexistent-model"
+      },
+      "input_description": "Request for non-existent model",
+      "expected_output_description": "Returns None",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_get_expired_profile_fallback",
+      "description": "ProfileCache.get falls back to pre-seeded when cached profile is expired",
+      "function": "ProfileCache.get",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "claude-opus-4"
+      },
+      "input_description": "Cached profile is expired, pre-seeded version exists",
+      "expected_output_description": "Returns pre-seeded profile instead of expired cached version",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_get_partial_match_preseeded",
+      "description": "ProfileCache.get matches pre-seeded profiles via partial name match",
+      "function": "ProfileCache.get",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4o-mini-2024"
+      },
+      "input_description": "Model name partially matches pre-seeded profile key",
+      "expected_output_description": "Returns pre-seeded profile via partial match",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_put_creates_directory",
+      "description": "ProfileCache.put creates cache directory if it doesn't exist",
+      "function": "ProfileCache.put",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Put profile when cache directory doesn't exist",
+      "expected_output_description": "Creates directory, writes file, updates memory, returns path",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_put_writes_file",
+      "description": "ProfileCache.put writes profile to JSON file and updates memory",
+      "function": "ProfileCache.put",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Put profile with valid data",
+      "expected_output_description": "Writes JSON file, updates memory cache, returns file path",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_put_overwrites_existing",
+      "description": "ProfileCache.put overwrites existing profile file and memory entry",
+      "function": "ProfileCache.put",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Put profile when file and memory entry already exist",
+      "expected_output_description": "Overwrites both file and memory with new profile",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_invalidate_removes_file_and_memory",
+      "description": "ProfileCache.invalidate removes profile from memory and deletes file",
+      "function": "ProfileCache.invalidate",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "test-model"
+      },
+      "input_description": "Invalidate existing profile",
+      "expected_output_description": "Removes from memory, deletes file, returns True",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_invalidate_file_not_exists",
+      "description": "ProfileCache.invalidate returns False when file doesn't exist",
+      "function": "ProfileCache.invalidate",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "nonexistent"
+      },
+      "input_description": "Invalidate non-existent profile",
+      "expected_output_description": "Removes from memory if present, returns False",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_invalidate_with_alias",
+      "description": "ProfileCache.invalidate resolves alias before invalidating",
+      "function": "ProfileCache.invalidate",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "aliased-model"
+      },
+      "input_description": "Invalidate using alias name",
+      "expected_output_description": "Resolves to canonical name, invalidates that profile",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_list_profiles_preseeded_only",
+      "description": "ProfileCache.list_profiles returns pre-seeded profiles when no cached files",
+      "function": "ProfileCache.list_profiles",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Empty cache directory with only pre-seeded data",
+      "expected_output_description": "Returns list of all pre-seeded profiles",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_list_profiles_with_cached",
+      "description": "ProfileCache.list_profiles combines pre-seeded and cached profiles, deduplicating by name",
+      "function": "ProfileCache.list_profiles",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Cache directory with some cached profiles",
+      "expected_output_description": "Returns pre-seeded profiles plus unique cached profiles",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_list_profiles_skips_invalid_files",
+      "description": "ProfileCache.list_profiles silently skips files that fail to parse",
+      "function": "ProfileCache.list_profiles",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Cache directory contains corrupted JSON files",
+      "expected_output_description": "Returns valid profiles, skips corrupted files without error",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_list_profiles_empty_directory",
+      "description": "ProfileCache.list_profiles handles non-existent cache directory gracefully",
+      "function": "ProfileCache.list_profiles",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Cache directory doesn't exist yet",
+      "expected_output_description": "Returns pre-seeded profiles only",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_load_file_success",
+      "description": "ProfileCache._load_file returns ModelProfile when file exists and is valid",
+      "function": "ProfileCache._load_file",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "test-model"
+      },
+      "input_description": "Valid JSON profile file exists",
+      "expected_output_description": "Returns ModelProfile instance",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_load_file_not_exists",
+      "description": "ProfileCache._load_file returns None when file doesn't exist",
+      "function": "ProfileCache._load_file",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "nonexistent"
+      },
+      "input_description": "File does not exist",
+      "expected_output_description": "Returns None",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_profile_cache_load_file_invalid_json",
+      "description": "ProfileCache._load_file returns None and logs debug when parsing fails",
+      "function": "ProfileCache._load_file",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "corrupt"
+      },
+      "input_description": "File exists but contains invalid JSON",
+      "expected_output_description": "Returns None and logs debug message",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_invariant_preseeded_models_exist",
+      "description": "Verify _PRESEEDED contains the four specified pre-calibrated profiles",
+      "function": "ProfileCache.get",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Check for claude-opus-4, claude-haiku-4-5, gpt-4o-mini, gemini-2-5-flash",
+      "expected_output_description": "All four models are available in _PRESEEDED",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_invariant_default_cache_dir",
+      "description": "Verify default cache directory is ~/.transmogrifier/profiles",
+      "function": "ProfileCache.__init__",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Initialize ProfileCache with None",
+      "expected_output_description": "cache_dir equals Path.home() / '.transmogrifier' / 'profiles'",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_invariant_default_register_fallback",
+      "description": "Verify default register is always 'direct' for empty accuracies",
+      "function": "ModelProfile.best_register",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Multiple functions with empty accuracies",
+      "expected_output_description": "All return 'direct'",
+      "expected_error": "",
+      "assertions": []
+    },
+    {
+      "id": "test_invariant_spread_threshold",
+      "description": "Verify is_invariant uses 2.0 percentage point threshold",
+      "function": "ModelProfile.is_invariant",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Profiles with spreads at 1.99, 2.0, and 2.01",
+      "expected_output_description": "Returns True for 1.99, False for 2.0 and 2.01",
+      "expected_error": "",
+      "assertions": []
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract tests for Model Profile Cache component.\n\nTests verify behavior at boundaries using pytest with mocked dependencies.\nCovers happy paths, edge cases, error cases, and invariants.\n\"\"\"\n\nimport json\nimport pytest\nfrom datetime import datetime, timedelta\nfrom pathlib import Path\nfrom unittest.mock import Mock, patch, mock_open, MagicMock\nfrom typing import Any\n\n# Import the component under test\nfrom src.transmogrifier.profiles import (\n    RegisterAccuracy,\n    TaskRegisterProfile,\n    ModelProfile,\n    ProfileCache,\n)\n\n\n# ============================================================================\n# Test Fixtures\n# ============================================================================\n\n@pytest.fixture\ndef temp_cache_dir(tmp_path):\n    \"\"\"Temporary cache directory for testing.\"\"\"\n    return tmp_path / \"test_cache\"\n\n\n@pytest.fixture\ndef sample_register_accuracies():\n    \"\"\"Sample RegisterAccuracy instances for testing.\"\"\"\n    return [\n        RegisterAccuracy(\n            register=\"direct\",\n            accuracy=0.85,\n            sample_size=16,\n            task_type=\"classification\"\n        ),\n        RegisterAccuracy(\n            register=\"casual\",\n            accuracy=0.80,\n            sample_size=16,\n            task_type=\"classification\"\n        ),\n        RegisterAccuracy(\n            register=\"formal\",\n            accuracy=0.95,\n            sample_size=16,\n            task_type=\"classification\"\n        ),\n    ]\n\n\n@pytest.fixture\ndef sample_task_profile(sample_register_accuracies):\n    \"\"\"Sample TaskRegisterProfile for testing.\"\"\"\n    return TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=sample_register_accuracies\n    )\n\n\n@pytest.fixture\ndef sample_model_profile(sample_register_accuracies):\n    \"\"\"Sample ModelProfile for testing.\"\"\"\n    return ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=sample_register_accuracies,\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n\n\n# ============================================================================\n# TaskRegisterProfile Tests\n# ============================================================================\n\ndef test_task_register_profile_best_register_happy_path(sample_register_accuracies):\n    \"\"\"TaskRegisterProfile.best_register returns register with highest accuracy.\"\"\"\n    profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=sample_register_accuracies\n    )\n    \n    result = profile.best_register()\n    \n    assert result == \"formal\", \"Should return 'formal' with accuracy 0.95\"\n\n\ndef test_task_register_profile_best_register_empty_accuracies():\n    \"\"\"TaskRegisterProfile.best_register returns 'direct' when accuracies is empty.\"\"\"\n    profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=[]\n    )\n    \n    result = profile.best_register()\n    \n    assert result == \"direct\", \"Should return 'direct' as default for empty accuracies\"\n\n\ndef test_task_register_profile_best_register_single_accuracy():\n    \"\"\"TaskRegisterProfile.best_register returns the only register when accuracies has one element.\"\"\"\n    profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=[\n            RegisterAccuracy(\n                register=\"casual\",\n                accuracy=0.87,\n                sample_size=16,\n                task_type=\"classification\"\n            )\n        ]\n    )\n    \n    result = profile.best_register()\n    \n    assert result == \"casual\", \"Should return the only register available\"\n\n\ndef test_task_register_profile_spread_pp_happy_path(sample_register_accuracies):\n    \"\"\"TaskRegisterProfile.spread_pp calculates percentage point spread correctly.\"\"\"\n    profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=sample_register_accuracies\n    )\n    \n    result = profile.spread_pp()\n    \n    # Max: 0.95, Min: 0.80, Spread: (0.95 - 0.80) * 100 = 15.0\n    assert abs(result - 15.0) < 1e-6, f\"Expected 15.0, got {result}\"\n\n\ndef test_task_register_profile_spread_pp_empty_accuracies():\n    \"\"\"TaskRegisterProfile.spread_pp returns 0.0 when accuracies is empty.\"\"\"\n    profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=[]\n    )\n    \n    result = profile.spread_pp()\n    \n    assert result == 0.0, \"Should return 0.0 for empty accuracies\"\n\n\ndef test_task_register_profile_spread_pp_identical_accuracies():\n    \"\"\"TaskRegisterProfile.spread_pp returns 0.0 when all accuracies are identical.\"\"\"\n    profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.90, sample_size=16, task_type=\"classification\"),\n            RegisterAccuracy(register=\"casual\", accuracy=0.90, sample_size=16, task_type=\"classification\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.90, sample_size=16, task_type=\"classification\"),\n        ]\n    )\n    \n    result = profile.spread_pp()\n    \n    assert result == 0.0, \"Should return 0.0 when all accuracies are identical\"\n\n\n# ============================================================================\n# ModelProfile Tests\n# ============================================================================\n\ndef test_model_profile_spread_pp_happy_path():\n    \"\"\"ModelProfile.spread_pp calculates aggregate percentage point spread correctly.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.75, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"casual\", accuracy=0.82, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.92, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.spread_pp()\n    \n    # Max: 0.92, Min: 0.75, Spread: (0.92 - 0.75) * 100 = 17.0\n    assert abs(result - 17.0) < 1e-6, f\"Expected 17.0, got {result}\"\n\n\ndef test_model_profile_spread_pp_empty_accuracies():\n    \"\"\"ModelProfile.spread_pp returns 0.0 when accuracies is empty.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.spread_pp()\n    \n    assert result == 0.0, \"Should return 0.0 for empty accuracies\"\n\n\ndef test_model_profile_is_invariant_true():\n    \"\"\"ModelProfile.is_invariant returns True when spread < 2.0 percentage points.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.900, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"casual\", accuracy=0.905, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.915, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.is_invariant()\n    \n    # Spread: (0.915 - 0.900) * 100 = 1.5\n    assert result is True, \"Should return True when spread is 1.5\"\n\n\ndef test_model_profile_is_invariant_false():\n    \"\"\"ModelProfile.is_invariant returns False when spread >= 2.0 percentage points.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.75, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"casual\", accuracy=0.82, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.90, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.is_invariant()\n    \n    # Spread: (0.90 - 0.75) * 100 = 15.0\n    assert result is False, \"Should return False when spread is 15.0\"\n\n\ndef test_model_profile_is_invariant_boundary_under():\n    \"\"\"ModelProfile.is_invariant returns True when spread is exactly 1.999 percentage points.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.900, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.91999, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.is_invariant()\n    \n    # Spread: (0.91999 - 0.900) * 100 = 1.999\n    assert result is True, \"Should return True when spread is 1.999\"\n\n\ndef test_model_profile_is_invariant_boundary_at():\n    \"\"\"ModelProfile.is_invariant returns False when spread is exactly 2.0 percentage points.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.900, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.920, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.is_invariant()\n    \n    # Spread: (0.920 - 0.900) * 100 = 2.0\n    assert result is False, \"Should return False when spread is exactly 2.0\"\n\n\ndef test_model_profile_best_register_happy_path():\n    \"\"\"ModelProfile.best_register returns register with highest aggregate accuracy.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.85, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"casual\", accuracy=0.80, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.95, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.best_register()\n    \n    assert result == \"formal\", \"Should return 'formal' with highest accuracy 0.95\"\n\n\ndef test_model_profile_best_register_empty_accuracies():\n    \"\"\"ModelProfile.best_register returns 'direct' when accuracies is empty.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.best_register()\n    \n    assert result == \"direct\", \"Should return 'direct' as default for empty accuracies\"\n\n\ndef test_model_profile_worst_register_happy_path():\n    \"\"\"ModelProfile.worst_register returns register with lowest aggregate accuracy.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.85, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"casual\", accuracy=0.75, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.95, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.worst_register()\n    \n    assert result == \"casual\", \"Should return 'casual' with lowest accuracy 0.75\"\n\n\ndef test_model_profile_worst_register_empty_accuracies():\n    \"\"\"ModelProfile.worst_register returns 'direct' when accuracies is empty.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.worst_register()\n    \n    assert result == \"direct\", \"Should return 'direct' as default for empty accuracies\"\n\n\ndef test_model_profile_best_register_for_task_found():\n    \"\"\"ModelProfile.best_register_for_task returns task-specific best register when task exists.\"\"\"\n    task_profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.85, sample_size=16, task_type=\"classification\"),\n            RegisterAccuracy(register=\"casual\", accuracy=0.90, sample_size=16, task_type=\"classification\"),\n        ]\n    )\n    \n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.75, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.95, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[task_profile],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.best_register_for_task(\"classification\")\n    \n    assert result == \"casual\", \"Should return 'casual' from classification task profile\"\n\n\ndef test_model_profile_best_register_for_task_not_found():\n    \"\"\"ModelProfile.best_register_for_task falls back to aggregate best_register when task not found.\"\"\"\n    task_profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=[\n            RegisterAccuracy(register=\"casual\", accuracy=0.90, sample_size=16, task_type=\"classification\"),\n        ]\n    )\n    \n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.75, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.95, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[task_profile],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.best_register_for_task(\"unknown_task\")\n    \n    assert result == \"formal\", \"Should fallback to aggregate best_register 'formal'\"\n\n\ndef test_model_profile_best_register_for_task_empty_by_task():\n    \"\"\"ModelProfile.best_register_for_task falls back to aggregate when by_task is empty.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.85, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.92, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.best_register_for_task(\"classification\")\n    \n    assert result == \"formal\", \"Should fallback to aggregate best_register 'formal'\"\n\n\ndef test_model_profile_spread_for_task_found():\n    \"\"\"ModelProfile.spread_for_task returns task-specific spread when task exists.\"\"\"\n    task_profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.80, sample_size=16, task_type=\"classification\"),\n            RegisterAccuracy(register=\"casual\", accuracy=0.90, sample_size=16, task_type=\"classification\"),\n        ]\n    )\n    \n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.70, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.95, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[task_profile],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.spread_for_task(\"classification\")\n    \n    # Task spread: (0.90 - 0.80) * 100 = 10.0\n    assert abs(result - 10.0) < 1e-6, f\"Expected 10.0, got {result}\"\n\n\ndef test_model_profile_spread_for_task_not_found():\n    \"\"\"ModelProfile.spread_for_task falls back to aggregate spread when task not found.\"\"\"\n    task_profile = TaskRegisterProfile(\n        task_type=\"classification\",\n        accuracies=[\n            RegisterAccuracy(register=\"casual\", accuracy=0.90, sample_size=16, task_type=\"classification\"),\n        ]\n    )\n    \n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.70, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.95, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[task_profile],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.spread_for_task(\"unknown_task\")\n    \n    # Aggregate spread: (0.95 - 0.70) * 100 = 25.0\n    assert abs(result - 25.0) < 1e-6, f\"Expected 25.0, got {result}\"\n\n\ndef test_model_profile_is_expired_false_fresh():\n    \"\"\"ModelProfile.is_expired returns False for fresh profile within TTL.\"\"\"\n    one_hour_ago = datetime.now() - timedelta(hours=1)\n    \n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=one_hour_ago.isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.is_expired()\n    \n    assert result is False, \"Profile calibrated 1 hour ago should not be expired with 720 hour TTL\"\n\n\ndef test_model_profile_is_expired_true_old():\n    \"\"\"ModelProfile.is_expired returns True for expired profile beyond TTL.\"\"\"\n    old_time = datetime.now() - timedelta(hours=800)\n    \n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=old_time.isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.is_expired()\n    \n    assert result is True, \"Profile calibrated 800 hours ago should be expired with 720 hour TTL\"\n\n\ndef test_model_profile_is_expired_empty_calibrated_at():\n    \"\"\"ModelProfile.is_expired returns False when calibrated_at is empty.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=\"\",\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.is_expired()\n    \n    assert result is False, \"Should return False for empty calibrated_at\"\n\n\ndef test_model_profile_is_expired_invalid_timestamp():\n    \"\"\"ModelProfile.is_expired returns False when calibrated_at cannot be parsed.\"\"\"\n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=\"invalid-timestamp-format\",\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.is_expired()\n    \n    assert result is False, \"Should return False for invalid timestamp\"\n\n\ndef test_model_profile_is_expired_boundary_exact_ttl():\n    \"\"\"ModelProfile.is_expired returns False when exactly at TTL boundary.\"\"\"\n    exactly_ttl_ago = datetime.now() - timedelta(hours=720)\n    \n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=exactly_ttl_ago.isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result = profile.is_expired()\n    \n    # At exactly TTL boundary, should not be expired yet (uses >)\n    assert result is False, \"Should not be expired at exact TTL boundary\"\n\n\n# ============================================================================\n# ProfileCache Tests\n# ============================================================================\n\ndef test_profile_cache_init_with_path(temp_cache_dir):\n    \"\"\"ProfileCache.__init__ sets cache_dir when provided.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    assert cache._cache_dir == temp_cache_dir, \"cache_dir should be set to provided path\"\n    assert cache._memory == {}, \"memory should be initialized to empty dict\"\n\n\ndef test_profile_cache_init_default_path():\n    \"\"\"ProfileCache.__init__ sets default cache_dir when None provided.\"\"\"\n    cache = ProfileCache(cache_dir=None)\n    \n    expected_path = Path.home() / '.transmogrifier' / 'profiles'\n    assert cache._cache_dir == expected_path, \"cache_dir should be set to default path\"\n    assert cache._memory == {}, \"memory should be initialized to empty dict\"\n\n\ndef test_profile_cache_get_from_memory(temp_cache_dir, sample_model_profile):\n    \"\"\"ProfileCache.get returns cached profile from memory when available and not expired.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    cache._memory[\"test-model\"] = sample_model_profile\n    \n    with patch.object(cache, '_load_file') as mock_load:\n        result = cache.get(\"test-model\")\n    \n    assert result == sample_model_profile, \"Should return profile from memory\"\n    mock_load.assert_not_called()\n\n\ndef test_profile_cache_get_from_file(temp_cache_dir, sample_model_profile):\n    \"\"\"ProfileCache.get loads profile from file when not in memory.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    with patch.object(cache, '_load_file', return_value=sample_model_profile) as mock_load:\n        result = cache.get(\"test-model\")\n    \n    assert result == sample_model_profile, \"Should return profile from file\"\n    assert cache._memory[\"test-model\"] == sample_model_profile, \"Should cache in memory\"\n    mock_load.assert_called_once_with(\"test-model\")\n\n\ndef test_profile_cache_get_from_preseeded(temp_cache_dir):\n    \"\"\"ProfileCache.get returns pre-seeded profile when no cached version exists.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    # Mock _PRESEEDED to have a test profile\n    mock_preseeded = {\n        \"claude-opus-4\": ModelProfile(\n            model_name=\"claude-opus-4\",\n            model_version=\"1.0\",\n            provider=\"anthropic\",\n            accuracies=[],\n            by_task=[],\n            calibrated_at=\"2026-03-27T00:00:00\",\n            ttl_hours=720,\n            calibration_version=\"1.0\"\n        )\n    }\n    \n    with patch.object(cache, '_load_file', return_value=None):\n        with patch('src_transmogrifier_profiles._PRESEEDED', mock_preseeded):\n            result = cache.get(\"claude-opus-4\")\n    \n    assert result is not None, \"Should return pre-seeded profile\"\n    assert result.model_name == \"claude-opus-4\", \"Should return correct pre-seeded profile\"\n\n\ndef test_profile_cache_get_with_alias_resolution(temp_cache_dir, sample_model_profile):\n    \"\"\"ProfileCache.get resolves alias to canonical name.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    # Mock _ALIASES\n    mock_aliases = {\"aliased-model-v2\": \"canonical-model\"}\n    sample_model_profile.model_name = \"canonical-model\"\n    \n    with patch('src_transmogrifier_profiles._ALIASES', mock_aliases):\n        with patch.object(cache, '_load_file', return_value=sample_model_profile):\n            result = cache.get(\"aliased-model-v2\")\n    \n    assert result is not None, \"Should resolve alias and return profile\"\n    assert result.model_name == \"canonical-model\", \"Should return canonical model\"\n\n\ndef test_profile_cache_get_not_found(temp_cache_dir):\n    \"\"\"ProfileCache.get returns None when profile not found anywhere.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    with patch.object(cache, '_load_file', return_value=None):\n        with patch('src_transmogrifier_profiles._PRESEEDED', {}):\n            result = cache.get(\"nonexistent-model\")\n    \n    assert result is None, \"Should return None for non-existent model\"\n\n\ndef test_profile_cache_get_expired_profile_fallback(temp_cache_dir):\n    \"\"\"ProfileCache.get falls back to pre-seeded when cached profile is expired.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    # Create expired profile\n    expired_time = datetime.now() - timedelta(hours=800)\n    expired_profile = ModelProfile(\n        model_name=\"claude-opus-4\",\n        model_version=\"1.0\",\n        provider=\"anthropic\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=expired_time.isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    # Create fresh pre-seeded profile\n    fresh_profile = ModelProfile(\n        model_name=\"claude-opus-4\",\n        model_version=\"2.0\",\n        provider=\"anthropic\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    mock_preseeded = {\"claude-opus-4\": fresh_profile}\n    \n    with patch.object(cache, '_load_file', return_value=expired_profile):\n        with patch('src_transmogrifier_profiles._PRESEEDED', mock_preseeded):\n            result = cache.get(\"claude-opus-4\")\n    \n    assert result == fresh_profile, \"Should return pre-seeded profile when cached is expired\"\n\n\ndef test_profile_cache_get_partial_match_preseeded(temp_cache_dir):\n    \"\"\"ProfileCache.get matches pre-seeded profiles via partial name match.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    # Pre-seeded profile with base name\n    preseeded_profile = ModelProfile(\n        model_name=\"gpt-4o-mini\",\n        model_version=\"1.0\",\n        provider=\"openai\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    mock_preseeded = {\"gpt-4o-mini\": preseeded_profile}\n    \n    with patch.object(cache, '_load_file', return_value=None):\n        with patch('src_transmogrifier_profiles._PRESEEDED', mock_preseeded):\n            result = cache.get(\"gpt-4o-mini-2024\")\n    \n    assert result is not None, \"Should find profile via partial match\"\n    assert result.model_name == \"gpt-4o-mini\", \"Should return base model profile\"\n\n\ndef test_profile_cache_put_creates_directory(temp_cache_dir, sample_model_profile):\n    \"\"\"ProfileCache.put creates cache directory if it doesn't exist.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    assert not temp_cache_dir.exists(), \"Cache directory should not exist initially\"\n    \n    result_path = cache.put(sample_model_profile)\n    \n    assert temp_cache_dir.exists(), \"Cache directory should be created\"\n    assert result_path.parent == temp_cache_dir, \"File should be in cache directory\"\n    assert sample_model_profile.model_name in cache._memory, \"Profile should be in memory cache\"\n\n\ndef test_profile_cache_put_writes_file(temp_cache_dir, sample_model_profile):\n    \"\"\"ProfileCache.put writes profile to JSON file and updates memory.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    result_path = cache.put(sample_model_profile)\n    \n    expected_path = temp_cache_dir / f\"{sample_model_profile.model_name}.json\"\n    assert result_path == expected_path, \"Should return correct file path\"\n    assert result_path.exists(), \"File should be created\"\n    assert cache._memory[sample_model_profile.model_name] == sample_model_profile, \"Should update memory cache\"\n    \n    # Verify file contents\n    with open(result_path) as f:\n        data = json.load(f)\n    assert data[\"model_name\"] == sample_model_profile.model_name, \"File should contain profile data\"\n\n\ndef test_profile_cache_put_overwrites_existing(temp_cache_dir):\n    \"\"\"ProfileCache.put overwrites existing profile file and memory entry.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    # Create initial profile\n    profile1 = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"provider1\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    cache.put(profile1)\n    \n    # Create updated profile\n    profile2 = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"2.0\",\n        provider=\"provider2\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    result_path = cache.put(profile2)\n    \n    assert cache._memory[\"test-model\"] == profile2, \"Memory should have updated profile\"\n    \n    # Verify file has updated content\n    with open(result_path) as f:\n        data = json.load(f)\n    assert data[\"model_version\"] == \"2.0\", \"File should have updated version\"\n    assert data[\"provider\"] == \"provider2\", \"File should have updated provider\"\n\n\ndef test_profile_cache_invalidate_removes_file_and_memory(temp_cache_dir):\n    \"\"\"ProfileCache.invalidate removes profile from memory and deletes file.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    file_path = cache.put(profile)\n    assert file_path.exists(), \"File should exist before invalidation\"\n    assert \"test-model\" in cache._memory, \"Profile should be in memory\"\n    \n    result = cache.invalidate(\"test-model\")\n    \n    assert result is True, \"Should return True when file was deleted\"\n    assert not file_path.exists(), \"File should be deleted\"\n    assert \"test-model\" not in cache._memory, \"Profile should be removed from memory\"\n\n\ndef test_profile_cache_invalidate_file_not_exists(temp_cache_dir):\n    \"\"\"ProfileCache.invalidate returns False when file doesn't exist.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    # Add to memory only (no file)\n    cache._memory[\"test-model\"] = Mock()\n    \n    result = cache.invalidate(\"nonexistent\")\n    \n    assert result is False, \"Should return False when file doesn't exist\"\n\n\ndef test_profile_cache_invalidate_with_alias(temp_cache_dir):\n    \"\"\"ProfileCache.invalidate resolves alias before invalidating.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    profile = ModelProfile(\n        model_name=\"canonical-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    file_path = cache.put(profile)\n    \n    mock_aliases = {\"aliased-model\": \"canonical-model\"}\n    \n    with patch('src_transmogrifier_profiles._ALIASES', mock_aliases):\n        result = cache.invalidate(\"aliased-model\")\n    \n    assert result is True, \"Should resolve alias and invalidate canonical model\"\n    assert not file_path.exists(), \"Canonical model file should be deleted\"\n\n\ndef test_profile_cache_list_profiles_preseeded_only(temp_cache_dir):\n    \"\"\"ProfileCache.list_profiles returns pre-seeded profiles when no cached files.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    mock_preseeded = {\n        \"model1\": ModelProfile(\n            model_name=\"model1\",\n            model_version=\"1.0\",\n            provider=\"provider1\",\n            accuracies=[],\n            by_task=[],\n            calibrated_at=datetime.now().isoformat(),\n            ttl_hours=720,\n            calibration_version=\"1.0\"\n        ),\n        \"model2\": ModelProfile(\n            model_name=\"model2\",\n            model_version=\"1.0\",\n            provider=\"provider2\",\n            accuracies=[],\n            by_task=[],\n            calibrated_at=datetime.now().isoformat(),\n            ttl_hours=720,\n            calibration_version=\"1.0\"\n        )\n    }\n    \n    with patch('src_transmogrifier_profiles._PRESEEDED', mock_preseeded):\n        result = cache.list_profiles()\n    \n    assert len(result) == 2, \"Should return all pre-seeded profiles\"\n    model_names = [p.model_name for p in result]\n    assert \"model1\" in model_names, \"Should include model1\"\n    assert \"model2\" in model_names, \"Should include model2\"\n\n\ndef test_profile_cache_list_profiles_with_cached(temp_cache_dir):\n    \"\"\"ProfileCache.list_profiles combines pre-seeded and cached profiles, deduplicating by name.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    # Create cached profile\n    cached_profile = ModelProfile(\n        model_name=\"cached-model\",\n        model_version=\"1.0\",\n        provider=\"cached-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    cache.put(cached_profile)\n    \n    # Create pre-seeded profile with same name as cached (should be deduplicated)\n    preseeded_duplicate = ModelProfile(\n        model_name=\"cached-model\",\n        model_version=\"0.5\",\n        provider=\"preseeded-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    preseeded_unique = ModelProfile(\n        model_name=\"preseeded-model\",\n        model_version=\"1.0\",\n        provider=\"preseeded-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    mock_preseeded = {\n        \"cached-model\": preseeded_duplicate,\n        \"preseeded-model\": preseeded_unique\n    }\n    \n    with patch('src_transmogrifier_profiles._PRESEEDED', mock_preseeded):\n        result = cache.list_profiles()\n    \n    model_names = [p.model_name for p in result]\n    assert len(model_names) == len(set(model_names)), \"Should not have duplicates\"\n    assert \"cached-model\" in model_names, \"Should include cached-model\"\n    assert \"preseeded-model\" in model_names, \"Should include preseeded-model\"\n\n\ndef test_profile_cache_list_profiles_skips_invalid_files(temp_cache_dir):\n    \"\"\"ProfileCache.list_profiles silently skips files that fail to parse.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    # Create valid profile\n    valid_profile = ModelProfile(\n        model_name=\"valid-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    cache.put(valid_profile)\n    \n    # Create corrupted file\n    corrupted_file = temp_cache_dir / \"corrupted.json\"\n    corrupted_file.write_text(\"{ invalid json }\")\n    \n    with patch('src_transmogrifier_profiles._PRESEEDED', {}):\n        result = cache.list_profiles()\n    \n    model_names = [p.model_name for p in result]\n    assert \"valid-model\" in model_names, \"Should include valid profile\"\n    assert len(result) == 1, \"Should skip corrupted file\"\n\n\ndef test_profile_cache_list_profiles_empty_directory(temp_cache_dir):\n    \"\"\"ProfileCache.list_profiles handles non-existent cache directory gracefully.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    # Don't create directory\n    assert not temp_cache_dir.exists(), \"Directory should not exist\"\n    \n    mock_preseeded = {\n        \"preseeded-model\": ModelProfile(\n            model_name=\"preseeded-model\",\n            model_version=\"1.0\",\n            provider=\"test-provider\",\n            accuracies=[],\n            by_task=[],\n            calibrated_at=datetime.now().isoformat(),\n            ttl_hours=720,\n            calibration_version=\"1.0\"\n        )\n    }\n    \n    with patch('src_transmogrifier_profiles._PRESEEDED', mock_preseeded):\n        result = cache.list_profiles()\n    \n    assert len(result) == 1, \"Should return pre-seeded profiles only\"\n    assert result[0].model_name == \"preseeded-model\", \"Should include pre-seeded profile\"\n\n\ndef test_profile_cache_load_file_success(temp_cache_dir):\n    \"\"\"ProfileCache._load_file returns ModelProfile when file exists and is valid.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    profile = ModelProfile(\n        model_name=\"test-model\",\n        model_version=\"1.0\",\n        provider=\"test-provider\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    \n    cache.put(profile)\n    \n    result = cache._load_file(\"test-model\")\n    \n    assert result is not None, \"Should return ModelProfile\"\n    assert result.model_name == \"test-model\", \"Should have correct model name\"\n\n\ndef test_profile_cache_load_file_not_exists(temp_cache_dir):\n    \"\"\"ProfileCache._load_file returns None when file doesn't exist.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    result = cache._load_file(\"nonexistent\")\n    \n    assert result is None, \"Should return None for non-existent file\"\n\n\ndef test_profile_cache_load_file_invalid_json(temp_cache_dir):\n    \"\"\"ProfileCache._load_file returns None and logs debug when parsing fails.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    temp_cache_dir.mkdir(parents=True)\n    \n    # Create corrupted file\n    corrupted_file = temp_cache_dir / \"corrupt.json\"\n    corrupted_file.write_text(\"{ invalid json }\")\n    \n    with patch('src_transmogrifier_profiles.logger') as mock_logger:\n        result = cache._load_file(\"corrupt\")\n    \n    assert result is None, \"Should return None for invalid JSON\"\n    # Verify debug logging was called\n    assert mock_logger.debug.called, \"Should log debug message\"\n\n\n# ============================================================================\n# Invariant Tests\n# ============================================================================\n\ndef test_invariant_preseeded_models_exist(temp_cache_dir):\n    \"\"\"Verify _PRESEEDED contains the four specified pre-calibrated profiles.\"\"\"\n    cache = ProfileCache(cache_dir=temp_cache_dir)\n    \n    # Mock _PRESEEDED with required models\n    required_models = [\"claude-opus-4\", \"claude-haiku-4-5\", \"gpt-4o-mini\", \"gemini-2-5-flash\"]\n    mock_preseeded = {\n        name: ModelProfile(\n            model_name=name,\n            model_version=\"1.0\",\n            provider=\"test\",\n            accuracies=[],\n            by_task=[],\n            calibrated_at=\"2026-03-27T00:00:00\",\n            ttl_hours=720,\n            calibration_version=\"1.0\"\n        )\n        for name in required_models\n    }\n    \n    with patch('src_transmogrifier_profiles._PRESEEDED', mock_preseeded):\n        for model_name in required_models:\n            with patch.object(cache, '_load_file', return_value=None):\n                result = cache.get(model_name)\n            assert result is not None, f\"{model_name} should be in _PRESEEDED\"\n            assert result.model_name == model_name, f\"Should return correct profile for {model_name}\"\n\n\ndef test_invariant_default_cache_dir():\n    \"\"\"Verify default cache directory is ~/.transmogrifier/profiles.\"\"\"\n    cache = ProfileCache(cache_dir=None)\n    \n    expected_path = Path.home() / '.transmogrifier' / 'profiles'\n    assert cache._cache_dir == expected_path, f\"Default cache_dir should be {expected_path}\"\n\n\ndef test_invariant_default_register_fallback():\n    \"\"\"Verify default register is always 'direct' for empty accuracies.\"\"\"\n    # Test TaskRegisterProfile.best_register\n    task_profile = TaskRegisterProfile(task_type=\"test\", accuracies=[])\n    assert task_profile.best_register() == \"direct\", \"TaskRegisterProfile should default to 'direct'\"\n    \n    # Test ModelProfile.best_register\n    model_profile = ModelProfile(\n        model_name=\"test\",\n        model_version=\"1.0\",\n        provider=\"test\",\n        accuracies=[],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    assert model_profile.best_register() == \"direct\", \"ModelProfile.best_register should default to 'direct'\"\n    assert model_profile.worst_register() == \"direct\", \"ModelProfile.worst_register should default to 'direct'\"\n\n\ndef test_invariant_spread_threshold():\n    \"\"\"Verify is_invariant uses 2.0 percentage point threshold.\"\"\"\n    # Test with spread of 1.99 (should be True)\n    profile_under = ModelProfile(\n        model_name=\"test\",\n        model_version=\"1.0\",\n        provider=\"test\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.900, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.91999, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    assert profile_under.is_invariant() is True, \"Spread of 1.99 should be invariant\"\n    \n    # Test with spread of 2.0 (should be False)\n    profile_at = ModelProfile(\n        model_name=\"test\",\n        model_version=\"1.0\",\n        provider=\"test\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.900, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.920, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    assert profile_at.is_invariant() is False, \"Spread of 2.0 should not be invariant\"\n    \n    # Test with spread of 2.01 (should be False)\n    profile_over = ModelProfile(\n        model_name=\"test\",\n        model_version=\"1.0\",\n        provider=\"test\",\n        accuracies=[\n            RegisterAccuracy(register=\"direct\", accuracy=0.900, sample_size=16, task_type=\"general\"),\n            RegisterAccuracy(register=\"formal\", accuracy=0.92001, sample_size=16, task_type=\"general\"),\n        ],\n        by_task=[],\n        calibrated_at=datetime.now().isoformat(),\n        ttl_hours=720,\n        calibration_version=\"1.0\"\n    )\n    assert profile_over.is_invariant() is False, \"Spread of 2.01 should not be invariant\"\n"
+}

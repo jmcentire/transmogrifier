@@ -1,0 +1,115 @@
+{
+  "component_id": "contracts_src_transmogrifier_task_classifier_interface",
+  "name": "Task Classifier Interface",
+  "description": "Heuristic-based task type classifier that categorizes text prompts into task types (factual, reasoning, code, analysis, creative, instruction, unknown) using weighted regex pattern matching. Designed for sub-millisecond performance with no API calls.",
+  "version": 1,
+  "types": [
+    {
+      "name": "TaskType",
+      "kind": "enum",
+      "fields": [],
+      "item_type": "",
+      "variants": [
+        "factual",
+        "reasoning",
+        "code",
+        "analysis",
+        "creative",
+        "instruction",
+        "unknown"
+      ],
+      "inner_types": [],
+      "description": "Enumeration of task types for prompt classification",
+      "owner_component": ""
+    },
+    {
+      "name": "TaskClassifier",
+      "kind": "struct",
+      "fields": [],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Classifier that categorizes prompts into task types via heuristics",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "classify",
+      "description": "Classifies input text into a task type using weighted regex pattern matching across predefined marker sets. Returns the task type with highest score and a confidence value (0-1) based on score separation.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "TaskClassifier",
+          "required": true,
+          "default": "",
+          "description": "The classifier instance",
+          "validators": []
+        },
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Input text to classify",
+          "validators": []
+        }
+      ],
+      "output_type": "tuple[TaskType, float]",
+      "error_cases": [],
+      "preconditions": [
+        "Input text may be empty or whitespace-only (handled gracefully)"
+      ],
+      "postconditions": [
+        "Returns tuple of (TaskType, confidence) where confidence is in range [0.0, 1.0]",
+        "Empty or whitespace-only input returns (TaskType.unknown, 0.0)",
+        "If no patterns match (score == 0), returns (TaskType.unknown, 0.5)",
+        "Confidence is rounded to 3 decimal places",
+        "Confidence is computed as min((best_score - second_score) / total + 0.5, 1.0)"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [],
+      "performance_budget": {
+        "p95_latency_ms": 1,
+        "max_memory_mb": null,
+        "complexity": "O(n*m)"
+      }
+    }
+  ],
+  "dependencies": [
+    "enum",
+    "re"
+  ],
+  "dependency_contracts": {},
+  "invariants": [
+    "_FACTUAL_MARKERS contains weighted regex patterns for factual questions",
+    "_REASONING_MARKERS contains weighted regex patterns for reasoning tasks",
+    "_CODE_MARKERS contains weighted regex patterns for code-related tasks",
+    "_ANALYSIS_MARKERS contains weighted regex patterns for analytical tasks",
+    "_CREATIVE_MARKERS contains weighted regex patterns for creative tasks",
+    "_INSTRUCTION_MARKERS contains weighted regex patterns for instructional content",
+    "_ALL_MARKERS is immutable list of (TaskType, markers) tuples excluding 'unknown' type",
+    "Pattern weights are positive floats reflecting importance of matches",
+    "All regex patterns are case-insensitive when applied"
+  ],
+  "requires": [
+    "TaskType",
+    "TaskClassifier",
+    "classify"
+  ],
+  "processing_register": "",
+  "data_access": {
+    "reads": [],
+    "writes": [],
+    "rationale": "Pure computation module with no data persistence",
+    "side_effects": []
+  },
+  "authority": {
+    "domains": [
+      "task_classification"
+    ],
+    "rationale": "Owns the heuristic logic for categorizing text prompts into task types"
+  }
+}

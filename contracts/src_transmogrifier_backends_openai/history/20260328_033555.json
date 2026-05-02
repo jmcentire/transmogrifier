@@ -1,0 +1,291 @@
+{
+  "component_id": "src_transmogrifier_backends_openai",
+  "name": "OpenAI Backend",
+  "description": "OpenAI backend for Level 3 translation and calibration. Provides a wrapper around the OpenAI API for chat completions with lazy client initialization and environment-based configuration.",
+  "version": 1,
+  "types": [
+    {
+      "name": "OpenAIBackend",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "_api_key",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "OpenAI API key (may be empty string)",
+          "validators": []
+        },
+        {
+          "name": "_model",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "OpenAI model identifier",
+          "validators": []
+        },
+        {
+          "name": "_client",
+          "type_ref": "openai.OpenAI | None",
+          "required": true,
+          "default": "",
+          "description": "Lazily-initialized OpenAI client instance",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Backend implementation for OpenAI chat completions API with lazy client initialization.",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "__init__",
+      "description": "Initialize the OpenAI backend with optional API key and model. Falls back to environment variables OPENAI_API_KEY and TRANSMOG_MODEL, with gpt-4o-mini as the default model.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "OpenAIBackend",
+          "required": true,
+          "default": "",
+          "description": "The instance being initialized",
+          "validators": []
+        },
+        {
+          "name": "api_key",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "OpenAI API key. If None, reads from OPENAI_API_KEY environment variable.",
+          "validators": []
+        },
+        {
+          "name": "model",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "OpenAI model identifier. If None, reads from TRANSMOG_MODEL environment variable or defaults to gpt-4o-mini.",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "self._api_key is set to provided api_key or OPENAI_API_KEY environment variable or empty string",
+        "self._model is set to provided model or TRANSMOG_MODEL environment variable or 'gpt-4o-mini'",
+        "self._client is set to None (lazy initialization)"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Reads environment variables OPENAI_API_KEY and TRANSMOG_MODEL"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "environment variables OPENAI_API_KEY, TRANSMOG_MODEL",
+          "description": "Reads from os.environ"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "_ensure_client",
+      "description": "Lazily initialize the OpenAI client if not already created. Imports openai module and creates client with stored API key.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "OpenAIBackend",
+          "required": true,
+          "default": "",
+          "description": "The instance",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [
+        {
+          "name": "import_error",
+          "condition": "openai module is not installed",
+          "error_type": "ImportError",
+          "error_data": {}
+        },
+        {
+          "name": "authentication_error",
+          "condition": "Invalid API key provided to openai.OpenAI constructor",
+          "error_type": "openai.AuthenticationError",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "self._client is an instance of openai.OpenAI if it was None",
+        "self._client remains unchanged if already initialized"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Imports openai module dynamically",
+        "Creates OpenAI client instance"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "self._client",
+          "description": "Sets _client to openai.OpenAI instance"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "complete",
+      "description": "Generate a chat completion using the OpenAI API. Prepends system message if provided, then sends all messages to the configured model with temperature=0 for deterministic output.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "OpenAIBackend",
+          "required": true,
+          "default": "",
+          "description": "The instance",
+          "validators": []
+        },
+        {
+          "name": "system",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "System message content. If empty/falsy, no system message is added.",
+          "validators": []
+        },
+        {
+          "name": "messages",
+          "type_ref": "list[dict]",
+          "required": true,
+          "default": "",
+          "description": "List of message dictionaries with 'role' and 'content' keys",
+          "validators": []
+        },
+        {
+          "name": "max_tokens",
+          "type_ref": "int",
+          "required": false,
+          "default": "1024",
+          "description": "Maximum tokens in the completion response",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [
+        {
+          "name": "authentication_error",
+          "condition": "Invalid API key",
+          "error_type": "openai.AuthenticationError",
+          "error_data": {}
+        },
+        {
+          "name": "api_error",
+          "condition": "OpenAI API returns an error (rate limit, invalid model, etc.)",
+          "error_type": "openai.APIError",
+          "error_data": {}
+        },
+        {
+          "name": "index_error",
+          "condition": "response.choices is empty",
+          "error_type": "IndexError",
+          "error_data": {}
+        },
+        {
+          "name": "attribute_error",
+          "condition": "response.choices[0].message.content is None or missing",
+          "error_type": "AttributeError",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [
+        "messages must be a list of dicts compatible with OpenAI chat API format"
+      ],
+      "postconditions": [
+        "Returns the content of the first choice from the API response",
+        "self._client is initialized after call completes"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Calls _ensure_client which may import openai and create client",
+        "Makes HTTP request to OpenAI API"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "self._client",
+          "description": "May initialize client via _ensure_client"
+        },
+        {
+          "kind": "network_call",
+          "target": "OpenAI chat completions API",
+          "description": "HTTP POST to OpenAI API endpoint"
+        }
+      ],
+      "performance_budget": {
+        "p95_latency_ms": null,
+        "max_memory_mb": null,
+        "complexity": "O(n) where n is total message content length"
+      }
+    }
+  ],
+  "dependencies": [
+    "os",
+    "openai"
+  ],
+  "dependency_contracts": {
+    "openai": [
+      "OpenAI",
+      "AuthenticationError",
+      "APIError"
+    ],
+    "os": [
+      "environ.get"
+    ]
+  },
+  "invariants": [
+    "Default model is 'gpt-4o-mini' when not specified",
+    "Temperature is always 0 for deterministic completions",
+    "Client is lazily initialized on first complete() call",
+    "_api_key and _model are immutable after __init__"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [
+      "environment variables"
+    ],
+    "writes": [],
+    "rationale": "Backend wrapper that reads configuration from environment and makes external API calls to OpenAI",
+    "side_effects": [
+      {
+        "type": "network_call",
+        "classification": "external_api",
+        "fields": [
+          "OpenAI chat completions API"
+        ],
+        "rationale": "Makes HTTP requests to OpenAI API for chat completions"
+      },
+      {
+        "type": "environment_read",
+        "classification": "configuration",
+        "fields": [
+          "OPENAI_API_KEY",
+          "TRANSMOG_MODEL"
+        ],
+        "rationale": "Reads environment variables for API key and model configuration during initialization"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

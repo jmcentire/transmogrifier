@@ -1,0 +1,549 @@
+{
+  "root_id": "root",
+  "nodes": {
+    "root": {
+      "component_id": "root",
+      "name": "Project Root",
+      "description": "Adopted codebase at /Users/jmcentire/Code/transmogrifier",
+      "depth": 0,
+      "parent_id": "",
+      "children": [
+        "contracts",
+        "src"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts": {
+      "component_id": "contracts",
+      "name": "Contracts",
+      "description": "Package: contracts",
+      "depth": 1,
+      "parent_id": "root",
+      "children": [
+        "contracts_src_transmogrifier_task_classifier",
+        "contracts_src_transmogrifier_system_prompts",
+        "contracts_src_transmogrifier_cli",
+        "contracts_src_transmogrifier_rules",
+        "contracts_src_transmogrifier_mcp_server",
+        "contracts_src_transmogrifier_detector",
+        "contracts_contracts_src_transmogrifier_rules_interface",
+        "contracts_contracts_src_transmogrifier_task_classifier_interface",
+        "contracts_contracts_src_transmogrifier_system_prompts_interface",
+        "contracts_src_transmogrifier_core",
+        "contracts_contracts_src_transmogrifier_cli_interface",
+        "contracts_src_transmogrifier_kindex_integration"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_task_classifier": {
+      "component_id": "contracts_src_transmogrifier_task_classifier",
+      "name": "Src Transmogrifier Task Classifier",
+      "description": "Package: contracts/src_transmogrifier_task_classifier",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_src_transmogrifier_task_classifier_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_task_classifier_interface": {
+      "component_id": "contracts_src_transmogrifier_task_classifier_interface",
+      "name": "Interface",
+      "description": "Module contracts/src_transmogrifier_task_classifier/interface.py: classify",
+      "depth": 3,
+      "parent_id": "contracts_src_transmogrifier_task_classifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_system_prompts": {
+      "component_id": "contracts_src_transmogrifier_system_prompts",
+      "name": "Src Transmogrifier System Prompts",
+      "description": "Package: contracts/src_transmogrifier_system_prompts",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_src_transmogrifier_system_prompts_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_system_prompts_interface": {
+      "component_id": "contracts_src_transmogrifier_system_prompts_interface",
+      "name": "Interface",
+      "description": "Module contracts/src_transmogrifier_system_prompts/interface.py: get_system_prompt, inject_system_prompt",
+      "depth": 3,
+      "parent_id": "contracts_src_transmogrifier_system_prompts",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_cli": {
+      "component_id": "contracts_src_transmogrifier_cli",
+      "name": "Src Transmogrifier Cli",
+      "description": "Package: contracts/src_transmogrifier_cli",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_src_transmogrifier_cli_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_cli_interface": {
+      "component_id": "contracts_src_transmogrifier_cli_interface",
+      "name": "Interface",
+      "description": "Module contracts/src_transmogrifier_cli/interface.py: main, detect, classify, translate, profile (+3 more)",
+      "depth": 3,
+      "parent_id": "contracts_src_transmogrifier_cli",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_rules": {
+      "component_id": "contracts_src_transmogrifier_rules",
+      "name": "Src Transmogrifier Rules",
+      "description": "Package: contracts/src_transmogrifier_rules",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_src_transmogrifier_rules_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_rules_interface": {
+      "component_id": "contracts_src_transmogrifier_rules_interface",
+      "name": "Interface",
+      "description": "Module contracts/src_transmogrifier_rules/interface.py: rewrite",
+      "depth": 3,
+      "parent_id": "contracts_src_transmogrifier_rules",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_mcp_server": {
+      "component_id": "contracts_src_transmogrifier_mcp_server",
+      "name": "Src Transmogrifier Mcp Server",
+      "description": "Package: contracts/src_transmogrifier_mcp_server",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_src_transmogrifier_mcp_server_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_mcp_server_interface": {
+      "component_id": "contracts_src_transmogrifier_mcp_server_interface",
+      "name": "Interface",
+      "description": "Module contracts/src_transmogrifier_mcp_server/interface.py: main, transmog_translate, transmog_detect, transmog_profiles",
+      "depth": 3,
+      "parent_id": "contracts_src_transmogrifier_mcp_server",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_detector": {
+      "component_id": "contracts_src_transmogrifier_detector",
+      "name": "Src Transmogrifier Detector",
+      "description": "Package: contracts/src_transmogrifier_detector",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_src_transmogrifier_detector_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_detector_interface": {
+      "component_id": "contracts_src_transmogrifier_detector_interface",
+      "name": "Interface",
+      "description": "Module contracts/src_transmogrifier_detector/interface.py: detect, _score",
+      "depth": 3,
+      "parent_id": "contracts_src_transmogrifier_detector",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_contracts_src_transmogrifier_rules_interface": {
+      "component_id": "contracts_contracts_src_transmogrifier_rules_interface",
+      "name": "Contracts Src Transmogrifier Rules Interface",
+      "description": "Package: contracts/contracts_src_transmogrifier_rules_interface",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_contracts_src_transmogrifier_rules_interface_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_contracts_src_transmogrifier_rules_interface_interface": {
+      "component_id": "contracts_contracts_src_transmogrifier_rules_interface_interface",
+      "name": "Interface",
+      "description": "Module contracts/contracts_src_transmogrifier_rules_interface/interface.py: rewrite",
+      "depth": 3,
+      "parent_id": "contracts_contracts_src_transmogrifier_rules_interface",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_contracts_src_transmogrifier_task_classifier_interface": {
+      "component_id": "contracts_contracts_src_transmogrifier_task_classifier_interface",
+      "name": "Contracts Src Transmogrifier Task Classifier Interface",
+      "description": "Package: contracts/contracts_src_transmogrifier_task_classifier_interface",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_contracts_src_transmogrifier_task_classifier_interface_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_contracts_src_transmogrifier_task_classifier_interface_interface": {
+      "component_id": "contracts_contracts_src_transmogrifier_task_classifier_interface_interface",
+      "name": "Interface",
+      "description": "Module contracts/contracts_src_transmogrifier_task_classifier_interface/interface.py: classify",
+      "depth": 3,
+      "parent_id": "contracts_contracts_src_transmogrifier_task_classifier_interface",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_contracts_src_transmogrifier_system_prompts_interface": {
+      "component_id": "contracts_contracts_src_transmogrifier_system_prompts_interface",
+      "name": "Contracts Src Transmogrifier System Prompts Interface",
+      "description": "Package: contracts/contracts_src_transmogrifier_system_prompts_interface",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_contracts_src_transmogrifier_system_prompts_interface_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_contracts_src_transmogrifier_system_prompts_interface_interface": {
+      "component_id": "contracts_contracts_src_transmogrifier_system_prompts_interface_interface",
+      "name": "Interface",
+      "description": "Module contracts/contracts_src_transmogrifier_system_prompts_interface/interface.py: get_system_prompt, inject_system_prompt",
+      "depth": 3,
+      "parent_id": "contracts_contracts_src_transmogrifier_system_prompts_interface",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_core": {
+      "component_id": "contracts_src_transmogrifier_core",
+      "name": "Src Transmogrifier Core",
+      "description": "Package: contracts/src_transmogrifier_core",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_src_transmogrifier_core_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_core_interface": {
+      "component_id": "contracts_src_transmogrifier_core_interface",
+      "name": "Interface",
+      "description": "Module contracts/src_transmogrifier_core/interface.py: __init__, translate",
+      "depth": 3,
+      "parent_id": "contracts_src_transmogrifier_core",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_contracts_src_transmogrifier_cli_interface": {
+      "component_id": "contracts_contracts_src_transmogrifier_cli_interface",
+      "name": "Contracts Src Transmogrifier Cli Interface",
+      "description": "Package: contracts/contracts_src_transmogrifier_cli_interface",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_contracts_src_transmogrifier_cli_interface_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_contracts_src_transmogrifier_cli_interface_interface": {
+      "component_id": "contracts_contracts_src_transmogrifier_cli_interface_interface",
+      "name": "Interface",
+      "description": "Module contracts/contracts_src_transmogrifier_cli_interface/interface.py: main, detect, classify, translate, profile (+3 more)",
+      "depth": 3,
+      "parent_id": "contracts_contracts_src_transmogrifier_cli_interface",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_kindex_integration": {
+      "component_id": "contracts_src_transmogrifier_kindex_integration",
+      "name": "Src Transmogrifier Kindex Integration",
+      "description": "Package: contracts/src_transmogrifier_kindex_integration",
+      "depth": 2,
+      "parent_id": "contracts",
+      "children": [
+        "contracts_src_transmogrifier_kindex_integration_interface"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "contracts_src_transmogrifier_kindex_integration_interface": {
+      "component_id": "contracts_src_transmogrifier_kindex_integration_interface",
+      "name": "Interface",
+      "description": "Module contracts/src_transmogrifier_kindex_integration/interface.py: is_available, _init_store, close",
+      "depth": 3,
+      "parent_id": "contracts_src_transmogrifier_kindex_integration",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src": {
+      "component_id": "src",
+      "name": "Src",
+      "description": "Package: src",
+      "depth": 1,
+      "parent_id": "root",
+      "children": [
+        "src_transmogrifier"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier": {
+      "component_id": "src_transmogrifier",
+      "name": "Transmogrifier",
+      "description": "Package: src/transmogrifier",
+      "depth": 2,
+      "parent_id": "src",
+      "children": [
+        "src_transmogrifier_calibrate",
+        "src_transmogrifier_cli",
+        "src_transmogrifier_core",
+        "src_transmogrifier_detector",
+        "src_transmogrifier_kindex_integration",
+        "src_transmogrifier_mcp_server",
+        "src_transmogrifier_profiles",
+        "src_transmogrifier_rules",
+        "src_transmogrifier_system_prompts",
+        "src_transmogrifier_task_classifier",
+        "src_transmogrifier_validator",
+        "src_transmogrifier_backends"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_calibrate": {
+      "component_id": "src_transmogrifier_calibrate",
+      "name": "Calibrate",
+      "description": "Module src/transmogrifier/calibrate.py: score_response, __init__, run",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_cli": {
+      "component_id": "src_transmogrifier_cli",
+      "name": "Cli",
+      "description": "Module src/transmogrifier/cli.py: main, detect, classify, translate, profile (+3 more)",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_core": {
+      "component_id": "src_transmogrifier_core",
+      "name": "Core",
+      "description": "Module src/transmogrifier/core.py: __init__, translate",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_detector": {
+      "component_id": "src_transmogrifier_detector",
+      "name": "Detector",
+      "description": "Module src/transmogrifier/detector.py: detect, _score",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_kindex_integration": {
+      "component_id": "src_transmogrifier_kindex_integration",
+      "name": "Kindex Integration",
+      "description": "Module src/transmogrifier/kindex_integration.py: is_available, _init_store, close",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_mcp_server": {
+      "component_id": "src_transmogrifier_mcp_server",
+      "name": "Mcp Server",
+      "description": "Module src/transmogrifier/mcp_server.py: main, transmog_translate, transmog_detect, transmog_profiles",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_profiles": {
+      "component_id": "src_transmogrifier_profiles",
+      "name": "Profiles",
+      "description": "Module src/transmogrifier/profiles.py: best_register, spread_pp, spread_pp, is_invariant, best_register (+10 more)",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_rules": {
+      "component_id": "src_transmogrifier_rules",
+      "name": "Rules",
+      "description": "Module src/transmogrifier/rules.py: rewrite",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_system_prompts": {
+      "component_id": "src_transmogrifier_system_prompts",
+      "name": "System Prompts",
+      "description": "Module src/transmogrifier/system_prompts.py: get_system_prompt, inject_system_prompt",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_task_classifier": {
+      "component_id": "src_transmogrifier_task_classifier",
+      "name": "Task Classifier",
+      "description": "Module src/transmogrifier/task_classifier.py: classify",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_validator": {
+      "component_id": "src_transmogrifier_validator",
+      "name": "Validator",
+      "description": "Module src/transmogrifier/validator.py: __init__, _load, validate, is_valid",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_backends": {
+      "component_id": "src_transmogrifier_backends",
+      "name": "Backends",
+      "description": "Package: src/transmogrifier/backends",
+      "depth": 3,
+      "parent_id": "src_transmogrifier",
+      "children": [
+        "src_transmogrifier_backends___init__",
+        "src_transmogrifier_backends_anthropic",
+        "src_transmogrifier_backends_gemini",
+        "src_transmogrifier_backends_openai"
+      ],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_backends___init__": {
+      "component_id": "src_transmogrifier_backends___init__",
+      "name": "  Init  ",
+      "description": "Module src/transmogrifier/backends/__init__.py: create_backend, complete",
+      "depth": 4,
+      "parent_id": "src_transmogrifier_backends",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_backends_anthropic": {
+      "component_id": "src_transmogrifier_backends_anthropic",
+      "name": "Anthropic",
+      "description": "Module src/transmogrifier/backends/anthropic.py: __init__, _ensure_client, complete",
+      "depth": 4,
+      "parent_id": "src_transmogrifier_backends",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_backends_gemini": {
+      "component_id": "src_transmogrifier_backends_gemini",
+      "name": "Gemini",
+      "description": "Module src/transmogrifier/backends/gemini.py: __init__, _ensure_configured, complete",
+      "depth": 4,
+      "parent_id": "src_transmogrifier_backends",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    },
+    "src_transmogrifier_backends_openai": {
+      "component_id": "src_transmogrifier_backends_openai",
+      "name": "Openai",
+      "description": "Module src/transmogrifier/backends/openai.py: __init__, _ensure_client, complete",
+      "depth": 4,
+      "parent_id": "src_transmogrifier_backends",
+      "children": [],
+      "contract": null,
+      "implementation_status": "pending",
+      "test_results": null
+    }
+  }
+}

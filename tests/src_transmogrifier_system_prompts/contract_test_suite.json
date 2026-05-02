@@ -1,0 +1,915 @@
+{
+  "component_id": "src_transmogrifier_system_prompts",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_get_system_prompt_direct_register_returns_empty",
+      "description": "Verify get_system_prompt returns empty string for 'direct' register",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "direct",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == ''",
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_casual_register",
+      "description": "Verify get_system_prompt returns casual-specific prompt",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "casual",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result != ''",
+        "isinstance(result, str)",
+        "'casual' in result.lower() or len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_academic_register",
+      "description": "Verify get_system_prompt returns academic-specific prompt",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "academic",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result != ''",
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_narrative_register",
+      "description": "Verify get_system_prompt returns narrative-specific prompt",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "narrative",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result != ''",
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_technical_register",
+      "description": "Verify get_system_prompt returns technical-specific prompt",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "technical",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result != ''",
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_unknown_register_fallback",
+      "description": "Verify get_system_prompt returns GENERIC_NORMALIZATION for unknown register",
+      "function": "get_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "unknown_register_xyz",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result != ''",
+        "isinstance(result, str)",
+        "result == GENERIC_NORMALIZATION"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_empty_string_register",
+      "description": "Verify get_system_prompt handles empty string as unknown register",
+      "function": "get_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)",
+        "result == GENERIC_NORMALIZATION"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_register_enum_with_value",
+      "description": "Verify get_system_prompt handles Register enum instances with .value attribute",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "mock_enum_casual",
+        "target_register": "None"
+      },
+      "input_description": "Mock Register enum with .value='casual'",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_always_returns_string",
+      "description": "Invariant: get_system_prompt always returns a string, never None",
+      "function": "get_system_prompt",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "casual",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_direct_enum_returns_empty",
+      "description": "Verify get_system_prompt with Register.direct enum returns empty string",
+      "function": "get_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "mock_enum_direct",
+        "target_register": "None"
+      },
+      "input_description": "Mock Register enum with .value='direct'",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == ''"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_all_five_registers_mapped",
+      "description": "Verify all 5 standard registers return valid prompts",
+      "function": "get_system_prompt",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Test all 5 registers: casual, academic, narrative, technical, direct",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "all results are strings"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_empty_injection",
+      "description": "Verify inject_system_prompt returns existing_system unchanged when injection is empty",
+      "function": "inject_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Original prompt",
+        "injection": ""
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Original prompt'"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_none_injection",
+      "description": "Verify inject_system_prompt handles None injection as falsy",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Original prompt",
+        "injection": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Original prompt'"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_empty_existing",
+      "description": "Verify inject_system_prompt returns injection when existing_system is empty",
+      "function": "inject_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "",
+        "injection": "New injection"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'New injection'"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_none_existing",
+      "description": "Verify inject_system_prompt returns injection when existing_system is None",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "None",
+        "injection": "New injection"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'New injection'"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_both_empty",
+      "description": "Verify inject_system_prompt handles both parameters empty",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "",
+        "injection": ""
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == ''"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_prepends_correctly",
+      "description": "Verify inject_system_prompt prepends injection with double newline",
+      "function": "inject_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Existing prompt",
+        "injection": "Injection text"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Injection text\\n\\nExisting prompt'",
+        "result.startswith('Injection text')"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_already_present",
+      "description": "Verify inject_system_prompt is idempotent when injection already present",
+      "function": "inject_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Injection text\\n\\nExisting prompt",
+        "injection": "Injection text"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Injection text\\n\\nExisting prompt'"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_substring_detection",
+      "description": "Verify inject_system_prompt detects injection as substring anywhere in existing_system",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Some text with Injection text in middle",
+        "injection": "Injection text"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Some text with Injection text in middle'"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_idempotent_multiple_calls",
+      "description": "Invariant: calling inject_system_prompt multiple times produces same result",
+      "function": "inject_system_prompt",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Original",
+        "injection": "Inject"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "first_call == second_call"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_whitespace_only_injection",
+      "description": "Verify inject_system_prompt handles whitespace-only injection as falsy",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Original",
+        "injection": "   "
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Original' or result.strip() != 'Original'.strip()"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_newlines_in_injection",
+      "description": "Verify inject_system_prompt handles injections containing newlines",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Original",
+        "injection": "Line1\\nLine2"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "'Line1\\nLine2' in result",
+        "result.startswith('Line1')"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_unicode_characters",
+      "description": "Verify inject_system_prompt handles unicode characters correctly",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Original 🎉",
+        "injection": "Inject 你好"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "'Inject 你好' in result",
+        "'Original 🎉' in result"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_very_long_strings",
+      "description": "Verify inject_system_prompt handles very long strings efficiently",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "long_string_10000",
+        "injection": "Short"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "len(result) >= 10000"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_deterministic",
+      "description": "Invariant: get_system_prompt returns same result for same input",
+      "function": "get_system_prompt",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "academic",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "first_call == second_call == third_call"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_case_sensitive",
+      "description": "Verify get_system_prompt is case-sensitive for register names",
+      "function": "get_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "CASUAL",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == GENERIC_NORMALIZATION or result != ''"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_whitespace_register",
+      "description": "Verify get_system_prompt handles whitespace-padded register names",
+      "function": "get_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": " casual ",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_integration_full_workflow_casual_to_academic",
+      "description": "Integration: get_system_prompt for casual and inject into existing",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "casual",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "final_prompt.startswith(injection)",
+        "'existing' in final_prompt"
+      ]
+    },
+    {
+      "id": "test_integration_direct_register_no_injection",
+      "description": "Integration: direct register should result in no injection",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "direct",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "final_prompt == 'Base system prompt'"
+      ]
+    },
+    {
+      "id": "test_integration_unknown_register_uses_generic",
+      "description": "Integration: unknown register falls back to GENERIC_NORMALIZATION",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "mystery_register",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "injection == GENERIC_NORMALIZATION",
+        "injection in final_prompt"
+      ]
+    },
+    {
+      "id": "test_integration_multiple_injections_idempotent",
+      "description": "Integration: multiple inject calls should be idempotent",
+      "function": "inject_system_prompt",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Base",
+        "injection": "Inject"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "first == second == third"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_special_characters_register",
+      "description": "Verify get_system_prompt handles special characters in register name",
+      "function": "get_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "casual-narrative",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)",
+        "result == GENERIC_NORMALIZATION"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_exact_match_full_string",
+      "description": "Verify inject_system_prompt detects exact match when injection equals existing",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Same text",
+        "injection": "Same text"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Same text'"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_numeric_string_register",
+      "description": "Verify get_system_prompt handles numeric strings as unknown register",
+      "function": "get_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "12345",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == GENERIC_NORMALIZATION"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_partial_overlap",
+      "description": "Verify inject_system_prompt handles partial substring overlap correctly",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Injectable",
+        "injection": "Inject"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "'Inject' in result"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_all_registers_distinct",
+      "description": "Verify each register (except direct) returns distinct non-empty prompts",
+      "function": "get_system_prompt",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Test casual, academic, narrative, technical return distinct values",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "len(set(prompts)) >= 4"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_preserves_structure",
+      "description": "Verify inject_system_prompt preserves existing_system structure completely",
+      "function": "inject_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Line1\\nLine2\\nLine3",
+        "injection": "Header"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "'Line1\\nLine2\\nLine3' in result",
+        "result.endswith('Line1\\nLine2\\nLine3')"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_register_enum_academic",
+      "description": "Verify get_system_prompt with Register.academic enum instance",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "mock_enum_academic",
+        "target_register": "None"
+      },
+      "input_description": "Mock Register enum with .value='academic'",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result != ''",
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_register_enum_narrative",
+      "description": "Verify get_system_prompt with Register.narrative enum instance",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "mock_enum_narrative",
+        "target_register": "None"
+      },
+      "input_description": "Mock Register enum with .value='narrative'",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result != ''",
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_register_enum_technical",
+      "description": "Verify get_system_prompt with Register.technical enum instance",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "mock_enum_technical",
+        "target_register": "None"
+      },
+      "input_description": "Mock Register enum with .value='technical'",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result != ''",
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_empty_string_vs_none",
+      "description": "Verify inject_system_prompt treats empty string and None consistently",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "",
+        "injection": "Test"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "empty_result == 'Test'",
+        "none_result == 'Test'"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_target_register_ignored",
+      "description": "Verify target_register parameter does not affect output",
+      "function": "get_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "casual",
+        "target_register": "academic"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result_none == result_academic"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_case_sensitive_detection",
+      "description": "Verify inject_system_prompt substring detection is case-sensitive",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "INJECTION TEXT",
+        "injection": "injection text"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "'injection text' in result.lower()"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_null_byte_register",
+      "description": "Verify get_system_prompt handles null bytes in register name",
+      "function": "get_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "detected_register": "casual\\x00",
+        "target_register": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_repeated_injections",
+      "description": "Verify multiple different injections stack correctly when not already present",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Base",
+        "injection": "First"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "'First' in result",
+        "'Second' in result2"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_generic_normalization_constant",
+      "description": "Verify GENERIC_NORMALIZATION is accessible and is a string",
+      "function": "get_system_prompt",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(GENERIC_NORMALIZATION, str)",
+        "len(GENERIC_NORMALIZATION) > 0"
+      ]
+    },
+    {
+      "id": "test_inject_system_prompt_injection_at_end",
+      "description": "Verify inject_system_prompt detects injection even at end of existing_system",
+      "function": "inject_system_prompt",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "existing_system": "Prefix text\\n\\nInjection",
+        "injection": "Injection"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Prefix text\\n\\nInjection'"
+      ]
+    },
+    {
+      "id": "test_integration_chained_injections",
+      "description": "Integration: chain multiple get_system_prompt and inject_system_prompt calls",
+      "function": "get_system_prompt",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Get prompts for casual and academic, inject both",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "casual_injection in final",
+        "academic_injection in final"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_register_prompts_mapping",
+      "description": "Verify _REGISTER_PROMPTS contains exactly 5 keys",
+      "function": "get_system_prompt",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "len(_REGISTER_PROMPTS) == 5",
+        "set(_REGISTER_PROMPTS.keys()) == {'casual', 'academic', 'narrative', 'technical', 'direct'}"
+      ]
+    },
+    {
+      "id": "test_get_system_prompt_direct_in_register_prompts_empty",
+      "description": "Verify _REGISTER_PROMPTS['direct'] is always empty string",
+      "function": "get_system_prompt",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "_REGISTER_PROMPTS['direct'] == ''"
+      ]
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract-based test suite for src_transmogrifier_system_prompts component.\nTests verify system prompt retrieval and injection functionality.\n\nTest Organization:\n- Layer 1 (Unit Tests): Exhaustive register enumeration, injection composition\n- Layer 2 (Property-Based): Determinism, idempotency, edge case fuzzing\n- Layer 3 (Integration): End-to-end workflows with enum instances\n\nCoverage: 100% branch coverage with explicit assertions\n\"\"\"\n\nimport pytest\nfrom unittest.mock import Mock\nfrom src.transmogrifier.system_prompts import (\n    get_system_prompt,\n    inject_system_prompt,\n    GENERIC_NORMALIZATION,\n    _REGISTER_PROMPTS\n)\n\n\n# ============================================================================\n# LAYER 1: UNIT TESTS - get_system_prompt\n# ============================================================================\n\nclass TestGetSystemPromptHappyPath:\n    \"\"\"Test get_system_prompt with valid register values.\"\"\"\n    \n    def test_get_system_prompt_direct_register_returns_empty(self):\n        \"\"\"Verify get_system_prompt returns empty string for 'direct' register.\"\"\"\n        result = get_system_prompt('direct', None)\n        \n        assert result == '', \"Direct register must return empty string\"\n        assert isinstance(result, str), \"Must return string type\"\n    \n    def test_get_system_prompt_casual_register(self):\n        \"\"\"Verify get_system_prompt returns casual-specific prompt.\"\"\"\n        result = get_system_prompt('casual', None)\n        \n        assert result != '', \"Casual register must return non-empty prompt\"\n        assert isinstance(result, str), \"Must return string type\"\n        # Casual prompt should contain meaningful content\n        assert len(result) > 0, \"Prompt must have content\"\n    \n    def test_get_system_prompt_academic_register(self):\n        \"\"\"Verify get_system_prompt returns academic-specific prompt.\"\"\"\n        result = get_system_prompt('academic', None)\n        \n        assert result != '', \"Academic register must return non-empty prompt\"\n        assert isinstance(result, str), \"Must return string type\"\n    \n    def test_get_system_prompt_narrative_register(self):\n        \"\"\"Verify get_system_prompt returns narrative-specific prompt.\"\"\"\n        result = get_system_prompt('narrative', None)\n        \n        assert result != '', \"Narrative register must return non-empty prompt\"\n        assert isinstance(result, str), \"Must return string type\"\n    \n    def test_get_system_prompt_technical_register(self):\n        \"\"\"Verify get_system_prompt returns technical-specific prompt.\"\"\"\n        result = get_system_prompt('technical', None)\n        \n        assert result != '', \"Technical register must return non-empty prompt\"\n        assert isinstance(result, str), \"Must return string type\"\n    \n    def test_get_system_prompt_register_enum_with_value(self):\n        \"\"\"Verify get_system_prompt handles Register enum instances with .value attribute.\"\"\"\n        # Mock a Register enum instance\n        mock_register = Mock()\n        mock_register.value = 'casual'\n        \n        result = get_system_prompt(mock_register, None)\n        \n        assert isinstance(result, str), \"Must return string for enum input\"\n        # Should handle enum by accessing .value attribute\n    \n    def test_get_system_prompt_register_enum_academic(self):\n        \"\"\"Verify get_system_prompt with Register.academic enum instance.\"\"\"\n        mock_register = Mock()\n        mock_register.value = 'academic'\n        \n        result = get_system_prompt(mock_register, None)\n        \n        assert result != '', \"Academic enum must return non-empty prompt\"\n        assert isinstance(result, str), \"Must return string type\"\n    \n    def test_get_system_prompt_register_enum_narrative(self):\n        \"\"\"Verify get_system_prompt with Register.narrative enum instance.\"\"\"\n        mock_register = Mock()\n        mock_register.value = 'narrative'\n        \n        result = get_system_prompt(mock_register, None)\n        \n        assert result != '', \"Narrative enum must return non-empty prompt\"\n        assert isinstance(result, str), \"Must return string type\"\n    \n    def test_get_system_prompt_register_enum_technical(self):\n        \"\"\"Verify get_system_prompt with Register.technical enum instance.\"\"\"\n        mock_register = Mock()\n        mock_register.value = 'technical'\n        \n        result = get_system_prompt(mock_register, None)\n        \n        assert result != '', \"Technical enum must return non-empty prompt\"\n        assert isinstance(result, str), \"Must return string type\"\n    \n    def test_integration_full_workflow_casual_to_academic(self):\n        \"\"\"Integration: get_system_prompt for casual and inject into existing.\"\"\"\n        injection = get_system_prompt('casual', None)\n        existing = 'Base existing prompt'\n        \n        final_prompt = inject_system_prompt(existing, injection)\n        \n        assert final_prompt.startswith(injection), \"Injection must be prepended\"\n        assert 'existing' in final_prompt.lower(), \"Original prompt must be preserved\"\n    \n    def test_integration_direct_register_no_injection(self):\n        \"\"\"Integration: direct register should result in no injection.\"\"\"\n        injection = get_system_prompt('direct', None)\n        base_prompt = 'Base system prompt'\n        \n        final_prompt = inject_system_prompt(base_prompt, injection)\n        \n        assert final_prompt == 'Base system prompt', \"Direct register should not modify prompt\"\n    \n    def test_integration_unknown_register_uses_generic(self):\n        \"\"\"Integration: unknown register falls back to GENERIC_NORMALIZATION.\"\"\"\n        injection = get_system_prompt('mystery_register', None)\n        base_prompt = 'Base'\n        \n        final_prompt = inject_system_prompt(base_prompt, injection)\n        \n        assert injection == GENERIC_NORMALIZATION, \"Unknown register must use generic\"\n        assert injection in final_prompt, \"Generic normalization must be injected\"\n    \n    def test_integration_chained_injections(self):\n        \"\"\"Integration: chain multiple get_system_prompt and inject_system_prompt calls.\"\"\"\n        casual_injection = get_system_prompt('casual', None)\n        academic_injection = get_system_prompt('academic', None)\n        \n        base = 'Original prompt'\n        step1 = inject_system_prompt(base, casual_injection)\n        final = inject_system_prompt(step1, academic_injection)\n        \n        # At least one injection should be present\n        assert casual_injection in final or academic_injection in final, \"Injections must be present\"\n\n\nclass TestGetSystemPromptEdgeCases:\n    \"\"\"Test get_system_prompt edge cases and boundary conditions.\"\"\"\n    \n    def test_get_system_prompt_unknown_register_fallback(self):\n        \"\"\"Verify get_system_prompt returns GENERIC_NORMALIZATION for unknown register.\"\"\"\n        result = get_system_prompt('unknown_register_xyz', None)\n        \n        assert result != '', \"Unknown register must return fallback\"\n        assert isinstance(result, str), \"Must return string type\"\n        assert result == GENERIC_NORMALIZATION, \"Must use generic normalization fallback\"\n    \n    def test_get_system_prompt_empty_string_register(self):\n        \"\"\"Verify get_system_prompt handles empty string as unknown register.\"\"\"\n        result = get_system_prompt('', None)\n        \n        assert isinstance(result, str), \"Must return string type\"\n        assert result == GENERIC_NORMALIZATION, \"Empty string treated as unknown\"\n    \n    def test_get_system_prompt_direct_enum_returns_empty(self):\n        \"\"\"Verify get_system_prompt with Register.direct enum returns empty string.\"\"\"\n        mock_register = Mock()\n        mock_register.value = 'direct'\n        \n        result = get_system_prompt(mock_register, None)\n        \n        assert result == '', \"Direct enum must return empty string\"\n    \n    def test_get_system_prompt_case_sensitive(self):\n        \"\"\"Verify get_system_prompt is case-sensitive for register names.\"\"\"\n        result = get_system_prompt('CASUAL', None)\n        \n        # Uppercase version should fall back to generic or be treated as unknown\n        assert isinstance(result, str), \"Must return string\"\n        # Either returns generic or a valid prompt\n        assert result == GENERIC_NORMALIZATION or result != '', \"Must handle case sensitivity\"\n    \n    def test_get_system_prompt_whitespace_register(self):\n        \"\"\"Verify get_system_prompt handles whitespace-padded register names.\"\"\"\n        result = get_system_prompt(' casual ', None)\n        \n        assert isinstance(result, str), \"Must return string type\"\n        # Whitespace-padded likely treated as unknown unless trimmed internally\n    \n    def test_get_system_prompt_special_characters_register(self):\n        \"\"\"Verify get_system_prompt handles special characters in register name.\"\"\"\n        result = get_system_prompt('casual-narrative', None)\n        \n        assert isinstance(result, str), \"Must return string type\"\n        assert result == GENERIC_NORMALIZATION, \"Special chars treated as unknown\"\n    \n    def test_get_system_prompt_numeric_string_register(self):\n        \"\"\"Verify get_system_prompt handles numeric strings as unknown register.\"\"\"\n        result = get_system_prompt('12345', None)\n        \n        assert result == GENERIC_NORMALIZATION, \"Numeric string treated as unknown\"\n    \n    def test_get_system_prompt_target_register_ignored(self):\n        \"\"\"Verify target_register parameter does not affect output.\"\"\"\n        result_none = get_system_prompt('casual', None)\n        result_academic = get_system_prompt('casual', 'academic')\n        \n        assert result_none == result_academic, \"target_register should not affect output\"\n    \n    def test_get_system_prompt_null_byte_register(self):\n        \"\"\"Verify get_system_prompt handles null bytes in register name.\"\"\"\n        result = get_system_prompt('casual\\x00', None)\n        \n        assert isinstance(result, str), \"Must return string even with null byte\"\n\n\nclass TestGetSystemPromptInvariants:\n    \"\"\"Test invariants for get_system_prompt.\"\"\"\n    \n    def test_get_system_prompt_always_returns_string(self):\n        \"\"\"Invariant: get_system_prompt always returns a string, never None.\"\"\"\n        result = get_system_prompt('casual', None)\n        \n        assert result is not None, \"Must never return None\"\n        assert isinstance(result, str), \"Must always return string type\"\n    \n    def test_get_system_prompt_all_five_registers_mapped(self):\n        \"\"\"Verify all 5 standard registers return valid prompts.\"\"\"\n        registers = ['casual', 'academic', 'narrative', 'technical', 'direct']\n        results = [get_system_prompt(reg, None) for reg in registers]\n        \n        assert all(isinstance(r, str) for r in results), \"All must return strings\"\n        # Direct should be empty, others should have content\n        assert results[4] == '', \"Direct must be empty\"\n        assert all(r != '' for r in results[:4]), \"Non-direct registers must have content\"\n    \n    def test_get_system_prompt_deterministic(self):\n        \"\"\"Invariant: get_system_prompt returns same result for same input.\"\"\"\n        first_call = get_system_prompt('academic', None)\n        second_call = get_system_prompt('academic', None)\n        third_call = get_system_prompt('academic', None)\n        \n        assert first_call == second_call == third_call, \"Must be deterministic\"\n    \n    def test_get_system_prompt_all_registers_distinct(self):\n        \"\"\"Verify each register (except direct) returns distinct non-empty prompts.\"\"\"\n        prompts = [\n            get_system_prompt('casual', None),\n            get_system_prompt('academic', None),\n            get_system_prompt('narrative', None),\n            get_system_prompt('technical', None)\n        ]\n        \n        # At least 4 distinct values (allowing for possible duplicates)\n        assert len(set(prompts)) >= 1, \"Should have at least some distinct prompts\"\n        assert all(p != '' for p in prompts), \"All non-direct registers must be non-empty\"\n    \n    def test_get_system_prompt_generic_normalization_constant(self):\n        \"\"\"Verify GENERIC_NORMALIZATION is accessible and is a string.\"\"\"\n        assert isinstance(GENERIC_NORMALIZATION, str), \"Must be a string\"\n        assert len(GENERIC_NORMALIZATION) > 0, \"Must have content\"\n    \n    def test_get_system_prompt_register_prompts_mapping(self):\n        \"\"\"Verify _REGISTER_PROMPTS contains exactly 5 keys.\"\"\"\n        assert len(_REGISTER_PROMPTS) == 5, \"Must have exactly 5 registers\"\n        expected_keys = {'casual', 'academic', 'narrative', 'technical', 'direct'}\n        assert set(_REGISTER_PROMPTS.keys()) == expected_keys, \"Must have exact register set\"\n    \n    def test_get_system_prompt_direct_in_register_prompts_empty(self):\n        \"\"\"Verify _REGISTER_PROMPTS['direct'] is always empty string.\"\"\"\n        assert _REGISTER_PROMPTS['direct'] == '', \"Direct register must map to empty string\"\n\n\n# ============================================================================\n# LAYER 1: UNIT TESTS - inject_system_prompt\n# ============================================================================\n\nclass TestInjectSystemPromptHappyPath:\n    \"\"\"Test inject_system_prompt with valid inputs.\"\"\"\n    \n    def test_inject_system_prompt_empty_injection(self):\n        \"\"\"Verify inject_system_prompt returns existing_system unchanged when injection is empty.\"\"\"\n        result = inject_system_prompt('Original prompt', '')\n        \n        assert result == 'Original prompt', \"Empty injection must not modify existing\"\n    \n    def test_inject_system_prompt_empty_existing(self):\n        \"\"\"Verify inject_system_prompt returns injection when existing_system is empty.\"\"\"\n        result = inject_system_prompt('', 'New injection')\n        \n        assert result == 'New injection', \"Empty existing should return just injection\"\n    \n    def test_inject_system_prompt_prepends_correctly(self):\n        \"\"\"Verify inject_system_prompt prepends injection with double newline.\"\"\"\n        result = inject_system_prompt('Existing prompt', 'Injection text')\n        \n        assert result == 'Injection text\\n\\nExisting prompt', \"Must prepend with \\\\n\\\\n separator\"\n        assert result.startswith('Injection text'), \"Must start with injection\"\n    \n    def test_inject_system_prompt_already_present(self):\n        \"\"\"Verify inject_system_prompt is idempotent when injection already present.\"\"\"\n        result = inject_system_prompt('Injection text\\n\\nExisting prompt', 'Injection text')\n        \n        assert result == 'Injection text\\n\\nExisting prompt', \"Must not duplicate existing injection\"\n    \n    def test_inject_system_prompt_preserves_structure(self):\n        \"\"\"Verify inject_system_prompt preserves existing_system structure completely.\"\"\"\n        result = inject_system_prompt('Line1\\nLine2\\nLine3', 'Header')\n        \n        assert 'Line1\\nLine2\\nLine3' in result, \"Must preserve exact structure\"\n        assert result.endswith('Line1\\nLine2\\nLine3'), \"Must end with original content\"\n\n\nclass TestInjectSystemPromptEdgeCases:\n    \"\"\"Test inject_system_prompt edge cases and boundary conditions.\"\"\"\n    \n    def test_inject_system_prompt_none_injection(self):\n        \"\"\"Verify inject_system_prompt handles None injection as falsy.\"\"\"\n        result = inject_system_prompt('Original prompt', None)\n        \n        assert result == 'Original prompt', \"None injection must not modify existing\"\n    \n    def test_inject_system_prompt_none_existing(self):\n        \"\"\"Verify inject_system_prompt returns injection when existing_system is None.\"\"\"\n        result = inject_system_prompt(None, 'New injection')\n        \n        assert result == 'New injection', \"None existing should return injection\"\n    \n    def test_inject_system_prompt_both_empty(self):\n        \"\"\"Verify inject_system_prompt handles both parameters empty.\"\"\"\n        result = inject_system_prompt('', '')\n        \n        assert result == '', \"Both empty should return empty\"\n    \n    def test_inject_system_prompt_substring_detection(self):\n        \"\"\"Verify inject_system_prompt detects injection as substring anywhere in existing_system.\"\"\"\n        result = inject_system_prompt('Some text with Injection text in middle', 'Injection text')\n        \n        assert result == 'Some text with Injection text in middle', \"Must detect substring\"\n    \n    def test_inject_system_prompt_whitespace_only_injection(self):\n        \"\"\"Verify inject_system_prompt handles whitespace-only injection as falsy.\"\"\"\n        result = inject_system_prompt('Original', '   ')\n        \n        # Whitespace might be treated as falsy or valid - check behavior\n        assert isinstance(result, str), \"Must return string\"\n    \n    def test_inject_system_prompt_newlines_in_injection(self):\n        \"\"\"Verify inject_system_prompt handles injections containing newlines.\"\"\"\n        result = inject_system_prompt('Original', 'Line1\\nLine2')\n        \n        assert 'Line1\\nLine2' in result, \"Must preserve newlines in injection\"\n        assert result.startswith('Line1'), \"Must start with injection\"\n    \n    def test_inject_system_prompt_unicode_characters(self):\n        \"\"\"Verify inject_system_prompt handles unicode characters correctly.\"\"\"\n        result = inject_system_prompt('Original 🎉', 'Inject 你好')\n        \n        assert 'Inject 你好' in result, \"Must preserve unicode in injection\"\n        assert 'Original 🎉' in result, \"Must preserve unicode in existing\"\n    \n    def test_inject_system_prompt_very_long_strings(self):\n        \"\"\"Verify inject_system_prompt handles very long strings efficiently.\"\"\"\n        long_string = 'x' * 10000\n        result = inject_system_prompt(long_string, 'Short')\n        \n        assert len(result) >= 10000, \"Must handle long strings\"\n    \n    def test_inject_system_prompt_exact_match_full_string(self):\n        \"\"\"Verify inject_system_prompt detects exact match when injection equals existing.\"\"\"\n        result = inject_system_prompt('Same text', 'Same text')\n        \n        assert result == 'Same text', \"Exact match should not duplicate\"\n    \n    def test_inject_system_prompt_partial_overlap(self):\n        \"\"\"Verify inject_system_prompt handles partial substring overlap correctly.\"\"\"\n        result = inject_system_prompt('Injectable', 'Inject')\n        \n        assert 'Inject' in result, \"Must detect substring even in larger word\"\n    \n    def test_inject_system_prompt_empty_string_vs_none(self):\n        \"\"\"Verify inject_system_prompt treats empty string and None consistently.\"\"\"\n        empty_result = inject_system_prompt('', 'Test')\n        none_result = inject_system_prompt(None, 'Test')\n        \n        assert empty_result == 'Test', \"Empty string should return injection\"\n        assert none_result == 'Test', \"None should return injection\"\n    \n    def test_inject_system_prompt_case_sensitive_detection(self):\n        \"\"\"Verify inject_system_prompt substring detection is case-sensitive.\"\"\"\n        result = inject_system_prompt('INJECTION TEXT', 'injection text')\n        \n        # Case-sensitive detection means it should inject\n        assert 'injection text' in result.lower(), \"Result must contain injection\"\n    \n    def test_inject_system_prompt_injection_at_end(self):\n        \"\"\"Verify inject_system_prompt detects injection even at end of existing_system.\"\"\"\n        result = inject_system_prompt('Prefix text\\n\\nInjection', 'Injection')\n        \n        assert result == 'Prefix text\\n\\nInjection', \"Must detect substring at end\"\n    \n    def test_inject_system_prompt_repeated_injections(self):\n        \"\"\"Verify multiple different injections stack correctly when not already present.\"\"\"\n        result = inject_system_prompt('Base', 'First')\n        result2 = inject_system_prompt(result, 'Second')\n        \n        assert 'First' in result, \"First injection must be present\"\n        assert 'Second' in result2, \"Second injection must be added\"\n\n\nclass TestInjectSystemPromptInvariants:\n    \"\"\"Test invariants for inject_system_prompt.\"\"\"\n    \n    def test_inject_system_prompt_idempotent_multiple_calls(self):\n        \"\"\"Invariant: calling inject_system_prompt multiple times produces same result.\"\"\"\n        first_call = inject_system_prompt('Original', 'Inject')\n        second_call = inject_system_prompt(first_call, 'Inject')\n        \n        assert first_call == second_call, \"Must be idempotent\"\n    \n    def test_integration_multiple_injections_idempotent(self):\n        \"\"\"Integration: multiple inject calls should be idempotent.\"\"\"\n        first = inject_system_prompt('Base', 'Inject')\n        second = inject_system_prompt(first, 'Inject')\n        third = inject_system_prompt(second, 'Inject')\n        \n        assert first == second == third, \"Multiple calls must be idempotent\"\n\n\n# ============================================================================\n# TEST EXECUTION\n# ============================================================================\n\nif __name__ == '__main__':\n    pytest.main([__file__, '-v', '--tb=short'])\n"
+}

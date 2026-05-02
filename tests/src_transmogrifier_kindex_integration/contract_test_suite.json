@@ -1,0 +1,266 @@
+{
+  "component_id": "src_transmogrifier_kindex_integration",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_init_store_success",
+      "description": "Happy path: _init_store successfully imports kindex modules and creates Store singleton",
+      "function": "_init_store",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Kindex modules available and Store initialization succeeds",
+      "expected_output_description": "Returns True, _store is set to Store instance",
+      "expected_error": "",
+      "assertions": [
+        "_init_store() returns True",
+        "_store is not None",
+        "_store is a Store instance",
+        "logger.debug called appropriately"
+      ]
+    },
+    {
+      "id": "test_init_store_import_failure_config",
+      "description": "Error case: _init_store fails when kindex.config cannot be imported",
+      "function": "_init_store",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "kindex.config module unavailable",
+      "expected_output_description": "Returns False, _store unchanged, exception logged",
+      "expected_error": "kindex_import_failure",
+      "assertions": [
+        "_init_store() returns False",
+        "_store remains None",
+        "logger.debug called with exception info"
+      ]
+    },
+    {
+      "id": "test_init_store_import_failure_store",
+      "description": "Error case: _init_store fails when kindex.store cannot be imported",
+      "function": "_init_store",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "kindex.store module unavailable",
+      "expected_output_description": "Returns False, _store unchanged, exception logged",
+      "expected_error": "kindex_import_failure",
+      "assertions": [
+        "_init_store() returns False",
+        "_store remains None",
+        "logger.debug called with exception info"
+      ]
+    },
+    {
+      "id": "test_init_store_initialization_failure_load_config",
+      "description": "Error case: _init_store fails when load_config() raises exception",
+      "function": "_init_store",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "load_config() raises exception",
+      "expected_output_description": "Returns False, _store unchanged, exception logged",
+      "expected_error": "kindex_initialization_failure",
+      "assertions": [
+        "_init_store() returns False",
+        "_store remains None",
+        "logger.debug called with exception info"
+      ]
+    },
+    {
+      "id": "test_init_store_initialization_failure_store_constructor",
+      "description": "Error case: _init_store fails when Store() constructor raises exception",
+      "function": "_init_store",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Store() constructor raises exception",
+      "expected_output_description": "Returns False, _store unchanged, exception logged",
+      "expected_error": "kindex_initialization_failure",
+      "assertions": [
+        "_init_store() returns False",
+        "_store remains None",
+        "logger.debug called with exception info"
+      ]
+    },
+    {
+      "id": "test_init_store_preserves_existing_store_on_failure",
+      "description": "Edge case: _init_store preserves existing _store value on failure",
+      "function": "_init_store",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "_store already set, import fails",
+      "expected_output_description": "Returns False, _store unchanged from pre-call value",
+      "expected_error": "",
+      "assertions": [
+        "_init_store() returns False",
+        "_store equals pre-call value"
+      ]
+    },
+    {
+      "id": "test_is_available_first_call_success",
+      "description": "Happy path: is_available on first call successfully initializes store",
+      "function": "is_available",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Uninitialized state, kindex available",
+      "expected_output_description": "Returns True, _checked set to True, _store initialized",
+      "expected_error": "",
+      "assertions": [
+        "is_available() returns True",
+        "_checked is True",
+        "_store is not None"
+      ]
+    },
+    {
+      "id": "test_is_available_first_call_failure",
+      "description": "Happy path: is_available on first call when kindex unavailable",
+      "function": "is_available",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Uninitialized state, kindex import fails",
+      "expected_output_description": "Returns False, _checked set to True, _store remains None",
+      "expected_error": "",
+      "assertions": [
+        "is_available() returns False",
+        "_checked is True",
+        "_store is None"
+      ]
+    },
+    {
+      "id": "test_is_available_memoization_after_success",
+      "description": "Invariant: is_available memoizes result after successful initialization",
+      "function": "is_available",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Second call after successful initialization",
+      "expected_output_description": "Returns True without re-attempting initialization",
+      "expected_error": "",
+      "assertions": [
+        "is_available() returns True on first call",
+        "is_available() returns True on second call",
+        "_init_store called only once"
+      ]
+    },
+    {
+      "id": "test_is_available_memoization_after_failure",
+      "description": "Invariant: is_available memoizes result after initialization failure",
+      "function": "is_available",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Second call after failed initialization",
+      "expected_output_description": "Returns False without re-attempting initialization",
+      "expected_error": "",
+      "assertions": [
+        "is_available() returns False on first call",
+        "is_available() returns False on second call",
+        "_init_store called only once"
+      ]
+    },
+    {
+      "id": "test_is_available_after_close_re_initializes",
+      "description": "Edge case: is_available re-attempts initialization after close()",
+      "function": "is_available",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "is_available called after close()",
+      "expected_output_description": "Re-attempts initialization, updates _checked and _store",
+      "expected_error": "",
+      "assertions": [
+        "is_available() returns True before close",
+        "close() resets state",
+        "is_available() returns True after close",
+        "_init_store called twice"
+      ]
+    },
+    {
+      "id": "test_is_available_checked_flag_mutation",
+      "description": "Invariant: _checked always set to True after first is_available() call",
+      "function": "is_available",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Various initialization outcomes",
+      "expected_output_description": "_checked is True regardless of success/failure",
+      "expected_error": "",
+      "assertions": [
+        "_checked is False initially",
+        "After is_available() call, _checked is True",
+        "Holds for both success and failure cases"
+      ]
+    },
+    {
+      "id": "test_close_on_initialized_store",
+      "description": "Happy path: close() properly closes initialized store and resets state",
+      "function": "close",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Store initialized and available",
+      "expected_output_description": "_store.close() called, _store set to None, _checked set to False",
+      "expected_error": "",
+      "assertions": [
+        "_store.close() is called",
+        "_store is None after close()",
+        "_checked is False after close()"
+      ]
+    },
+    {
+      "id": "test_close_idempotent",
+      "description": "Edge case: close() can be called multiple times safely",
+      "function": "close",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Calling close() multiple times",
+      "expected_output_description": "No errors, state remains reset, close() only called on store once",
+      "expected_error": "",
+      "assertions": [
+        "First close() succeeds",
+        "Second close() succeeds without error",
+        "_store.close() called only once",
+        "_store is None",
+        "_checked is False"
+      ]
+    },
+    {
+      "id": "test_close_on_uninitialized",
+      "description": "Edge case: close() on uninitialized module state",
+      "function": "close",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "_store is None, _checked is False",
+      "expected_output_description": "No errors, state remains None/False",
+      "expected_error": "",
+      "assertions": [
+        "close() completes without error",
+        "_store is None",
+        "_checked is False"
+      ]
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract test suite for src_transmogrifier_kindex_integration\n\nThis test suite verifies the Kindex integration module against its contract,\ntesting initialization, availability checking, error handling, state management,\nand cleanup operations.\n\nTest Organization:\n1. Initialization & Error Paths: Tests for _init_store() covering success and\n   both error cases (kindex_import_failure, kindex_initialization_failure)\n2. State & Availability: Tests for is_available() covering memoization, state\n   transitions, and _checked flag mutation\n3. Cleanup & Idempotency: Tests for close() covering initialized/uninitialized\n   states and idempotent behavior\n\"\"\"\n\nimport pytest\nimport sys\nfrom unittest.mock import Mock, MagicMock, patch, call\nfrom typing import Any\n\n\n# Import the module under test\n# The actual module path should be adjusted based on the project structure\nimport src_transmogrifier_kindex_integration as kindex_integration\n\n\n@pytest.fixture(autouse=True)\ndef reset_module_state():\n    \"\"\"Reset module state before and after each test.\"\"\"\n    # Save original state\n    original_store = getattr(kindex_integration, '_store', None)\n    original_checked = getattr(kindex_integration, '_checked', False)\n    \n    # Reset to uninitialized state\n    kindex_integration._store = None\n    kindex_integration._checked = False\n    \n    yield\n    \n    # Restore original state after test\n    kindex_integration._store = original_store\n    kindex_integration._checked = original_checked\n\n\n@pytest.fixture\ndef mock_logger():\n    \"\"\"Mock the logger to verify logging behavior.\"\"\"\n    with patch.object(kindex_integration, 'logger') as mock_log:\n        yield mock_log\n\n\n@pytest.fixture\ndef mock_kindex_available(monkeypatch):\n    \"\"\"Mock kindex modules as available and functional.\"\"\"\n    mock_config_module = MagicMock()\n    mock_store_module = MagicMock()\n    mock_config_obj = MagicMock()\n    mock_store_instance = MagicMock()\n    \n    mock_config_module.load_config.return_value = mock_config_obj\n    mock_store_module.Store.return_value = mock_store_instance\n    \n    # Simulate successful imports\n    monkeypatch.setitem(sys.modules, 'kindex.config', mock_config_module)\n    monkeypatch.setitem(sys.modules, 'kindex.store', mock_store_module)\n    \n    return {\n        'config_module': mock_config_module,\n        'store_module': mock_store_module,\n        'config_obj': mock_config_obj,\n        'store_instance': mock_store_instance\n    }\n\n\n@pytest.fixture\ndef mock_kindex_config_import_failure(monkeypatch):\n    \"\"\"Mock kindex.config as unavailable (import failure).\"\"\"\n    # Remove kindex modules if they exist\n    if 'kindex.config' in sys.modules:\n        monkeypatch.delitem(sys.modules, 'kindex.config')\n    if 'kindex.store' in sys.modules:\n        monkeypatch.delitem(sys.modules, 'kindex.store')\n    \n    # Make import fail by not setting the module\n    return None\n\n\n@pytest.fixture\ndef mock_kindex_store_import_failure(monkeypatch):\n    \"\"\"Mock kindex.store as unavailable (import failure).\"\"\"\n    mock_config_module = MagicMock()\n    \n    # config is available but store is not\n    monkeypatch.setitem(sys.modules, 'kindex.config', mock_config_module)\n    \n    if 'kindex.store' in sys.modules:\n        monkeypatch.delitem(sys.modules, 'kindex.store')\n    \n    return None\n\n\n# =============================================================================\n# Suite 1: Initialization & Error Paths\n# =============================================================================\n\ndef test_init_store_success(mock_kindex_available, mock_logger):\n    \"\"\"\n    Happy path: _init_store successfully imports kindex modules and creates Store singleton.\n    \n    Verifies:\n    - Returns True\n    - _store is set to Store instance\n    - logger.debug may be called for informational purposes\n    \"\"\"\n    result = kindex_integration._init_store()\n    \n    assert result is True, \"_init_store() should return True on success\"\n    assert kindex_integration._store is not None, \"_store should be set\"\n    assert kindex_integration._store == mock_kindex_available['store_instance'], \\\n        \"_store should be the Store instance\"\n    \n    # Verify load_config and Store were called\n    mock_kindex_available['config_module'].load_config.assert_called_once()\n    mock_kindex_available['store_module'].Store.assert_called_once()\n\n\ndef test_init_store_import_failure_config(mock_logger):\n    \"\"\"\n    Error case: _init_store fails when kindex.config cannot be imported.\n    \n    Verifies:\n    - Returns False\n    - _store remains None\n    - logger.debug called with exception info\n    \"\"\"\n    # Ensure kindex modules are not available\n    if 'kindex.config' in sys.modules:\n        del sys.modules['kindex.config']\n    if 'kindex.store' in sys.modules:\n        del sys.modules['kindex.store']\n    \n    result = kindex_integration._init_store()\n    \n    assert result is False, \"_init_store() should return False on import failure\"\n    assert kindex_integration._store is None, \"_store should remain None\"\n    \n    # Verify debug logging occurred\n    assert mock_logger.debug.called, \"logger.debug should be called on failure\"\n\n\ndef test_init_store_import_failure_store(mock_logger, monkeypatch):\n    \"\"\"\n    Error case: _init_store fails when kindex.store cannot be imported.\n    \n    Verifies:\n    - Returns False\n    - _store remains None\n    - logger.debug called with exception info\n    \"\"\"\n    # Make config available but not store\n    mock_config_module = MagicMock()\n    monkeypatch.setitem(sys.modules, 'kindex.config', mock_config_module)\n    \n    # Ensure store module is not available\n    if 'kindex.store' in sys.modules:\n        del sys.modules['kindex.store']\n    \n    result = kindex_integration._init_store()\n    \n    assert result is False, \"_init_store() should return False on store import failure\"\n    assert kindex_integration._store is None, \"_store should remain None\"\n    \n    # Verify debug logging occurred\n    assert mock_logger.debug.called, \"logger.debug should be called on failure\"\n\n\ndef test_init_store_initialization_failure_load_config(mock_logger, monkeypatch):\n    \"\"\"\n    Error case: _init_store fails when load_config() raises exception.\n    \n    Verifies:\n    - Returns False\n    - _store remains None\n    - logger.debug called with exception info\n    \"\"\"\n    mock_config_module = MagicMock()\n    mock_store_module = MagicMock()\n    \n    # Make load_config raise an exception\n    mock_config_module.load_config.side_effect = RuntimeError(\"Config load failed\")\n    \n    monkeypatch.setitem(sys.modules, 'kindex.config', mock_config_module)\n    monkeypatch.setitem(sys.modules, 'kindex.store', mock_store_module)\n    \n    result = kindex_integration._init_store()\n    \n    assert result is False, \"_init_store() should return False on load_config failure\"\n    assert kindex_integration._store is None, \"_store should remain None\"\n    \n    # Verify debug logging occurred\n    assert mock_logger.debug.called, \"logger.debug should be called on failure\"\n    \n    # Verify Store was not instantiated\n    mock_store_module.Store.assert_not_called()\n\n\ndef test_init_store_initialization_failure_store_constructor(mock_logger, monkeypatch):\n    \"\"\"\n    Error case: _init_store fails when Store() constructor raises exception.\n    \n    Verifies:\n    - Returns False\n    - _store remains None\n    - logger.debug called with exception info\n    \"\"\"\n    mock_config_module = MagicMock()\n    mock_store_module = MagicMock()\n    mock_config_obj = MagicMock()\n    \n    mock_config_module.load_config.return_value = mock_config_obj\n    # Make Store constructor raise an exception\n    mock_store_module.Store.side_effect = RuntimeError(\"Store init failed\")\n    \n    monkeypatch.setitem(sys.modules, 'kindex.config', mock_config_module)\n    monkeypatch.setitem(sys.modules, 'kindex.store', mock_store_module)\n    \n    result = kindex_integration._init_store()\n    \n    assert result is False, \"_init_store() should return False on Store() failure\"\n    assert kindex_integration._store is None, \"_store should remain None\"\n    \n    # Verify debug logging occurred\n    assert mock_logger.debug.called, \"logger.debug should be called on failure\"\n\n\ndef test_init_store_preserves_existing_store_on_failure(mock_logger):\n    \"\"\"\n    Edge case: _init_store preserves existing _store value on failure.\n    \n    Verifies:\n    - Returns False on failure\n    - _store unchanged from pre-call value\n    \"\"\"\n    # Set up existing store\n    existing_store = MagicMock()\n    kindex_integration._store = existing_store\n    \n    # Ensure kindex modules are not available\n    if 'kindex.config' in sys.modules:\n        del sys.modules['kindex.config']\n    if 'kindex.store' in sys.modules:\n        del sys.modules['kindex.store']\n    \n    result = kindex_integration._init_store()\n    \n    assert result is False, \"_init_store() should return False on failure\"\n    assert kindex_integration._store == existing_store, \\\n        \"_store should be unchanged from pre-call value\"\n\n\n# =============================================================================\n# Suite 2: State & Availability\n# =============================================================================\n\ndef test_is_available_first_call_success(mock_kindex_available, mock_logger):\n    \"\"\"\n    Happy path: is_available on first call successfully initializes store.\n    \n    Verifies:\n    - Returns True\n    - _checked set to True\n    - _store initialized\n    \"\"\"\n    assert kindex_integration._checked is False, \"Initial state: _checked should be False\"\n    assert kindex_integration._store is None, \"Initial state: _store should be None\"\n    \n    result = kindex_integration.is_available()\n    \n    assert result is True, \"is_available() should return True on success\"\n    assert kindex_integration._checked is True, \"_checked should be set to True\"\n    assert kindex_integration._store is not None, \"_store should be initialized\"\n    assert kindex_integration._store == mock_kindex_available['store_instance'], \\\n        \"_store should be the Store instance\"\n\n\ndef test_is_available_first_call_failure(mock_logger):\n    \"\"\"\n    Happy path: is_available on first call when kindex unavailable.\n    \n    Verifies:\n    - Returns False\n    - _checked set to True\n    - _store remains None\n    \"\"\"\n    # Ensure kindex modules are not available\n    if 'kindex.config' in sys.modules:\n        del sys.modules['kindex.config']\n    if 'kindex.store' in sys.modules:\n        del sys.modules['kindex.store']\n    \n    assert kindex_integration._checked is False, \"Initial state: _checked should be False\"\n    assert kindex_integration._store is None, \"Initial state: _store should be None\"\n    \n    result = kindex_integration.is_available()\n    \n    assert result is False, \"is_available() should return False on failure\"\n    assert kindex_integration._checked is True, \"_checked should be set to True\"\n    assert kindex_integration._store is None, \"_store should remain None\"\n\n\ndef test_is_available_memoization_after_success(mock_kindex_available, mock_logger):\n    \"\"\"\n    Invariant: is_available memoizes result after successful initialization.\n    \n    Verifies:\n    - First call returns True and initializes\n    - Second call returns True without re-attempting initialization\n    - _init_store effectively called only once\n    \"\"\"\n    # Patch _init_store to track calls\n    with patch.object(kindex_integration, '_init_store', \n                     wraps=kindex_integration._init_store) as mock_init:\n        # First call\n        result1 = kindex_integration.is_available()\n        assert result1 is True, \"First call should return True\"\n        assert mock_init.call_count == 1, \"_init_store should be called once\"\n        \n        # Second call\n        result2 = kindex_integration.is_available()\n        assert result2 is True, \"Second call should return True\"\n        assert mock_init.call_count == 1, \"_init_store should not be called again\"\n        \n        # Verify state\n        assert kindex_integration._checked is True, \"_checked should remain True\"\n        assert kindex_integration._store is not None, \"_store should remain initialized\"\n\n\ndef test_is_available_memoization_after_failure(mock_logger):\n    \"\"\"\n    Invariant: is_available memoizes result after initialization failure.\n    \n    Verifies:\n    - First call returns False\n    - Second call returns False without re-attempting initialization\n    - _init_store effectively called only once\n    \"\"\"\n    # Ensure kindex modules are not available\n    if 'kindex.config' in sys.modules:\n        del sys.modules['kindex.config']\n    if 'kindex.store' in sys.modules:\n        del sys.modules['kindex.store']\n    \n    # Patch _init_store to track calls\n    with patch.object(kindex_integration, '_init_store', \n                     wraps=kindex_integration._init_store) as mock_init:\n        # First call\n        result1 = kindex_integration.is_available()\n        assert result1 is False, \"First call should return False\"\n        assert mock_init.call_count == 1, \"_init_store should be called once\"\n        \n        # Second call\n        result2 = kindex_integration.is_available()\n        assert result2 is False, \"Second call should return False\"\n        assert mock_init.call_count == 1, \"_init_store should not be called again\"\n        \n        # Verify state\n        assert kindex_integration._checked is True, \"_checked should remain True\"\n        assert kindex_integration._store is None, \"_store should remain None\"\n\n\ndef test_is_available_after_close_re_initializes(mock_kindex_available, mock_logger):\n    \"\"\"\n    Edge case: is_available re-attempts initialization after close().\n    \n    Verifies:\n    - is_available returns True before close\n    - close() resets state\n    - is_available returns True after close and re-initializes\n    - _init_store called twice\n    \"\"\"\n    # Patch _init_store to track calls\n    with patch.object(kindex_integration, '_init_store', \n                     wraps=kindex_integration._init_store) as mock_init:\n        # First availability check\n        result1 = kindex_integration.is_available()\n        assert result1 is True, \"First is_available() should return True\"\n        assert mock_init.call_count == 1, \"_init_store should be called once\"\n        assert kindex_integration._checked is True, \"_checked should be True\"\n        \n        # Close\n        kindex_integration.close()\n        assert kindex_integration._checked is False, \"_checked should be reset to False\"\n        assert kindex_integration._store is None, \"_store should be reset to None\"\n        \n        # Second availability check after close\n        result2 = kindex_integration.is_available()\n        assert result2 is True, \"Second is_available() should return True\"\n        assert mock_init.call_count == 2, \"_init_store should be called twice\"\n        assert kindex_integration._checked is True, \"_checked should be True again\"\n        assert kindex_integration._store is not None, \"_store should be re-initialized\"\n\n\ndef test_is_available_checked_flag_mutation(mock_kindex_available, mock_logger):\n    \"\"\"\n    Invariant: _checked always set to True after first is_available() call.\n    \n    Verifies _checked is True regardless of success/failure outcome.\n    \"\"\"\n    # Test success case\n    assert kindex_integration._checked is False, \"Initial: _checked should be False\"\n    kindex_integration.is_available()\n    assert kindex_integration._checked is True, \\\n        \"_checked should be True after is_available() (success)\"\n    \n    # Reset and test failure case\n    kindex_integration._checked = False\n    kindex_integration._store = None\n    \n    # Remove kindex modules to force failure\n    if 'kindex.config' in sys.modules:\n        del sys.modules['kindex.config']\n    if 'kindex.store' in sys.modules:\n        del sys.modules['kindex.store']\n    \n    assert kindex_integration._checked is False, \"After reset: _checked should be False\"\n    kindex_integration.is_available()\n    assert kindex_integration._checked is True, \\\n        \"_checked should be True after is_available() (failure)\"\n\n\n# =============================================================================\n# Suite 3: Cleanup & Idempotency\n# =============================================================================\n\ndef test_close_on_initialized_store(mock_kindex_available, mock_logger):\n    \"\"\"\n    Happy path: close() properly closes initialized store and resets state.\n    \n    Verifies:\n    - _store.close() is called\n    - _store set to None\n    - _checked set to False\n    \"\"\"\n    # Initialize the store\n    kindex_integration.is_available()\n    assert kindex_integration._store is not None, \"Store should be initialized\"\n    assert kindex_integration._checked is True, \"_checked should be True\"\n    \n    store_instance = kindex_integration._store\n    \n    # Close\n    kindex_integration.close()\n    \n    # Verify close was called on the store\n    store_instance.close.assert_called_once()\n    \n    # Verify state reset\n    assert kindex_integration._store is None, \"_store should be None after close()\"\n    assert kindex_integration._checked is False, \"_checked should be False after close()\"\n\n\ndef test_close_idempotent(mock_kindex_available, mock_logger):\n    \"\"\"\n    Edge case: close() can be called multiple times safely.\n    \n    Verifies:\n    - First close() succeeds\n    - Second close() succeeds without error\n    - _store.close() called only once\n    - State remains reset\n    \"\"\"\n    # Initialize the store\n    kindex_integration.is_available()\n    store_instance = kindex_integration._store\n    \n    # First close\n    kindex_integration.close()\n    store_instance.close.assert_called_once()\n    assert kindex_integration._store is None, \"_store should be None after first close()\"\n    assert kindex_integration._checked is False, \"_checked should be False after first close()\"\n    \n    # Second close (should not raise error)\n    kindex_integration.close()\n    \n    # Verify close was still only called once (on the original instance)\n    store_instance.close.assert_called_once()\n    \n    # Verify state remains reset\n    assert kindex_integration._store is None, \"_store should remain None\"\n    assert kindex_integration._checked is False, \"_checked should remain False\"\n\n\ndef test_close_on_uninitialized(mock_logger):\n    \"\"\"\n    Edge case: close() on uninitialized module state.\n    \n    Verifies:\n    - No errors occur\n    - State remains None/False\n    \"\"\"\n    # Ensure uninitialized state\n    assert kindex_integration._store is None, \"_store should be None initially\"\n    assert kindex_integration._checked is False, \"_checked should be False initially\"\n    \n    # Close should not raise any errors\n    kindex_integration.close()\n    \n    # Verify state remains uninitialized\n    assert kindex_integration._store is None, \"_store should remain None\"\n    assert kindex_integration._checked is False, \"_checked should remain False\"\n"
+}

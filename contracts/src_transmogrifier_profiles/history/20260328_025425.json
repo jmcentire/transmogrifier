@@ -1,0 +1,812 @@
+{
+  "component_id": "src_transmogrifier_profiles",
+  "name": "Model Profile Cache",
+  "description": "File-based cache for model register sensitivity profiles with pre-seeded calibration data. Tracks per-model and per-task-type accuracy metrics across different linguistic registers (direct, technical, academic, narrative, casual) to enable register-aware prompt optimization.",
+  "version": 1,
+  "types": [
+    {
+      "name": "RegisterAccuracy",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "register",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Register name (e.g., 'direct', 'technical', 'academic', 'narrative', 'casual')",
+          "validators": []
+        },
+        {
+          "name": "accuracy",
+          "type_ref": "float",
+          "required": true,
+          "default": "",
+          "description": "Accuracy score in range [0.0, 1.0]",
+          "validators": []
+        },
+        {
+          "name": "sample_size",
+          "type_ref": "int",
+          "required": false,
+          "default": "16",
+          "description": "Number of test cases used for calibration",
+          "validators": []
+        },
+        {
+          "name": "task_type",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "Task type filter; empty string means aggregate across all tasks",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Register-specific accuracy measurement for a model",
+      "owner_component": ""
+    },
+    {
+      "name": "TaskRegisterProfile",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "task_type",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Task category (e.g., 'factual', 'reasoning', 'code', 'analysis')",
+          "validators": []
+        },
+        {
+          "name": "accuracies",
+          "type_ref": "list[RegisterAccuracy]",
+          "required": true,
+          "default": "",
+          "description": "Accuracy measurements for each register on this task type",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Per-task-type register accuracy breakdown",
+      "owner_component": ""
+    },
+    {
+      "name": "ModelProfile",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "model_name",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Canonical model identifier",
+          "validators": []
+        },
+        {
+          "name": "model_version",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "Model version/snapshot identifier",
+          "validators": []
+        },
+        {
+          "name": "provider",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "Provider name (e.g., 'anthropic', 'openai', 'gemini')",
+          "validators": []
+        },
+        {
+          "name": "accuracies",
+          "type_ref": "list[RegisterAccuracy]",
+          "required": true,
+          "default": "",
+          "description": "Aggregate accuracy across all tasks (backward compatible)",
+          "validators": []
+        },
+        {
+          "name": "by_task",
+          "type_ref": "list[TaskRegisterProfile]",
+          "required": false,
+          "default": "[]",
+          "description": "Per-task-type accuracy breakdown",
+          "validators": []
+        },
+        {
+          "name": "calibrated_at",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "ISO 8601 timestamp of calibration",
+          "validators": []
+        },
+        {
+          "name": "ttl_hours",
+          "type_ref": "int",
+          "required": false,
+          "default": "720",
+          "description": "Time-to-live in hours before profile is considered expired",
+          "validators": []
+        },
+        {
+          "name": "calibration_version",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"1.0\"",
+          "description": "Schema version of calibration data",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Complete calibration profile for a single model including aggregate and per-task register sensitivities",
+      "owner_component": ""
+    },
+    {
+      "name": "ProfileCache",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "_cache_dir",
+          "type_ref": "Path",
+          "required": true,
+          "default": "",
+          "description": "Directory for persistent JSON profile storage",
+          "validators": []
+        },
+        {
+          "name": "_memory",
+          "type_ref": "dict[str, ModelProfile]",
+          "required": true,
+          "default": "",
+          "description": "In-memory cache layer keyed by canonical model name",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "File-based cache manager for model profiles with memory layer and pre-seeded fallback",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "TaskRegisterProfile.best_register",
+      "description": "Returns the register with highest accuracy for this task type. Defaults to 'direct' if no accuracies available.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "TaskRegisterProfile",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns 'direct' if self.accuracies is empty",
+        "Otherwise returns the register field of the RegisterAccuracy with maximum accuracy"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "TaskRegisterProfile.spread_pp",
+      "description": "Calculates percentage point spread (max - min accuracy) * 100 for this task type. Returns 0.0 if no accuracies.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "TaskRegisterProfile",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        }
+      ],
+      "output_type": "float",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns 0.0 if self.accuracies is empty",
+        "Otherwise returns (max(accuracies) - min(accuracies)) * 100"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ModelProfile.spread_pp",
+      "description": "Calculates aggregate percentage point spread (max - min accuracy) * 100 across all registers. Returns 0.0 if no accuracies. Computed field.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ModelProfile",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        }
+      ],
+      "output_type": "float",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns 0.0 if self.accuracies is empty",
+        "Otherwise returns (max(accuracies) - min(accuracies)) * 100"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ModelProfile.is_invariant",
+      "description": "Determines if model is register-invariant (spread < 2.0 percentage points). Computed field.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ModelProfile",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        }
+      ],
+      "output_type": "bool",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns True if self.spread_pp < 2.0, False otherwise"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ModelProfile.best_register",
+      "description": "Returns the aggregate register with highest accuracy. Defaults to 'direct' if no accuracies. Computed field.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ModelProfile",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns 'direct' if self.accuracies is empty",
+        "Otherwise returns the register field of the RegisterAccuracy with maximum accuracy"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ModelProfile.worst_register",
+      "description": "Returns the aggregate register with lowest accuracy. Defaults to 'direct' if no accuracies. Computed field.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ModelProfile",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns 'direct' if self.accuracies is empty",
+        "Otherwise returns the register field of the RegisterAccuracy with minimum accuracy"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ModelProfile.best_register_for_task",
+      "description": "Returns optimal register for specific task type. Falls back to aggregate best_register if task type not found in by_task.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ModelProfile",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "task_type",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Task category to look up (e.g., 'factual', 'reasoning', 'code')",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "If task_type matches a TaskRegisterProfile in self.by_task, returns that profile's best_register",
+        "Otherwise returns self.best_register (aggregate)"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ModelProfile.spread_for_task",
+      "description": "Returns register spread for specific task type. Falls back to aggregate spread if task type not found.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ModelProfile",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "task_type",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Task category to look up",
+          "validators": []
+        }
+      ],
+      "output_type": "float",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "If task_type matches a TaskRegisterProfile in self.by_task, returns that profile's spread_pp",
+        "Otherwise returns self.spread_pp (aggregate)"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ModelProfile.is_expired",
+      "description": "Checks if profile has exceeded its TTL based on calibrated_at timestamp. Returns False if calibrated_at is empty or parsing fails.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ModelProfile",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        }
+      ],
+      "output_type": "bool",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns False if self.calibrated_at is empty",
+        "Returns False if datetime parsing raises ValueError or TypeError",
+        "Otherwise returns True if (now - calibrated_at) > self.ttl_hours, False otherwise"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Calls datetime.now(timezone.utc) to get current time"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ProfileCache.__init__",
+      "description": "Initializes ProfileCache with optional cache directory. Defaults to ~/.transmogrifier/profiles if not provided.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ProfileCache",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "cache_dir",
+          "type_ref": "Path | None",
+          "required": false,
+          "default": "None",
+          "description": "Directory for persistent cache storage",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "self._cache_dir is set to cache_dir if provided, otherwise Path.home() / '.transmogrifier' / 'profiles'",
+        "self._memory is initialized to empty dict"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ProfileCache.get",
+      "description": "Retrieves ModelProfile by name with alias resolution, memory cache, file cache, and pre-seeded fallback. Returns None if not found.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ProfileCache",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "model_name",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Model identifier (may be alias or canonical name)",
+          "validators": []
+        }
+      ],
+      "output_type": "ModelProfile | None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Resolves model_name via _ALIASES to canonical name",
+        "Returns cached unexpired profile from memory if exists",
+        "Otherwise loads from file, caches in memory, and returns if unexpired",
+        "Otherwise returns from _PRESEEDED dict if exact match exists",
+        "Otherwise returns from _PRESEEDED dict if partial match exists (key in canonical or canonical in key)",
+        "Returns None if no match found anywhere"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "May update self._memory cache",
+        "Reads from filesystem via _load_file"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "cache_dir/*.json",
+          "description": "Reads profile JSON files"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._memory",
+          "description": "Updates in-memory cache"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ProfileCache.put",
+      "description": "Persists ModelProfile to disk and updates memory cache. Creates cache directory if it doesn't exist.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ProfileCache",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "profile",
+          "type_ref": "ModelProfile",
+          "required": true,
+          "default": "",
+          "description": "Profile to persist",
+          "validators": []
+        }
+      ],
+      "output_type": "Path",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Creates self._cache_dir with parents if it doesn't exist",
+        "Writes profile JSON to {cache_dir}/{profile.model_name}.json",
+        "Updates self._memory[profile.model_name] with profile",
+        "Returns Path to written file"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Creates directories",
+        "Writes to filesystem"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "writes_file",
+          "target": "cache_dir/{model_name}.json",
+          "description": "Writes profile as JSON"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._memory",
+          "description": "Updates in-memory cache"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ProfileCache.invalidate",
+      "description": "Removes profile from memory cache and deletes file from disk. Returns True if file was deleted, False otherwise.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ProfileCache",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "model_name",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Model identifier to invalidate",
+          "validators": []
+        }
+      ],
+      "output_type": "bool",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Resolves model_name via _ALIASES to canonical name",
+        "Removes canonical name from self._memory if present",
+        "Deletes {cache_dir}/{canonical}.json if it exists and returns True",
+        "Returns False if file does not exist"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Removes from memory cache",
+        "May delete file from filesystem"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "writes_file",
+          "target": "cache_dir/{model_name}.json",
+          "description": "Deletes profile file if exists"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._memory",
+          "description": "Removes from in-memory cache"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ProfileCache.list_profiles",
+      "description": "Returns list of all available profiles from pre-seeded data and cached files, deduplicating by model_name.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ProfileCache",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        }
+      ],
+      "output_type": "list[ModelProfile]",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns list starting with all _PRESEEDED profiles",
+        "Appends profiles from {cache_dir}/*.json files that don't have matching model_name in pre-seeded",
+        "Silently skips files that fail to parse"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Reads all .json files from cache_dir if directory exists"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "cache_dir/*.json",
+          "description": "Reads all cached profile files"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "ProfileCache._load_file",
+      "description": "Internal method to load ModelProfile from JSON file. Returns None if file doesn't exist or parsing fails.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "ProfileCache",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "model_name",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Model identifier (used as filename)",
+          "validators": []
+        }
+      ],
+      "output_type": "ModelProfile | None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns None if {cache_dir}/{model_name}.json does not exist",
+        "Returns ModelProfile instance if file exists and parses successfully",
+        "Returns None and logs debug message if parsing fails"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Reads from filesystem",
+        "Logs debug message on parse failure"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "cache_dir/{model_name}.json",
+          "description": "Reads profile JSON file"
+        },
+        {
+          "kind": "logging",
+          "target": "logger.debug",
+          "description": "Logs parse failures"
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "json",
+    "logging",
+    "datetime",
+    "pathlib",
+    "pydantic"
+  ],
+  "dependency_contracts": {
+    "pydantic": [
+      "BaseModel",
+      "computed_field"
+    ],
+    "pathlib": [
+      "Path"
+    ],
+    "datetime": [
+      "datetime",
+      "timezone"
+    ],
+    "json": [
+      "loads"
+    ],
+    "logging": [
+      "getLogger"
+    ]
+  },
+  "invariants": [
+    "_PRESEEDED contains pre-calibrated profiles for 'claude-opus-4', 'claude-haiku-4-5', 'gpt-4o-mini', 'gemini-2-5-flash' as of 2026-03-27",
+    "_ALIASES maps versioned model IDs to canonical profile names",
+    "Default register fallback is always 'direct' when accuracies list is empty",
+    "Default cache directory is ~/.transmogrifier/profiles",
+    "Profile TTL default is 720 hours (30 days)",
+    "Calibration version default is '1.0'",
+    "Sample size default is 16",
+    "Register spread threshold for invariance is 2.0 percentage points"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [],
+    "writes": [],
+    "rationale": "",
+    "side_effects": []
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

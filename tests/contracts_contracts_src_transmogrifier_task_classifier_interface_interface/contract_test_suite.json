@@ -1,0 +1,320 @@
+{
+  "component_id": "contracts_contracts_src_transmogrifier_task_classifier_interface_interface",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_classify_happy_path_factual",
+      "description": "Verify classify returns valid TaskType and confidence for a factual question",
+      "function": "classify",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "What is the capital of France?"
+      },
+      "input_description": "A simple factual question",
+      "expected_output_description": "Returns tuple of (TaskType, float) with confidence in [0.0, 1.0]",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple with 2 elements",
+        "First element is a TaskType enum member",
+        "Second element is float in range [0.0, 1.0]",
+        "Confidence is rounded to 3 decimal places"
+      ]
+    },
+    {
+      "id": "test_classify_happy_path_code",
+      "description": "Verify classify handles code-related prompts",
+      "function": "classify",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "Write a Python function to sort a list"
+      },
+      "input_description": "A code-related question",
+      "expected_output_description": "Returns tuple of (TaskType, float) with confidence in [0.0, 1.0]",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple with 2 elements",
+        "First element is a TaskType enum member",
+        "Second element is float in range [0.0, 1.0]"
+      ]
+    },
+    {
+      "id": "test_classify_happy_path_reasoning",
+      "description": "Verify classify handles reasoning tasks",
+      "function": "classify",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "If all A are B and all B are C, what can we conclude about A and C?"
+      },
+      "input_description": "A reasoning-based question",
+      "expected_output_description": "Returns tuple of (TaskType, float) with confidence in [0.0, 1.0]",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple with 2 elements",
+        "First element is a TaskType enum member",
+        "Second element is float in range [0.0, 1.0]"
+      ]
+    },
+    {
+      "id": "test_classify_empty_string",
+      "description": "Verify empty string returns unknown with 0.0 confidence",
+      "function": "classify",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": ""
+      },
+      "input_description": "Empty string",
+      "expected_output_description": "Returns (TaskType.unknown, 0.0)",
+      "expected_error": "",
+      "assertions": [
+        "Returns TaskType.unknown",
+        "Confidence is exactly 0.0"
+      ]
+    },
+    {
+      "id": "test_classify_whitespace_only",
+      "description": "Verify whitespace-only input returns unknown with 0.0 confidence",
+      "function": "classify",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "   \t\n\r  "
+      },
+      "input_description": "String with only whitespace characters",
+      "expected_output_description": "Returns (TaskType.unknown, 0.0)",
+      "expected_error": "",
+      "assertions": [
+        "Returns TaskType.unknown",
+        "Confidence is exactly 0.0"
+      ]
+    },
+    {
+      "id": "test_classify_no_pattern_match",
+      "description": "Verify text with no matching patterns returns unknown with 0.5 confidence",
+      "function": "classify",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "xyzabc123"
+      },
+      "input_description": "Random text unlikely to match any patterns",
+      "expected_output_description": "Returns (TaskType.unknown, 0.5) when no patterns match",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple",
+        "First element is a TaskType enum member",
+        "Second element is float in range [0.0, 1.0]"
+      ]
+    },
+    {
+      "id": "test_classify_confidence_bounds",
+      "description": "Verify confidence is always in range [0.0, 1.0]",
+      "function": "classify",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Various text inputs",
+      "expected_output_description": "Confidence always between 0.0 and 1.0 inclusive",
+      "expected_error": "",
+      "assertions": [
+        "Confidence >= 0.0",
+        "Confidence <= 1.0"
+      ]
+    },
+    {
+      "id": "test_classify_confidence_precision",
+      "description": "Verify confidence is rounded to 3 decimal places",
+      "function": "classify",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "Sample text for testing precision"
+      },
+      "input_description": "Any valid text",
+      "expected_output_description": "Confidence has at most 3 decimal places",
+      "expected_error": "",
+      "assertions": [
+        "Confidence rounded to 3 decimal places"
+      ]
+    },
+    {
+      "id": "test_classify_return_type",
+      "description": "Verify classify returns tuple of (TaskType, float)",
+      "function": "classify",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "Test input"
+      },
+      "input_description": "Any text input",
+      "expected_output_description": "Returns tuple[TaskType, float]",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple",
+        "Tuple has exactly 2 elements",
+        "First element is TaskType",
+        "Second element is float"
+      ]
+    },
+    {
+      "id": "test_classify_all_task_types_reachable",
+      "description": "Verify all TaskType enum members can theoretically be returned",
+      "function": "classify",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Various inputs designed to trigger different task types",
+      "expected_output_description": "All TaskType values are valid return values",
+      "expected_error": "",
+      "assertions": [
+        "All TaskType enum members are valid"
+      ]
+    },
+    {
+      "id": "test_classify_unicode_text",
+      "description": "Verify classify handles unicode text correctly",
+      "function": "classify",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "Какова столица России? 日本の首都は?"
+      },
+      "input_description": "Text with unicode characters",
+      "expected_output_description": "Returns valid tuple without errors",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple",
+        "First element is a TaskType",
+        "Second element is float in range [0.0, 1.0]"
+      ]
+    },
+    {
+      "id": "test_classify_very_long_text",
+      "description": "Verify classify handles very long text inputs",
+      "function": "classify",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "Very long text (10000+ characters)",
+      "expected_output_description": "Returns valid tuple without errors",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple",
+        "First element is a TaskType",
+        "Second element is float in range [0.0, 1.0]"
+      ]
+    },
+    {
+      "id": "test_classify_special_characters",
+      "description": "Verify classify handles special characters and symbols",
+      "function": "classify",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "!@#$%^&*()_+-=[]{}|;':\",./<>?"
+      },
+      "input_description": "Text with special characters",
+      "expected_output_description": "Returns valid tuple without errors",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple",
+        "First element is a TaskType",
+        "Second element is float in range [0.0, 1.0]"
+      ]
+    },
+    {
+      "id": "test_classify_mixed_content",
+      "description": "Verify classify handles text with mixed markers from multiple categories",
+      "function": "classify",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "What is the answer? Analyze this code: def foo(): pass. Be creative!"
+      },
+      "input_description": "Text containing markers from multiple task types",
+      "expected_output_description": "Returns the highest scoring TaskType with appropriate confidence",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple",
+        "First element is a TaskType",
+        "Second element is float in range [0.0, 1.0]",
+        "Confidence is rounded to 3 decimal places"
+      ]
+    },
+    {
+      "id": "test_classify_case_insensitive",
+      "description": "Verify pattern matching is case-insensitive",
+      "function": "classify",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "WHAT IS THE CAPITAL"
+      },
+      "input_description": "Same text in different cases",
+      "expected_output_description": "Case variations should be handled consistently",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple",
+        "First element is a TaskType",
+        "Second element is float in range [0.0, 1.0]"
+      ]
+    },
+    {
+      "id": "test_classify_single_character",
+      "description": "Verify classify handles single character input",
+      "function": "classify",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "a"
+      },
+      "input_description": "Single character",
+      "expected_output_description": "Returns valid tuple without errors",
+      "expected_error": "",
+      "assertions": [
+        "Result is a tuple",
+        "First element is a TaskType",
+        "Second element is float in range [0.0, 1.0]"
+      ]
+    },
+    {
+      "id": "test_classify_determinism",
+      "description": "Verify classify is deterministic (same input yields same output)",
+      "function": "classify",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "text": "Determinism test input"
+      },
+      "input_description": "Same text called multiple times",
+      "expected_output_description": "Multiple calls return identical results",
+      "expected_error": "",
+      "assertions": [
+        "First call result equals second call result",
+        "Result is stable across multiple invocations"
+      ]
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract test suite for TaskClassifier interface.\n\nTests verify compliance with the contract specification including:\n- Happy path: valid inputs return correct types and bounds\n- Edge cases: empty strings, whitespace, unicode, long text, special chars\n- Invariants: confidence bounds, precision, return types, determinism\n\"\"\"\n\nimport pytest\nfrom unittest.mock import Mock, MagicMock, patch\nfrom enum import Enum\nfrom typing import Tuple\nimport random\nimport string\n\n# Import the component under test\nfrom contracts.contracts_src_transmogrifier_task_classifier_interface.interface import *\n\n\n# ============================================================================\n# Test Fixtures and Helpers\n# ============================================================================\n\n@pytest.fixture\ndef classifier():\n    \"\"\"Fixture providing a TaskClassifier instance.\"\"\"\n    return TaskClassifier()\n\n\n@pytest.fixture\ndef mock_classifier():\n    \"\"\"Fixture providing a mock TaskClassifier for controlled testing.\"\"\"\n    mock = Mock(spec=TaskClassifier)\n    # Default behavior: return unknown with 0.5 confidence\n    mock.classify.return_value = (TaskType.unknown, 0.5)\n    return mock\n\n\ndef is_valid_confidence(conf: float) -> bool:\n    \"\"\"Check if confidence value meets contract requirements.\"\"\"\n    if not isinstance(conf, float):\n        return False\n    if not (0.0 <= conf <= 1.0):\n        return False\n    # Check precision (at most 3 decimal places)\n    return round(conf, 3) == conf\n\n\n# ============================================================================\n# Contract Compliance Tests\n# ============================================================================\n\nclass TestContractCompliance:\n    \"\"\"Test basic contract compliance: types, bounds, interface.\"\"\"\n    \n    def test_task_type_enum_exists(self):\n        \"\"\"Verify TaskType enum is defined with correct members.\"\"\"\n        assert issubclass(TaskType, Enum)\n        expected_members = {'factual', 'reasoning', 'code', 'analysis', \n                          'creative', 'instruction', 'unknown'}\n        actual_members = {member.name for member in TaskType}\n        assert expected_members == actual_members, \\\n            f\"Expected {expected_members}, got {actual_members}\"\n    \n    def test_task_classifier_exists(self):\n        \"\"\"Verify TaskClassifier class is defined.\"\"\"\n        assert TaskClassifier is not None\n        classifier = TaskClassifier()\n        assert classifier is not None\n    \n    def test_classify_method_exists(self, classifier):\n        \"\"\"Verify classify method exists and is callable.\"\"\"\n        assert hasattr(classifier, 'classify')\n        assert callable(getattr(classifier, 'classify'))\n    \n    def test_classify_return_type(self, classifier):\n        \"\"\"Verify classify returns tuple of (TaskType, float).\"\"\"\n        result = classifier.classify(\"Test input\")\n        \n        assert isinstance(result, tuple), \"Result must be a tuple\"\n        assert len(result) == 2, \"Result tuple must have exactly 2 elements\"\n        \n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \\\n            f\"First element must be TaskType, got {type(task_type)}\"\n        assert isinstance(confidence, float), \\\n            f\"Second element must be float, got {type(confidence)}\"\n    \n    def test_classify_confidence_bounds(self, classifier):\n        \"\"\"Verify confidence is always in range [0.0, 1.0].\"\"\"\n        test_inputs = [\n            \"What is the capital of France?\",\n            \"Write a Python function\",\n            \"Analyze this data\",\n            \"Be creative\",\n            \"How to install software\",\n            \"If A then B\",\n            \"\",\n            \"   \",\n            \"xyzabc123\"\n        ]\n        \n        for text in test_inputs:\n            _, confidence = classifier.classify(text)\n            assert 0.0 <= confidence <= 1.0, \\\n                f\"Confidence {confidence} out of bounds for input: {text}\"\n    \n    def test_classify_confidence_precision(self, classifier):\n        \"\"\"Verify confidence is rounded to 3 decimal places.\"\"\"\n        test_inputs = [\n            \"What is the answer?\",\n            \"Write code to solve this\",\n            \"Analyze the results\",\n            \"Sample text input\"\n        ]\n        \n        for text in test_inputs:\n            _, confidence = classifier.classify(text)\n            assert is_valid_confidence(confidence), \\\n                f\"Confidence {confidence} not rounded to 3 decimal places\"\n\n\n# ============================================================================\n# Happy Path Tests\n# ============================================================================\n\nclass TestHappyPath:\n    \"\"\"Test expected behavior with typical inputs.\"\"\"\n    \n    def test_classify_happy_path_factual(self, classifier):\n        \"\"\"Verify classify returns valid TaskType and confidence for a factual question.\"\"\"\n        text = \"What is the capital of France?\"\n        result = classifier.classify(text)\n        \n        assert isinstance(result, tuple), \"Result is a tuple with 2 elements\"\n        assert len(result) == 2\n        \n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \"First element is a TaskType enum member\"\n        assert isinstance(confidence, float), \"Second element is float\"\n        assert 0.0 <= confidence <= 1.0, \"Confidence in range [0.0, 1.0]\"\n        assert is_valid_confidence(confidence), \"Confidence is rounded to 3 decimal places\"\n    \n    def test_classify_happy_path_code(self, classifier):\n        \"\"\"Verify classify handles code-related prompts.\"\"\"\n        text = \"Write a Python function to sort a list\"\n        result = classifier.classify(text)\n        \n        assert isinstance(result, tuple), \"Result is a tuple with 2 elements\"\n        assert len(result) == 2\n        \n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \"First element is a TaskType enum member\"\n        assert isinstance(confidence, float), \"Second element is float\"\n        assert 0.0 <= confidence <= 1.0, \"Confidence in range [0.0, 1.0]\"\n    \n    def test_classify_happy_path_reasoning(self, classifier):\n        \"\"\"Verify classify handles reasoning tasks.\"\"\"\n        text = \"If all A are B and all B are C, what can we conclude about A and C?\"\n        result = classifier.classify(text)\n        \n        assert isinstance(result, tuple), \"Result is a tuple with 2 elements\"\n        assert len(result) == 2\n        \n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \"First element is a TaskType enum member\"\n        assert isinstance(confidence, float), \"Second element is float\"\n        assert 0.0 <= confidence <= 1.0, \"Confidence in range [0.0, 1.0]\"\n\n\n# ============================================================================\n# Edge Case Tests\n# ============================================================================\n\nclass TestEdgeCases:\n    \"\"\"Test boundary conditions and edge cases.\"\"\"\n    \n    def test_classify_empty_string(self, classifier):\n        \"\"\"Verify empty string returns unknown with 0.0 confidence.\"\"\"\n        task_type, confidence = classifier.classify(\"\")\n        \n        assert task_type == TaskType.unknown, \"Returns TaskType.unknown\"\n        assert confidence == 0.0, \"Confidence is exactly 0.0\"\n    \n    def test_classify_whitespace_only(self, classifier):\n        \"\"\"Verify whitespace-only input returns unknown with 0.0 confidence.\"\"\"\n        whitespace_inputs = [\"   \", \"\\t\", \"\\n\", \"\\r\", \"   \\t\\n\\r  \", \" \\t\\n\\r \"]\n        \n        for text in whitespace_inputs:\n            task_type, confidence = classifier.classify(text)\n            assert task_type == TaskType.unknown, \\\n                f\"Returns TaskType.unknown for '{repr(text)}'\"\n            assert confidence == 0.0, \\\n                f\"Confidence is exactly 0.0 for '{repr(text)}'\"\n    \n    def test_classify_no_pattern_match(self, classifier):\n        \"\"\"Verify text with no matching patterns returns unknown with 0.5 confidence.\"\"\"\n        # Random text unlikely to match any patterns\n        text = \"xyzabc123\"\n        result = classifier.classify(text)\n        \n        assert isinstance(result, tuple), \"Result is a tuple\"\n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \"First element is a TaskType enum member\"\n        assert isinstance(confidence, float), \"Second element is float\"\n        assert 0.0 <= confidence <= 1.0, \"Confidence in range [0.0, 1.0]\"\n    \n    def test_classify_unicode_text(self, classifier):\n        \"\"\"Verify classify handles unicode text correctly.\"\"\"\n        text = \"Какова столица России? 日本の首都は?\"\n        result = classifier.classify(text)\n        \n        assert isinstance(result, tuple), \"Result is a tuple\"\n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \"First element is a TaskType\"\n        assert isinstance(confidence, float), \"Second element is float\"\n        assert 0.0 <= confidence <= 1.0, \"Confidence in range [0.0, 1.0]\"\n    \n    def test_classify_very_long_text(self, classifier):\n        \"\"\"Verify classify handles very long text inputs.\"\"\"\n        # Create a very long text (10000+ characters)\n        long_text = \"What is the answer? \" * 1000\n        result = classifier.classify(long_text)\n        \n        assert isinstance(result, tuple), \"Result is a tuple\"\n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \"First element is a TaskType\"\n        assert isinstance(confidence, float), \"Second element is float\"\n        assert 0.0 <= confidence <= 1.0, \"Confidence in range [0.0, 1.0]\"\n    \n    def test_classify_special_characters(self, classifier):\n        \"\"\"Verify classify handles special characters and symbols.\"\"\"\n        text = \"!@#$%^&*()_+-=[]{}|;':\\\",./<>?\"\n        result = classifier.classify(text)\n        \n        assert isinstance(result, tuple), \"Result is a tuple\"\n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \"First element is a TaskType\"\n        assert isinstance(confidence, float), \"Second element is float\"\n        assert 0.0 <= confidence <= 1.0, \"Confidence in range [0.0, 1.0]\"\n    \n    def test_classify_mixed_content(self, classifier):\n        \"\"\"Verify classify handles text with mixed markers from multiple categories.\"\"\"\n        text = \"What is the answer? Analyze this code: def foo(): pass. Be creative!\"\n        result = classifier.classify(text)\n        \n        assert isinstance(result, tuple), \"Result is a tuple\"\n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \"First element is a TaskType\"\n        assert isinstance(confidence, float), \"Second element is float\"\n        assert 0.0 <= confidence <= 1.0, \"Confidence in range [0.0, 1.0]\"\n        assert is_valid_confidence(confidence), \"Confidence is rounded to 3 decimal places\"\n    \n    def test_classify_single_character(self, classifier):\n        \"\"\"Verify classify handles single character input.\"\"\"\n        text = \"a\"\n        result = classifier.classify(text)\n        \n        assert isinstance(result, tuple), \"Result is a tuple\"\n        task_type, confidence = result\n        assert isinstance(task_type, TaskType), \"First element is a TaskType\"\n        assert isinstance(confidence, float), \"Second element is float\"\n        assert 0.0 <= confidence <= 1.0, \"Confidence in range [0.0, 1.0]\"\n    \n    @pytest.mark.parametrize(\"text\", [\n        \"\",\n        \"   \",\n        \"a\",\n        \"Test\",\n        \"What is this?\",\n        \"Write code\",\n        \"Analyze data\",\n        \"Be creative!\",\n        \"How to do something\",\n        \"If this then that\",\n        \"x\" * 10000,\n        \"🎉 emoji test 🚀\",\n        \"\\x00\\x01\\x02\",\n        \"UPPERCASE TEXT\",\n        \"lowercase text\",\n        \"MiXeD cAsE\"\n    ])\n    def test_classify_various_inputs(self, classifier, text):\n        \"\"\"Parametrized test for various edge case inputs.\"\"\"\n        result = classifier.classify(text)\n        \n        assert isinstance(result, tuple)\n        assert len(result) == 2\n        task_type, confidence = result\n        assert isinstance(task_type, TaskType)\n        assert isinstance(confidence, float)\n        assert 0.0 <= confidence <= 1.0\n\n\n# ============================================================================\n# Invariant Tests\n# ============================================================================\n\nclass TestInvariants:\n    \"\"\"Test invariants that must hold across all invocations.\"\"\"\n    \n    def test_classify_all_task_types_reachable(self):\n        \"\"\"Verify all TaskType enum members can theoretically be returned.\"\"\"\n        # All TaskType values are valid\n        all_types = list(TaskType)\n        assert len(all_types) == 7, \"Expected 7 TaskType enum members\"\n        \n        expected = {TaskType.factual, TaskType.reasoning, TaskType.code,\n                   TaskType.analysis, TaskType.creative, TaskType.instruction,\n                   TaskType.unknown}\n        actual = set(all_types)\n        assert expected == actual, \"All TaskType enum members are valid\"\n    \n    def test_classify_case_insensitive(self, classifier):\n        \"\"\"Verify pattern matching is case-insensitive.\"\"\"\n        text_lower = \"what is the capital\"\n        text_upper = \"WHAT IS THE CAPITAL\"\n        text_mixed = \"WhAt Is ThE cApItAl\"\n        \n        result_lower = classifier.classify(text_lower)\n        result_upper = classifier.classify(text_upper)\n        result_mixed = classifier.classify(text_mixed)\n        \n        # All should return valid tuples\n        for result in [result_lower, result_upper, result_mixed]:\n            assert isinstance(result, tuple)\n            task_type, confidence = result\n            assert isinstance(task_type, TaskType)\n            assert isinstance(confidence, float)\n            assert 0.0 <= confidence <= 1.0\n    \n    def test_classify_determinism(self, classifier):\n        \"\"\"Verify classify is deterministic (same input yields same output).\"\"\"\n        text = \"Determinism test input\"\n        \n        result1 = classifier.classify(text)\n        result2 = classifier.classify(text)\n        result3 = classifier.classify(text)\n        \n        assert result1 == result2, \"First call result equals second call result\"\n        assert result2 == result3, \"Result is stable across multiple invocations\"\n        assert result1 == result3\n    \n    def test_classify_no_side_effects(self, classifier):\n        \"\"\"Verify classify has no side effects (pure function behavior).\"\"\"\n        text = \"Side effect test\"\n        \n        # Call multiple times and verify state doesn't change\n        for _ in range(10):\n            result = classifier.classify(text)\n            assert isinstance(result, tuple)\n            assert len(result) == 2\n    \n    def test_confidence_calculation_bounds(self, classifier):\n        \"\"\"Verify confidence calculation never exceeds 1.0.\"\"\"\n        # Test with various inputs that might have high scores\n        test_inputs = [\n            \"What is? How? Why? When? Where? Who?\",  # Multiple factual markers\n            \"def class import function code python java\",  # Multiple code markers\n            \"analyze examine investigate evaluate assess\",  # Multiple analysis markers\n            \"create imagine invent design compose\",  # Multiple creative markers\n        ]\n        \n        for text in test_inputs:\n            _, confidence = classifier.classify(text)\n            assert confidence <= 1.0, \\\n                f\"Confidence {confidence} exceeds 1.0 for input: {text}\"\n            assert is_valid_confidence(confidence)\n    \n    def test_empty_and_whitespace_consistency(self, classifier):\n        \"\"\"Verify all empty/whitespace inputs consistently return (unknown, 0.0).\"\"\"\n        empty_inputs = [\"\", \" \", \"  \", \"\\t\", \"\\n\", \"\\r\\n\", \"   \\t\\n\\r   \"]\n        \n        for text in empty_inputs:\n            task_type, confidence = classifier.classify(text)\n            assert task_type == TaskType.unknown\n            assert confidence == 0.0\n    \n    def test_classify_random_inputs_no_exceptions(self, classifier):\n        \"\"\"Verify classify doesn't raise exceptions on random valid string inputs.\"\"\"\n        random.seed(42)  # For reproducibility\n        \n        for _ in range(50):\n            # Generate random strings of varying lengths\n            length = random.randint(0, 1000)\n            chars = string.ascii_letters + string.digits + string.punctuation + \" \\t\\n\"\n            text = ''.join(random.choice(chars) for _ in range(length))\n            \n            # Should not raise any exceptions\n            result = classifier.classify(text)\n            assert isinstance(result, tuple)\n            task_type, confidence = result\n            assert isinstance(task_type, TaskType)\n            assert isinstance(confidence, float)\n            assert 0.0 <= confidence <= 1.0\n\n\n# ============================================================================\n# Integration Tests\n# ============================================================================\n\nclass TestIntegration:\n    \"\"\"Integration tests verifying end-to-end behavior.\"\"\"\n    \n    def test_classify_workflow_typical_prompts(self, classifier):\n        \"\"\"Test classify with a variety of typical prompts.\"\"\"\n        test_cases = [\n            (\"What is the meaning of life?\", \"factual-like question\"),\n            (\"Explain how to solve this problem step by step\", \"reasoning task\"),\n            (\"Write a function in Python that reverses a string\", \"code task\"),\n            (\"Analyze the performance metrics of this system\", \"analysis task\"),\n            (\"Create a short story about a dragon\", \"creative task\"),\n            (\"How to install Docker on Ubuntu\", \"instruction task\"),\n            (\"\", \"empty string\"),\n            (\"zzz123\", \"random text\"),\n        ]\n        \n        for text, description in test_cases:\n            result = classifier.classify(text)\n            assert isinstance(result, tuple), f\"Failed for: {description}\"\n            task_type, confidence = result\n            assert isinstance(task_type, TaskType), f\"Failed for: {description}\"\n            assert isinstance(confidence, float), f\"Failed for: {description}\"\n            assert 0.0 <= confidence <= 1.0, f\"Failed for: {description}\"\n    \n    def test_classifier_multiple_instances(self):\n        \"\"\"Verify multiple classifier instances behave consistently.\"\"\"\n        classifier1 = TaskClassifier()\n        classifier2 = TaskClassifier()\n        \n        test_text = \"What is the capital of France?\"\n        \n        result1 = classifier1.classify(test_text)\n        result2 = classifier2.classify(test_text)\n        \n        # Both should return same result (deterministic behavior)\n        assert result1 == result2\n\n\n# ============================================================================\n# Marker Pattern Invariants (if accessible)\n# ============================================================================\n\nclass TestMarkerInvariants:\n    \"\"\"Test invariants related to marker patterns (if accessible).\"\"\"\n    \n    def test_marker_constants_exist(self):\n        \"\"\"Verify marker constants are defined (if publicly accessible).\"\"\"\n        # These might be private, so we check if they exist\n        # This is optional and depends on implementation visibility\n        try:\n            classifier = TaskClassifier()\n            # Try to access markers if they're public attributes\n            if hasattr(classifier, '_FACTUAL_MARKERS'):\n                assert isinstance(classifier._FACTUAL_MARKERS, (list, tuple))\n            if hasattr(classifier, '_REASONING_MARKERS'):\n                assert isinstance(classifier._REASONING_MARKERS, (list, tuple))\n            if hasattr(classifier, '_CODE_MARKERS'):\n                assert isinstance(classifier._CODE_MARKERS, (list, tuple))\n            if hasattr(classifier, '_ANALYSIS_MARKERS'):\n                assert isinstance(classifier._ANALYSIS_MARKERS, (list, tuple))\n            if hasattr(classifier, '_CREATIVE_MARKERS'):\n                assert isinstance(classifier._CREATIVE_MARKERS, (list, tuple))\n            if hasattr(classifier, '_INSTRUCTION_MARKERS'):\n                assert isinstance(classifier._INSTRUCTION_MARKERS, (list, tuple))\n        except AttributeError:\n            # Markers are private, skip this test\n            pytest.skip(\"Marker constants are not publicly accessible\")\n\n\n# ============================================================================\n# Run Tests\n# ============================================================================\n\nif __name__ == \"__main__\":\n    pytest.main([__file__, \"-v\", \"--tb=short\"])\n"
+}

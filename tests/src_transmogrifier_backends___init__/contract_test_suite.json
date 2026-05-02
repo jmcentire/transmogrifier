@@ -1,0 +1,447 @@
+{
+  "component_id": "src_transmogrifier_backends___init__",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_create_backend_default_anthropic",
+      "description": "Happy path: create_backend returns AnthropicBackend when no backend specified and TRANSMOG_BACKEND not set",
+      "function": "create_backend",
+      "category": "happy_path",
+      "setup_description": "Mock environment to not have TRANSMOG_BACKEND set, mock AnthropicBackend import",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "None",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns an AnthropicBackend instance",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, AnthropicBackend)",
+        "hasattr(result, 'complete')"
+      ]
+    },
+    {
+      "id": "test_create_backend_explicit_anthropic",
+      "description": "Happy path: create_backend with explicit 'anthropic' backend parameter",
+      "function": "create_backend",
+      "category": "happy_path",
+      "setup_description": "Mock AnthropicBackend import",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'anthropic'",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns an AnthropicBackend instance",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, mock_anthropic_class.return_value)",
+        "hasattr(result, 'complete')"
+      ]
+    },
+    {
+      "id": "test_create_backend_openai",
+      "description": "Happy path: create_backend with 'openai' backend parameter",
+      "function": "create_backend",
+      "category": "happy_path",
+      "setup_description": "Mock OpenAIBackend import",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'openai'",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns an OpenAIBackend instance",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, mock_openai_class.return_value)",
+        "hasattr(result, 'complete')"
+      ]
+    },
+    {
+      "id": "test_create_backend_gemini",
+      "description": "Happy path: create_backend with 'gemini' backend parameter",
+      "function": "create_backend",
+      "category": "happy_path",
+      "setup_description": "Mock GeminiBackend import",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'gemini'",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns a GeminiBackend instance",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, mock_gemini_class.return_value)",
+        "hasattr(result, 'complete')"
+      ]
+    },
+    {
+      "id": "test_create_backend_env_var_anthropic",
+      "description": "Happy path: create_backend reads TRANSMOG_BACKEND env var when backend is None",
+      "function": "create_backend",
+      "category": "happy_path",
+      "setup_description": "Set TRANSMOG_BACKEND='anthropic' in environment",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "None",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns an AnthropicBackend instance based on env var",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, mock_anthropic_class.return_value)"
+      ]
+    },
+    {
+      "id": "test_create_backend_env_var_openai",
+      "description": "Happy path: create_backend reads TRANSMOG_BACKEND env var for openai",
+      "function": "create_backend",
+      "category": "happy_path",
+      "setup_description": "Set TRANSMOG_BACKEND='openai' in environment",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "None",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns an OpenAIBackend instance based on env var",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, mock_openai_class.return_value)"
+      ]
+    },
+    {
+      "id": "test_create_backend_env_var_gemini",
+      "description": "Happy path: create_backend reads TRANSMOG_BACKEND env var for gemini",
+      "function": "create_backend",
+      "category": "happy_path",
+      "setup_description": "Set TRANSMOG_BACKEND='gemini' in environment",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "None",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns a GeminiBackend instance based on env var",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, mock_gemini_class.return_value)"
+      ]
+    },
+    {
+      "id": "test_create_backend_with_kwargs",
+      "description": "Happy path: create_backend passes kwargs to backend constructor",
+      "function": "create_backend",
+      "category": "happy_path",
+      "setup_description": "Mock AnthropicBackend, verify kwargs passed through",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'anthropic'",
+        "kwargs": "{\"api_key\": \"test-key\", \"timeout\": 30}"
+      },
+      "input_description": "",
+      "expected_output_description": "Backend constructed with provided kwargs",
+      "expected_error": "",
+      "assertions": [
+        "mock_anthropic_class.called",
+        "mock_anthropic_class.call_args includes kwargs"
+      ]
+    },
+    {
+      "id": "test_create_backend_parameter_overrides_env",
+      "description": "Edge case: explicit backend parameter overrides TRANSMOG_BACKEND env var",
+      "function": "create_backend",
+      "category": "edge_case",
+      "setup_description": "Set TRANSMOG_BACKEND='anthropic', pass backend='openai'",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'openai'",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns OpenAIBackend, not AnthropicBackend",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, mock_openai_class.return_value)",
+        "not isinstance(result, mock_anthropic_class.return_value)"
+      ]
+    },
+    {
+      "id": "test_create_backend_empty_kwargs",
+      "description": "Edge case: create_backend with empty kwargs dict",
+      "function": "create_backend",
+      "category": "edge_case",
+      "setup_description": "Pass empty dict for kwargs",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'anthropic'",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Backend created successfully with no kwargs",
+      "expected_error": "",
+      "assertions": [
+        "result is not None",
+        "hasattr(result, 'complete')"
+      ]
+    },
+    {
+      "id": "test_create_backend_case_sensitive",
+      "description": "Edge case: backend parameter is case-sensitive",
+      "function": "create_backend",
+      "category": "edge_case",
+      "setup_description": "Pass 'Anthropic' with capital A",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'Anthropic'",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "Raises error for unknown backend (case mismatch)",
+      "expected_error": "unknown_backend",
+      "assertions": [
+        "'unknown_backend' in str(exc_info.value) or 'anthropic' in str(exc_info.value).lower()"
+      ]
+    },
+    {
+      "id": "test_create_backend_unknown_backend_invalid",
+      "description": "Error case: unknown_backend error for invalid backend name",
+      "function": "create_backend",
+      "category": "error_case",
+      "setup_description": "Pass invalid backend name",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'invalid_backend'",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "unknown_backend",
+      "assertions": [
+        "exception raised",
+        "error message contains valid backend options"
+      ]
+    },
+    {
+      "id": "test_create_backend_unknown_backend_numeric",
+      "description": "Error case: unknown_backend error for numeric backend name",
+      "function": "create_backend",
+      "category": "error_case",
+      "setup_description": "Pass numeric string as backend",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'123'",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "unknown_backend",
+      "assertions": [
+        "exception raised"
+      ]
+    },
+    {
+      "id": "test_create_backend_unknown_backend_empty_string",
+      "description": "Error case: unknown_backend error for empty string backend",
+      "function": "create_backend",
+      "category": "error_case",
+      "setup_description": "Pass empty string as backend",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "''",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "unknown_backend",
+      "assertions": [
+        "exception raised"
+      ]
+    },
+    {
+      "id": "test_create_backend_unknown_backend_whitespace",
+      "description": "Error case: unknown_backend error for whitespace-only backend",
+      "function": "create_backend",
+      "category": "error_case",
+      "setup_description": "Pass whitespace string as backend",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'   '",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "unknown_backend",
+      "assertions": [
+        "exception raised"
+      ]
+    },
+    {
+      "id": "test_create_backend_unknown_backend_special_chars",
+      "description": "Error case: unknown_backend error for special characters",
+      "function": "create_backend",
+      "category": "error_case",
+      "setup_description": "Pass special characters as backend",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "'@#$%'",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "unknown_backend",
+      "assertions": [
+        "exception raised"
+      ]
+    },
+    {
+      "id": "test_create_backend_unknown_backend_from_env",
+      "description": "Error case: unknown_backend error when TRANSMOG_BACKEND env var is invalid",
+      "function": "create_backend",
+      "category": "error_case",
+      "setup_description": "Set TRANSMOG_BACKEND='invalid_backend'",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "None",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "unknown_backend",
+      "assertions": [
+        "exception raised"
+      ]
+    },
+    {
+      "id": "test_invariant_default_anthropic",
+      "description": "Invariant: Default backend is 'anthropic' when TRANSMOG_BACKEND is not set",
+      "function": "create_backend",
+      "category": "invariant",
+      "setup_description": "Ensure TRANSMOG_BACKEND is not in environment",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "None",
+        "kwargs": "{}"
+      },
+      "input_description": "",
+      "expected_output_description": "AnthropicBackend is created by default",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, mock_anthropic_class.return_value)"
+      ]
+    },
+    {
+      "id": "test_invariant_only_three_backends",
+      "description": "Invariant: Only three backend types are supported",
+      "function": "create_backend",
+      "category": "invariant",
+      "setup_description": "Test all valid backends work, any other backend fails",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "Only anthropic, openai, gemini succeed; others fail",
+      "expected_error": "",
+      "assertions": [
+        "valid backends work",
+        "invalid backends raise unknown_backend"
+      ]
+    },
+    {
+      "id": "test_invariant_all_backends_have_complete",
+      "description": "Invariant: All backends implement the Backend protocol with complete() method",
+      "function": "create_backend",
+      "category": "invariant",
+      "setup_description": "Create each backend type and verify complete method exists",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "All backends have complete() method",
+      "expected_error": "",
+      "assertions": [
+        "hasattr(anthropic_backend, 'complete')",
+        "hasattr(openai_backend, 'complete')",
+        "hasattr(gemini_backend, 'complete')"
+      ]
+    },
+    {
+      "id": "test_backend_protocol_conformance",
+      "description": "Invariant: Backend protocol conformance - all backends are callable with complete signature",
+      "function": "create_backend",
+      "category": "invariant",
+      "setup_description": "Verify all created backends conform to Backend protocol",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "All backends have complete(system, messages, max_tokens) method",
+      "expected_error": "",
+      "assertions": [
+        "callable(backend.complete)",
+        "signature matches protocol"
+      ]
+    },
+    {
+      "id": "test_complete_protocol_signature",
+      "description": "Happy path: complete() protocol method signature verification",
+      "function": "complete",
+      "category": "happy_path",
+      "setup_description": "Create mock backend implementing protocol",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "'You are a helpful assistant'",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hello\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns string completion",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)",
+        "len(result) > 0"
+      ]
+    },
+    {
+      "id": "test_complete_empty_messages",
+      "description": "Edge case: complete() with empty messages list",
+      "function": "complete",
+      "category": "edge_case",
+      "setup_description": "Mock backend with empty messages",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "'System prompt'",
+        "messages": "[]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns string (backend-dependent behavior)",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_complete_max_tokens_boundary",
+      "description": "Edge case: complete() with max_tokens boundary values",
+      "function": "complete",
+      "category": "edge_case",
+      "setup_description": "Test with minimal max_tokens value",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "'System'",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hi\"}]",
+        "max_tokens": "1"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns string, respecting token limit",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)"
+      ]
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract tests for src.transmogrifier.backends module.\n\nTests verify the Backend protocol and create_backend factory function against\nthe contract specification. All external dependencies are mocked.\n\"\"\"\n\nimport os\nimport sys\nfrom unittest.mock import Mock, patch, MagicMock\nimport pytest\n\n\n# Mock the backend classes before importing the module under test\nclass MockAnthropicBackend:\n    \"\"\"Mock implementation of AnthropicBackend.\"\"\"\n    def __init__(self, **kwargs):\n        self.kwargs = kwargs\n    \n    def complete(self, system: str, messages: list, max_tokens: int) -> str:\n        return f\"Anthropic completion: {system}\"\n\n\nclass MockOpenAIBackend:\n    \"\"\"Mock implementation of OpenAIBackend.\"\"\"\n    def __init__(self, **kwargs):\n        self.kwargs = kwargs\n    \n    def complete(self, system: str, messages: list, max_tokens: int) -> str:\n        return f\"OpenAI completion: {system}\"\n\n\nclass MockGeminiBackend:\n    \"\"\"Mock implementation of GeminiBackend.\"\"\"\n    def __init__(self, **kwargs):\n        self.kwargs = kwargs\n    \n    def complete(self, system: str, messages: list, max_tokens: int) -> str:\n        return f\"Gemini completion: {system}\"\n\n\n# Patch the imports at module level\nsys.modules['src'] = MagicMock()\nsys.modules['src.transmogrifier'] = MagicMock()\nsys.modules['src.transmogrifier.backends'] = MagicMock()\nsys.modules['src.transmogrifier.backends.anthropic'] = MagicMock()\nsys.modules['src.transmogrifier.backends.openai'] = MagicMock()\nsys.modules['src.transmogrifier.backends.gemini'] = MagicMock()\n\n\nclass TestCreateBackendHappyPath:\n    \"\"\"Happy path tests for create_backend function.\"\"\"\n    \n    @patch.dict(os.environ, {}, clear=True)\n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend', MockAnthropicBackend)\n    def test_create_backend_default_anthropic(self):\n        \"\"\"\n        Happy path: create_backend returns AnthropicBackend when no backend \n        specified and TRANSMOG_BACKEND not set.\n        \"\"\"\n        # Import after patching\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        result = create_backend(backend=None, kwargs={})\n        \n        assert result is not None\n        assert hasattr(result, 'complete')\n        assert isinstance(result, MockAnthropicBackend)\n    \n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend', MockAnthropicBackend)\n    def test_create_backend_explicit_anthropic(self):\n        \"\"\"\n        Happy path: create_backend with explicit 'anthropic' backend parameter.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        result = create_backend(backend='anthropic', kwargs={})\n        \n        assert result is not None\n        assert hasattr(result, 'complete')\n        assert isinstance(result, MockAnthropicBackend)\n    \n    @patch('src.transmogrifier.backends.openai.OpenAIBackend', MockOpenAIBackend)\n    def test_create_backend_openai(self):\n        \"\"\"\n        Happy path: create_backend with 'openai' backend parameter.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        result = create_backend(backend='openai', kwargs={})\n        \n        assert result is not None\n        assert hasattr(result, 'complete')\n        assert isinstance(result, MockOpenAIBackend)\n    \n    @patch('src.transmogrifier.backends.gemini.GeminiBackend', MockGeminiBackend)\n    def test_create_backend_gemini(self):\n        \"\"\"\n        Happy path: create_backend with 'gemini' backend parameter.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        result = create_backend(backend='gemini', kwargs={})\n        \n        assert result is not None\n        assert hasattr(result, 'complete')\n        assert isinstance(result, MockGeminiBackend)\n    \n    @patch.dict(os.environ, {'TRANSMOG_BACKEND': 'anthropic'})\n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend', MockAnthropicBackend)\n    def test_create_backend_env_var_anthropic(self):\n        \"\"\"\n        Happy path: create_backend reads TRANSMOG_BACKEND env var when backend is None.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        result = create_backend(backend=None, kwargs={})\n        \n        assert result is not None\n        assert isinstance(result, MockAnthropicBackend)\n    \n    @patch.dict(os.environ, {'TRANSMOG_BACKEND': 'openai'})\n    @patch('src.transmogrifier.backends.openai.OpenAIBackend', MockOpenAIBackend)\n    def test_create_backend_env_var_openai(self):\n        \"\"\"\n        Happy path: create_backend reads TRANSMOG_BACKEND env var for openai.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        result = create_backend(backend=None, kwargs={})\n        \n        assert result is not None\n        assert isinstance(result, MockOpenAIBackend)\n    \n    @patch.dict(os.environ, {'TRANSMOG_BACKEND': 'gemini'})\n    @patch('src.transmogrifier.backends.gemini.GeminiBackend', MockGeminiBackend)\n    def test_create_backend_env_var_gemini(self):\n        \"\"\"\n        Happy path: create_backend reads TRANSMOG_BACKEND env var for gemini.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        result = create_backend(backend=None, kwargs={})\n        \n        assert result is not None\n        assert isinstance(result, MockGeminiBackend)\n    \n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend')\n    def test_create_backend_with_kwargs(self, mock_anthropic_class):\n        \"\"\"\n        Happy path: create_backend passes kwargs to backend constructor.\n        \"\"\"\n        mock_anthropic_class.return_value = MockAnthropicBackend()\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        test_kwargs = {'api_key': 'test-key', 'timeout': 30}\n        result = create_backend(backend='anthropic', kwargs=test_kwargs)\n        \n        assert result is not None\n        assert mock_anthropic_class.called\n        # Verify kwargs were passed - check call_args\n        call_kwargs = mock_anthropic_class.call_args[1] if mock_anthropic_class.call_args else {}\n        assert 'api_key' in str(mock_anthropic_class.call_args) or len(call_kwargs) > 0 or mock_anthropic_class.call_count > 0\n\n\nclass TestCreateBackendEdgeCases:\n    \"\"\"Edge case tests for create_backend function.\"\"\"\n    \n    @patch.dict(os.environ, {'TRANSMOG_BACKEND': 'anthropic'})\n    @patch('src.transmogrifier.backends.openai.OpenAIBackend', MockOpenAIBackend)\n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend', MockAnthropicBackend)\n    def test_create_backend_parameter_overrides_env(self):\n        \"\"\"\n        Edge case: explicit backend parameter overrides TRANSMOG_BACKEND env var.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        result = create_backend(backend='openai', kwargs={})\n        \n        assert result is not None\n        assert isinstance(result, MockOpenAIBackend)\n        assert not isinstance(result, MockAnthropicBackend)\n    \n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend', MockAnthropicBackend)\n    def test_create_backend_empty_kwargs(self):\n        \"\"\"\n        Edge case: create_backend with empty kwargs dict.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        result = create_backend(backend='anthropic', kwargs={})\n        \n        assert result is not None\n        assert hasattr(result, 'complete')\n    \n    def test_create_backend_case_sensitive(self):\n        \"\"\"\n        Edge case: backend parameter is case-sensitive.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        with pytest.raises(Exception) as exc_info:\n            create_backend(backend='Anthropic', kwargs={})\n        \n        # Verify error message indicates unknown backend\n        error_msg = str(exc_info.value).lower()\n        assert 'unknown' in error_msg or 'invalid' in error_msg or 'anthropic' in error_msg\n\n\nclass TestCreateBackendErrorCases:\n    \"\"\"Error case tests for create_backend function.\"\"\"\n    \n    def test_create_backend_unknown_backend_invalid(self):\n        \"\"\"\n        Error case: unknown_backend error for invalid backend name.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        with pytest.raises(Exception) as exc_info:\n            create_backend(backend='invalid_backend', kwargs={})\n        \n        error_msg = str(exc_info.value).lower()\n        assert 'unknown' in error_msg or 'invalid' in error_msg or 'not found' in error_msg\n        # Check that valid options are mentioned\n        assert 'anthropic' in error_msg or 'openai' in error_msg or 'gemini' in error_msg\n    \n    def test_create_backend_unknown_backend_numeric(self):\n        \"\"\"\n        Error case: unknown_backend error for numeric backend name.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        with pytest.raises(Exception) as exc_info:\n            create_backend(backend='123', kwargs={})\n        \n        assert exc_info.value is not None\n    \n    def test_create_backend_unknown_backend_empty_string(self):\n        \"\"\"\n        Error case: unknown_backend error for empty string backend.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        with pytest.raises(Exception) as exc_info:\n            create_backend(backend='', kwargs={})\n        \n        assert exc_info.value is not None\n    \n    def test_create_backend_unknown_backend_whitespace(self):\n        \"\"\"\n        Error case: unknown_backend error for whitespace-only backend.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        with pytest.raises(Exception) as exc_info:\n            create_backend(backend='   ', kwargs={})\n        \n        assert exc_info.value is not None\n    \n    def test_create_backend_unknown_backend_special_chars(self):\n        \"\"\"\n        Error case: unknown_backend error for special characters.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        with pytest.raises(Exception) as exc_info:\n            create_backend(backend='@#$%', kwargs={})\n        \n        assert exc_info.value is not None\n    \n    @patch.dict(os.environ, {'TRANSMOG_BACKEND': 'invalid_backend'})\n    def test_create_backend_unknown_backend_from_env(self):\n        \"\"\"\n        Error case: unknown_backend error when TRANSMOG_BACKEND env var is invalid.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        with pytest.raises(Exception) as exc_info:\n            create_backend(backend=None, kwargs={})\n        \n        assert exc_info.value is not None\n\n\nclass TestCreateBackendInvariants:\n    \"\"\"Invariant tests for create_backend function.\"\"\"\n    \n    @patch.dict(os.environ, {}, clear=True)\n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend', MockAnthropicBackend)\n    def test_invariant_default_anthropic(self):\n        \"\"\"\n        Invariant: Default backend is 'anthropic' when TRANSMOG_BACKEND is not set.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        # Ensure env var not set\n        if 'TRANSMOG_BACKEND' in os.environ:\n            del os.environ['TRANSMOG_BACKEND']\n        \n        result = create_backend(backend=None, kwargs={})\n        \n        assert isinstance(result, MockAnthropicBackend)\n    \n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend', MockAnthropicBackend)\n    @patch('src.transmogrifier.backends.openai.OpenAIBackend', MockOpenAIBackend)\n    @patch('src.transmogrifier.backends.gemini.GeminiBackend', MockGeminiBackend)\n    def test_invariant_only_three_backends(self):\n        \"\"\"\n        Invariant: Only three backend types are supported.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        # Test valid backends work\n        valid_backends = ['anthropic', 'openai', 'gemini']\n        for backend_name in valid_backends:\n            result = create_backend(backend=backend_name, kwargs={})\n            assert result is not None\n            assert hasattr(result, 'complete')\n        \n        # Test invalid backend fails\n        invalid_backends = ['azure', 'cohere', 'huggingface', 'claude']\n        for backend_name in invalid_backends:\n            with pytest.raises(Exception):\n                create_backend(backend=backend_name, kwargs={})\n    \n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend', MockAnthropicBackend)\n    @patch('src.transmogrifier.backends.openai.OpenAIBackend', MockOpenAIBackend)\n    @patch('src.transmogrifier.backends.gemini.GeminiBackend', MockGeminiBackend)\n    def test_invariant_all_backends_have_complete(self):\n        \"\"\"\n        Invariant: All backends implement the Backend protocol with complete() method.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        \n        anthropic_backend = create_backend(backend='anthropic', kwargs={})\n        openai_backend = create_backend(backend='openai', kwargs={})\n        gemini_backend = create_backend(backend='gemini', kwargs={})\n        \n        assert hasattr(anthropic_backend, 'complete')\n        assert hasattr(openai_backend, 'complete')\n        assert hasattr(gemini_backend, 'complete')\n        \n        assert callable(anthropic_backend.complete)\n        assert callable(openai_backend.complete)\n        assert callable(gemini_backend.complete)\n    \n    @patch('src.transmogrifier.backends.anthropic.AnthropicBackend', MockAnthropicBackend)\n    @patch('src.transmogrifier.backends.openai.OpenAIBackend', MockOpenAIBackend)\n    @patch('src.transmogrifier.backends.gemini.GeminiBackend', MockGeminiBackend)\n    def test_backend_protocol_conformance(self):\n        \"\"\"\n        Invariant: Backend protocol conformance - all backends are callable with complete signature.\n        \"\"\"\n        from src.transmogrifier.backends.__init__ import create_backend\n        import inspect\n        \n        backends = [\n            create_backend(backend='anthropic', kwargs={}),\n            create_backend(backend='openai', kwargs={}),\n            create_backend(backend='gemini', kwargs={}),\n        ]\n        \n        for backend in backends:\n            assert callable(backend.complete)\n            \n            # Verify signature accepts required parameters\n            sig = inspect.signature(backend.complete)\n            params = list(sig.parameters.keys())\n            \n            # Should accept system, messages, max_tokens\n            assert len(params) >= 3  # At minimum these three params\n\n\nclass TestCompleteProtocol:\n    \"\"\"Tests for the complete() protocol method.\"\"\"\n    \n    def test_complete_protocol_signature(self):\n        \"\"\"\n        Happy path: complete() protocol method signature verification.\n        \"\"\"\n        mock_backend = MockAnthropicBackend()\n        \n        result = mock_backend.complete(\n            system='You are a helpful assistant',\n            messages=[{'role': 'user', 'content': 'Hello'}],\n            max_tokens=100\n        )\n        \n        assert isinstance(result, str)\n        assert len(result) > 0\n    \n    def test_complete_empty_messages(self):\n        \"\"\"\n        Edge case: complete() with empty messages list.\n        \"\"\"\n        mock_backend = MockAnthropicBackend()\n        \n        result = mock_backend.complete(\n            system='System prompt',\n            messages=[],\n            max_tokens=100\n        )\n        \n        assert isinstance(result, str)\n    \n    def test_complete_max_tokens_boundary(self):\n        \"\"\"\n        Edge case: complete() with max_tokens boundary values.\n        \"\"\"\n        mock_backend = MockAnthropicBackend()\n        \n        result = mock_backend.complete(\n            system='System',\n            messages=[{'role': 'user', 'content': 'Hi'}],\n            max_tokens=1\n        )\n        \n        assert isinstance(result, str)\n    \n    def test_complete_all_backends_return_string(self):\n        \"\"\"\n        Verify all backend implementations return strings from complete().\n        \"\"\"\n        backends = [\n            MockAnthropicBackend(),\n            MockOpenAIBackend(),\n            MockGeminiBackend(),\n        ]\n        \n        for backend in backends:\n            result = backend.complete(\n                system='Test',\n                messages=[{'role': 'user', 'content': 'Test'}],\n                max_tokens=50\n            )\n            assert isinstance(result, str)\n\n\nclass TestBackendProtocolCompliance:\n    \"\"\"Tests verifying Backend protocol compliance.\"\"\"\n    \n    def test_backend_has_complete_method(self):\n        \"\"\"Verify Backend protocol requires complete method.\"\"\"\n        backends = [\n            MockAnthropicBackend(),\n            MockOpenAIBackend(),\n            MockGeminiBackend(),\n        ]\n        \n        for backend in backends:\n            assert hasattr(backend, 'complete')\n            assert callable(getattr(backend, 'complete'))\n    \n    def test_backend_complete_accepts_correct_params(self):\n        \"\"\"Verify complete method accepts required parameters.\"\"\"\n        import inspect\n        \n        backends = [\n            MockAnthropicBackend(),\n            MockOpenAIBackend(),\n            MockGeminiBackend(),\n        ]\n        \n        for backend in backends:\n            sig = inspect.signature(backend.complete)\n            params = list(sig.parameters.keys())\n            \n            # Should have at least system, messages, max_tokens\n            assert len(params) >= 3\n"
+}

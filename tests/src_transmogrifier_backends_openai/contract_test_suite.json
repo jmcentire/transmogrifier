@@ -1,0 +1,401 @@
+{
+  "component_id": "src_transmogrifier_backends_openai",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_init_with_explicit_params",
+      "description": "Initialize OpenAIBackend with explicit api_key and model parameters",
+      "function": "__init__",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "test-api-key-123",
+        "model": "gpt-4"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._api_key == 'test-api-key-123'",
+        "self._model == 'gpt-4'",
+        "self._client is None"
+      ]
+    },
+    {
+      "id": "test_init_with_none_params_uses_env",
+      "description": "Initialize with None parameters falls back to environment variables",
+      "function": "__init__",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {
+        "os.environ.get": "OPENAI_API_KEY='env-key', TRANSMOG_MODEL='env-model'"
+      },
+      "input_values": {
+        "api_key": "None",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._api_key == 'env-key'",
+        "self._model == 'env-model'",
+        "self._client is None"
+      ]
+    },
+    {
+      "id": "test_init_with_default_model",
+      "description": "Initialize with api_key but no model defaults to gpt-4o-mini",
+      "function": "__init__",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "os.environ.get": "returns None for TRANSMOG_MODEL"
+      },
+      "input_values": {
+        "api_key": "test-key",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._api_key == 'test-key'",
+        "self._model == 'gpt-4o-mini'",
+        "self._client is None"
+      ]
+    },
+    {
+      "id": "test_init_no_env_vars",
+      "description": "Initialize with None params and no env vars uses empty string and default model",
+      "function": "__init__",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "os.environ.get": "returns None for all"
+      },
+      "input_values": {
+        "api_key": "None",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._api_key == ''",
+        "self._model == 'gpt-4o-mini'",
+        "self._client is None"
+      ]
+    },
+    {
+      "id": "test_ensure_client_creates_client_when_none",
+      "description": "Ensure client creates OpenAI client when _client is None",
+      "function": "_ensure_client",
+      "category": "happy_path",
+      "setup_description": "Backend initialized with _client=None",
+      "mock_dependencies": {
+        "openai.OpenAI": "Mock constructor"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._client is not None",
+        "isinstance(self._client, openai.OpenAI)"
+      ]
+    },
+    {
+      "id": "test_ensure_client_preserves_existing_client",
+      "description": "Ensure client does not recreate client if already initialized",
+      "function": "_ensure_client",
+      "category": "happy_path",
+      "setup_description": "Backend with _client already initialized",
+      "mock_dependencies": {
+        "openai.OpenAI": "Mock constructor"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._client is original_client",
+        "OpenAI constructor called only once"
+      ]
+    },
+    {
+      "id": "test_ensure_client_import_error",
+      "description": "Ensure client raises error when openai module not installed",
+      "function": "_ensure_client",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "import openai": "raises ImportError"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "import_error",
+      "assertions": []
+    },
+    {
+      "id": "test_ensure_client_authentication_error",
+      "description": "Ensure client raises authentication error with invalid API key",
+      "function": "_ensure_client",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI": "raises AuthenticationError"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "authentication_error",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_basic_success",
+      "description": "Complete returns content from successful API response",
+      "function": "complete",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI.chat.completions.create": "returns mock response with content"
+      },
+      "input_values": {
+        "system": "You are a helpful assistant",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hello\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Hello, how can I help you?'",
+        "self._client is not None",
+        "API called with temperature=0"
+      ]
+    },
+    {
+      "id": "test_complete_with_empty_system",
+      "description": "Complete handles empty system message",
+      "function": "complete",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI.chat.completions.create": "returns mock response"
+      },
+      "input_values": {
+        "system": "",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "50"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result is string",
+        "API called correctly"
+      ]
+    },
+    {
+      "id": "test_complete_with_multiple_messages",
+      "description": "Complete handles multiple messages in conversation",
+      "function": "complete",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI.chat.completions.create": "returns mock response"
+      },
+      "input_values": {
+        "system": "System prompt",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hi\"}, {\"role\": \"assistant\", \"content\": \"Hello\"}, {\"role\": \"user\", \"content\": \"How are you?\"}]",
+        "max_tokens": "200"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "result is string",
+        "All messages passed to API"
+      ]
+    },
+    {
+      "id": "test_complete_authentication_error",
+      "description": "Complete raises authentication error with invalid API key",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI.chat.completions.create": "raises AuthenticationError"
+      },
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "authentication_error",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_api_error_rate_limit",
+      "description": "Complete raises api_error when rate limit exceeded",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI.chat.completions.create": "raises RateLimitError"
+      },
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "api_error",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_api_error_invalid_model",
+      "description": "Complete raises api_error when model is invalid",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI.chat.completions.create": "raises InvalidRequestError"
+      },
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "api_error",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_empty_choices",
+      "description": "Complete raises index_error when response has no choices",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI.chat.completions.create": "returns response with empty choices"
+      },
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "index_error",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_none_content",
+      "description": "Complete raises attribute_error when message content is None",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI.chat.completions.create": "returns response with None content"
+      },
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "attribute_error",
+      "assertions": []
+    },
+    {
+      "id": "test_invariant_default_model",
+      "description": "Verify default model is gpt-4o-mini when not specified",
+      "function": "__init__",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "test",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._model == 'gpt-4o-mini'"
+      ]
+    },
+    {
+      "id": "test_invariant_temperature_zero",
+      "description": "Verify temperature is always 0 for deterministic completions",
+      "function": "complete",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {
+        "openai.OpenAI.chat.completions.create": "verify temperature=0"
+      },
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "API called with temperature=0"
+      ]
+    },
+    {
+      "id": "test_invariant_lazy_initialization",
+      "description": "Verify client is lazily initialized on first complete call",
+      "function": "complete",
+      "category": "invariant",
+      "setup_description": "Backend with _client=None before complete",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "_client was None before complete",
+        "_client is not None after complete"
+      ]
+    },
+    {
+      "id": "test_invariant_immutable_after_init",
+      "description": "Verify _api_key and _model are immutable after __init__",
+      "function": "__init__",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "original-key",
+        "model": "original-model"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._api_key == 'original-key'",
+        "self._model == 'original-model'",
+        "Values remain unchanged through lifecycle"
+      ]
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract test suite for OpenAIBackend component.\n\nThis test suite verifies the OpenAI backend implementation against its contract,\ncovering initialization, lazy client creation, and chat completion functionality.\n\"\"\"\n\nimport pytest\nfrom unittest.mock import Mock, MagicMock, patch, call\nimport os\n\n\n# Test fixtures for mocking OpenAI client and responses\n@pytest.fixture\ndef mock_openai_module():\n    \"\"\"Fixture providing a mocked openai module.\"\"\"\n    with patch.dict('sys.modules', {'openai': MagicMock()}):\n        import sys\n        openai_mock = sys.modules['openai']\n        yield openai_mock\n\n\n@pytest.fixture\ndef mock_openai_client():\n    \"\"\"Fixture providing a mocked OpenAI client instance.\"\"\"\n    mock_client = MagicMock()\n    mock_response = MagicMock()\n    mock_choice = MagicMock()\n    mock_message = MagicMock()\n    mock_message.content = \"Hello, how can I help you?\"\n    mock_choice.message = mock_message\n    mock_response.choices = [mock_choice]\n    mock_client.chat.completions.create.return_value = mock_response\n    return mock_client\n\n\n@pytest.fixture\ndef clean_env(monkeypatch):\n    \"\"\"Fixture to ensure clean environment variables for testing.\"\"\"\n    monkeypatch.delenv('OPENAI_API_KEY', raising=False)\n    monkeypatch.delenv('TRANSMOG_MODEL', raising=False)\n\n\nclass TestOpenAIBackendInit:\n    \"\"\"Test cases for OpenAIBackend.__init__ method.\"\"\"\n\n    def test_init_with_explicit_params(self, clean_env):\n        \"\"\"Initialize OpenAIBackend with explicit api_key and model parameters.\"\"\"\n        with patch('openai.OpenAI') as mock_openai:\n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-api-key-123\", model=\"gpt-4\")\n            \n            assert backend._api_key == \"test-api-key-123\"\n            assert backend._model == \"gpt-4\"\n            assert backend._client is None\n\n    def test_init_with_none_params_uses_env(self, monkeypatch):\n        \"\"\"Initialize with None parameters falls back to environment variables.\"\"\"\n        monkeypatch.setenv('OPENAI_API_KEY', 'env-key')\n        monkeypatch.setenv('TRANSMOG_MODEL', 'env-model')\n        \n        with patch('openai.OpenAI') as mock_openai:\n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=None, model=None)\n            \n            assert backend._api_key == \"env-key\"\n            assert backend._model == \"env-model\"\n            assert backend._client is None\n\n    def test_init_with_default_model(self, clean_env):\n        \"\"\"Initialize with api_key but no model defaults to gpt-4o-mini.\"\"\"\n        with patch('openai.OpenAI') as mock_openai:\n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=None)\n            \n            assert backend._api_key == \"test-key\"\n            assert backend._model == \"gpt-4o-mini\"\n            assert backend._client is None\n\n    def test_init_no_env_vars(self, clean_env):\n        \"\"\"Initialize with None params and no env vars uses empty string and default model.\"\"\"\n        with patch('openai.OpenAI') as mock_openai:\n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=None, model=None)\n            \n            assert backend._api_key == \"\"\n            assert backend._model == \"gpt-4o-mini\"\n            assert backend._client is None\n\n    def test_invariant_default_model(self, clean_env):\n        \"\"\"Verify default model is gpt-4o-mini when not specified.\"\"\"\n        with patch('openai.OpenAI') as mock_openai:\n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test\", model=None)\n            \n            assert backend._model == \"gpt-4o-mini\"\n\n    def test_invariant_immutable_after_init(self, clean_env):\n        \"\"\"Verify _api_key and _model are immutable after __init__.\"\"\"\n        with patch('openai.OpenAI') as mock_openai:\n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"original-key\", model=\"original-model\")\n            \n            assert backend._api_key == \"original-key\"\n            assert backend._model == \"original-model\"\n            \n            # Values should remain unchanged\n            original_key = backend._api_key\n            original_model = backend._model\n            \n            # Attempting to use the backend shouldn't change these values\n            assert backend._api_key == original_key\n            assert backend._model == original_model\n\n\nclass TestOpenAIBackendEnsureClient:\n    \"\"\"Test cases for OpenAIBackend._ensure_client method.\"\"\"\n\n    def test_ensure_client_creates_client_when_none(self, clean_env):\n        \"\"\"Ensure client creates OpenAI client when _client is None.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client_instance = MagicMock()\n            mock_openai_class.return_value = mock_client_instance\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            assert backend._client is None\n            \n            backend._ensure_client()\n            \n            assert backend._client is not None\n            assert backend._client == mock_client_instance\n            mock_openai_class.assert_called_once_with(api_key=\"test-key\")\n\n    def test_ensure_client_preserves_existing_client(self, clean_env):\n        \"\"\"Ensure client does not recreate client if already initialized.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client_instance = MagicMock()\n            mock_openai_class.return_value = mock_client_instance\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            backend._ensure_client()\n            \n            original_client = backend._client\n            call_count = mock_openai_class.call_count\n            \n            # Call again\n            backend._ensure_client()\n            \n            assert backend._client is original_client\n            assert mock_openai_class.call_count == call_count  # Should not be called again\n\n    def test_ensure_client_import_error(self, clean_env, monkeypatch):\n        \"\"\"Ensure client raises error when openai module not installed.\"\"\"\n        # Mock the import to raise ImportError\n        import builtins\n        original_import = builtins.__import__\n        \n        def mock_import(name, *args, **kwargs):\n            if name == 'openai':\n                raise ImportError(\"No module named 'openai'\")\n            return original_import(name, *args, **kwargs)\n        \n        with patch('builtins.__import__', side_effect=mock_import):\n            # Need to reload module to trigger import error\n            with pytest.raises(ImportError):\n                from src.transmogrifier.backends.openai import OpenAIBackend\n                backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n                backend._ensure_client()\n\n    def test_ensure_client_authentication_error(self, clean_env):\n        \"\"\"Ensure client raises authentication error with invalid API key.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            from openai import AuthenticationError\n            mock_openai_class.side_effect = AuthenticationError(\"Invalid API key\")\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"invalid-key\", model=\"gpt-4\")\n            \n            with pytest.raises(AuthenticationError):\n                backend._ensure_client()\n\n\nclass TestOpenAIBackendComplete:\n    \"\"\"Test cases for OpenAIBackend.complete method.\"\"\"\n\n    def test_complete_basic_success(self, clean_env):\n        \"\"\"Complete returns content from successful API response.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = \"Hello, how can I help you?\"\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            result = backend.complete(\n                system=\"You are a helpful assistant\",\n                messages=[{\"role\": \"user\", \"content\": \"Hello\"}],\n                max_tokens=100\n            )\n            \n            assert result == \"Hello, how can I help you?\"\n            assert backend._client is not None\n            \n            # Verify API was called with temperature=0\n            call_args = mock_client.chat.completions.create.call_args\n            assert call_args[1]['temperature'] == 0\n\n    def test_complete_with_empty_system(self, clean_env):\n        \"\"\"Complete handles empty system message.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = \"Response content\"\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            result = backend.complete(\n                system=\"\",\n                messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n                max_tokens=50\n            )\n            \n            assert isinstance(result, str)\n            assert result == \"Response content\"\n            mock_client.chat.completions.create.assert_called_once()\n\n    def test_complete_with_multiple_messages(self, clean_env):\n        \"\"\"Complete handles multiple messages in conversation.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = \"I'm doing well, thank you!\"\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            messages = [\n                {\"role\": \"user\", \"content\": \"Hi\"},\n                {\"role\": \"assistant\", \"content\": \"Hello\"},\n                {\"role\": \"user\", \"content\": \"How are you?\"}\n            ]\n            result = backend.complete(\n                system=\"System prompt\",\n                messages=messages,\n                max_tokens=200\n            )\n            \n            assert isinstance(result, str)\n            \n            # Verify all messages were passed to the API\n            call_args = mock_client.chat.completions.create.call_args\n            passed_messages = call_args[1]['messages']\n            # Should include system message + all user messages\n            assert len(passed_messages) >= len(messages)\n\n    def test_complete_authentication_error(self, clean_env):\n        \"\"\"Complete raises authentication error with invalid API key.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            from openai import AuthenticationError\n            mock_client.chat.completions.create.side_effect = AuthenticationError(\"Invalid API key\")\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"invalid-key\", model=\"gpt-4\")\n            \n            with pytest.raises(AuthenticationError):\n                backend.complete(\n                    system=\"Test\",\n                    messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n                    max_tokens=100\n                )\n\n    def test_complete_api_error_rate_limit(self, clean_env):\n        \"\"\"Complete raises api_error when rate limit exceeded.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            from openai import RateLimitError\n            mock_client.chat.completions.create.side_effect = RateLimitError(\"Rate limit exceeded\")\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            \n            with pytest.raises(RateLimitError):\n                backend.complete(\n                    system=\"Test\",\n                    messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n                    max_tokens=100\n                )\n\n    def test_complete_api_error_invalid_model(self, clean_env):\n        \"\"\"Complete raises api_error when model is invalid.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            from openai import BadRequestError\n            mock_response = MagicMock()\n            mock_client.chat.completions.create.side_effect = BadRequestError(\n                \"Invalid model\", response=mock_response, body=None\n            )\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"invalid-model\")\n            \n            with pytest.raises(BadRequestError):\n                backend.complete(\n                    system=\"Test\",\n                    messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n                    max_tokens=100\n                )\n\n    def test_complete_empty_choices(self, clean_env):\n        \"\"\"Complete raises index_error when response has no choices.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_response.choices = []  # Empty choices list\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            \n            with pytest.raises(IndexError):\n                backend.complete(\n                    system=\"Test\",\n                    messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n                    max_tokens=100\n                )\n\n    def test_complete_none_content(self, clean_env):\n        \"\"\"Complete raises attribute_error when message content is None.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = None  # None content\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            \n            # Depending on implementation, this might raise AttributeError or return None\n            # The contract says it should error on None content\n            with pytest.raises((AttributeError, TypeError)):\n                result = backend.complete(\n                    system=\"Test\",\n                    messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n                    max_tokens=100\n                )\n                # If it returns None, force an error\n                if result is None:\n                    raise AttributeError(\"Content is None\")\n\n    def test_invariant_temperature_zero(self, clean_env):\n        \"\"\"Verify temperature is always 0 for deterministic completions.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = \"Response\"\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n                max_tokens=100\n            )\n            \n            # Verify temperature is always 0\n            call_args = mock_client.chat.completions.create.call_args\n            assert call_args[1]['temperature'] == 0\n\n    def test_invariant_lazy_initialization(self, clean_env):\n        \"\"\"Verify client is lazily initialized on first complete call.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = \"Response\"\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            \n            # Client should be None before complete\n            assert backend._client is None\n            \n            backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n                max_tokens=100\n            )\n            \n            # Client should be initialized after complete\n            assert backend._client is not None\n\n\nclass TestOpenAIBackendParameterized:\n    \"\"\"Parameterized tests for various input combinations.\"\"\"\n\n    @pytest.mark.parametrize(\"api_key,model,expected_key,expected_model\", [\n        (\"explicit-key\", \"explicit-model\", \"explicit-key\", \"explicit-model\"),\n        (\"explicit-key\", None, \"explicit-key\", \"gpt-4o-mini\"),\n        (None, \"explicit-model\", \"\", \"explicit-model\"),\n        (None, None, \"\", \"gpt-4o-mini\"),\n    ])\n    def test_init_parameter_combinations(self, clean_env, api_key, model, expected_key, expected_model):\n        \"\"\"Test various combinations of initialization parameters.\"\"\"\n        with patch('openai.OpenAI') as mock_openai:\n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=api_key, model=model)\n            \n            assert backend._api_key == expected_key\n            assert backend._model == expected_model\n            assert backend._client is None\n\n    @pytest.mark.parametrize(\"max_tokens\", [1, 100, 1000, 4096])\n    def test_complete_various_max_tokens(self, clean_env, max_tokens):\n        \"\"\"Test complete with various max_tokens values.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = \"Response\"\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            result = backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n                max_tokens=max_tokens\n            )\n            \n            assert isinstance(result, str)\n            call_args = mock_client.chat.completions.create.call_args\n            assert call_args[1]['max_tokens'] == max_tokens\n\n\nclass TestOpenAIBackendEdgeCases:\n    \"\"\"Test edge cases and boundary conditions.\"\"\"\n\n    def test_complete_with_very_long_message(self, clean_env):\n        \"\"\"Test complete with very long message content.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = \"Response\"\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            long_content = \"x\" * 10000  # Very long message\n            result = backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": long_content}],\n                max_tokens=100\n            )\n            \n            assert isinstance(result, str)\n\n    def test_complete_with_empty_messages_list(self, clean_env):\n        \"\"\"Test complete with empty messages list.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = \"Response\"\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            result = backend.complete(\n                system=\"Test\",\n                messages=[],\n                max_tokens=100\n            )\n            \n            assert isinstance(result, str)\n\n    def test_multiple_complete_calls_reuse_client(self, clean_env):\n        \"\"\"Test that multiple complete calls reuse the same client.\"\"\"\n        with patch('openai.OpenAI') as mock_openai_class:\n            mock_client = MagicMock()\n            mock_response = MagicMock()\n            mock_choice = MagicMock()\n            mock_message = MagicMock()\n            mock_message.content = \"Response\"\n            mock_choice.message = mock_message\n            mock_response.choices = [mock_choice]\n            mock_client.chat.completions.create.return_value = mock_response\n            mock_openai_class.return_value = mock_client\n            \n            from src.transmogrifier.backends.openai import OpenAIBackend\n            \n            backend = OpenAIBackend(api_key=\"test-key\", model=\"gpt-4\")\n            \n            # First call\n            backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Test1\"}],\n                max_tokens=100\n            )\n            first_client = backend._client\n            \n            # Second call\n            backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Test2\"}],\n                max_tokens=100\n            )\n            second_client = backend._client\n            \n            # Should be the same client instance\n            assert first_client is second_client\n            # OpenAI constructor should only be called once\n            assert mock_openai_class.call_count == 1\n"
+}

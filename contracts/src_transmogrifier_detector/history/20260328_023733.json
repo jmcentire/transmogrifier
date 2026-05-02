@@ -1,0 +1,237 @@
+{
+  "component_id": "src_transmogrifier_detector",
+  "name": "Register Detector",
+  "description": "Classifies text into one of five linguistic registers (casual, technical, academic, narrative, direct) using surface-form regex heuristics. Designed for zero API calls and sub-millisecond performance.",
+  "version": 1,
+  "types": [
+    {
+      "name": "_FeatureScores",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "casual",
+          "type_ref": "float",
+          "required": true,
+          "default": "0.0",
+          "description": "Accumulated weight for casual register markers",
+          "validators": []
+        },
+        {
+          "name": "technical",
+          "type_ref": "float",
+          "required": true,
+          "default": "0.0",
+          "description": "Accumulated weight for technical register markers",
+          "validators": []
+        },
+        {
+          "name": "academic",
+          "type_ref": "float",
+          "required": true,
+          "default": "0.0",
+          "description": "Accumulated weight for academic register markers",
+          "validators": []
+        },
+        {
+          "name": "narrative",
+          "type_ref": "float",
+          "required": true,
+          "default": "0.0",
+          "description": "Accumulated weight for narrative register markers",
+          "validators": []
+        },
+        {
+          "name": "direct",
+          "type_ref": "float",
+          "required": true,
+          "default": "0.0",
+          "description": "Accumulated weight for direct register (short, unframed queries)",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Internal dataclass holding weighted scores for each register category during detection",
+      "owner_component": ""
+    },
+    {
+      "name": "RegisterDetector",
+      "kind": "struct",
+      "fields": [],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Main classifier class that uses pattern matching to determine linguistic register",
+      "owner_component": ""
+    },
+    {
+      "name": "tuple[Register, float]",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "register",
+          "type_ref": "Register",
+          "required": true,
+          "default": "",
+          "description": "The detected register enum value from src.transmogrifier.core",
+          "validators": []
+        },
+        {
+          "name": "confidence",
+          "type_ref": "float",
+          "required": true,
+          "default": "",
+          "description": "Confidence score between 0 and 1, rounded to 3 decimal places",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Return type for detect method: (Register enum value, confidence score 0-1)",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "detect",
+      "description": "Detects the linguistic register of input text and returns confidence score. Uses weighted pattern matching against predefined marker lists. Empty/whitespace-only text defaults to direct register with high confidence.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "RegisterDetector",
+          "required": true,
+          "default": "",
+          "description": "Instance of RegisterDetector",
+          "validators": []
+        },
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Input text to classify",
+          "validators": []
+        }
+      ],
+      "output_type": "tuple[Register, float]",
+      "error_cases": [],
+      "preconditions": [
+        "text is a string (may be empty or whitespace-only)"
+      ],
+      "postconditions": [
+        "Returns tuple of (Register, confidence)",
+        "confidence is between 0 and 1 inclusive",
+        "confidence is rounded to 3 decimal places",
+        "Empty or whitespace-only text returns (Register.direct, 1.0)",
+        "If all scores are 0, returns (Register.direct, 0.8)",
+        "Register is the highest-scoring category from _score results"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [
+        "Imports Register from .core module on first call (lazy import)"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "module import cache",
+          "description": "Lazy import of Register from .core on first invocation"
+        }
+      ],
+      "performance_budget": {
+        "p95_latency_ms": 1,
+        "max_memory_mb": null,
+        "complexity": "O(n*m) where n=text length, m=number of regex patterns"
+      }
+    },
+    {
+      "name": "_score",
+      "description": "Computes weighted scores for each register category by matching regex patterns against input text. Applies length-based heuristics for direct register and penalizes direct score when other categories are strongly present.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "RegisterDetector",
+          "required": true,
+          "default": "",
+          "description": "Instance of RegisterDetector",
+          "validators": []
+        },
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Input text to score (should not be empty based on detect's guard)",
+          "validators": []
+        }
+      ],
+      "output_type": "_FeatureScores",
+      "error_cases": [],
+      "preconditions": [
+        "text is a non-empty string"
+      ],
+      "postconditions": [
+        "Returns _FeatureScores with non-negative float values",
+        "casual score is sum of weights from matching CASUAL_MARKERS patterns",
+        "technical score is sum of weights from matching TECHNICAL_MARKERS patterns",
+        "academic score is sum of weights from matching ACADEMIC_MARKERS patterns",
+        "narrative score is sum of weights from matching NARRATIVE_MARKERS patterns",
+        "direct score starts at 0, adds 1.5 if ≤12 words, adds another 1.5 if ≤6 words",
+        "direct score is multiplied by 0.3 if max(other scores) > 2.0"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": {
+        "p95_latency_ms": 1,
+        "max_memory_mb": null,
+        "complexity": "O(n*m) where n=text length, m=total pattern count across all marker lists"
+      }
+    }
+  ],
+  "dependencies": [
+    "re",
+    "dataclasses",
+    "src.transmogrifier.core"
+  ],
+  "dependency_contracts": {
+    "src.transmogrifier.core": [
+      "Register"
+    ]
+  },
+  "invariants": [
+    "CASUAL_MARKERS contains 7 (pattern, weight) tuples with weights 1.0-2.5",
+    "TECHNICAL_MARKERS contains 5 (pattern, weight) tuples with weights 1.0-2.0",
+    "ACADEMIC_MARKERS contains 6 (pattern, weight) tuples with weights 1.5-2.5",
+    "NARRATIVE_MARKERS contains 5 (pattern, weight) tuples with weights 1.0-3.0",
+    "DIRECT_MARKERS is empty list (direct detected by absence + brevity)",
+    "All marker patterns are compiled case-insensitively via re.IGNORECASE",
+    "Confidence calculation: min((best_score - second_score) / total + 0.5, 1.0)",
+    "Default confidence for all-zero scores is 0.8",
+    "Word count thresholds: ≤6 words (strong direct), ≤12 words (moderate direct)",
+    "Direct penalty threshold: max_other > 2.0 → multiply direct by 0.3"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [],
+    "writes": [],
+    "rationale": "Pure computation module with no data persistence. Reads only from in-memory constants and function parameters.",
+    "side_effects": []
+  },
+  "authority": {
+    "domains": [
+      "linguistic_register_classification"
+    ],
+    "rationale": "Owns the heuristic-based classification logic for determining text register types. Authoritative source for pattern-based register detection in the transmogrifier system."
+  }
+}

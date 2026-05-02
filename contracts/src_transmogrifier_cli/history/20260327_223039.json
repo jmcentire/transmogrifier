@@ -1,0 +1,485 @@
+{
+  "component_id": "src_transmogrifier_cli",
+  "name": "Transmogrifier CLI",
+  "description": "Click-based command-line interface for the Transmogrifier library. Provides commands for register detection, text classification, prompt translation, and model profile management (list, show, calibrate).",
+  "version": 1,
+  "types": [],
+  "functions": [
+    {
+      "name": "main",
+      "description": "Root CLI group for Transmogrifier commands. Entry point for register-aware prompt translation.",
+      "inputs": [],
+      "output_type": "None",
+      "error_cases": [
+        {
+          "name": "click_import_error",
+          "condition": "click module not available on import",
+          "error_type": "SystemExit",
+          "error_data": {
+            "exit_code": "1",
+            "stderr_message": "CLI requires click: pip install click"
+          }
+        }
+      ],
+      "preconditions": [
+        "click library must be installed"
+      ],
+      "postconditions": [
+        "Click group is registered and ready to dispatch subcommands"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Creates click command group"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "click.group registry",
+          "description": "Registers CLI group"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "detect",
+      "description": "Detect the register of input text and output JSON with register value and confidence score.",
+      "inputs": [
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Input text to analyze for register",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [
+        "text must be provided as click argument"
+      ],
+      "postconditions": [
+        "JSON output written to stdout with register and confidence fields"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Instantiates Transmogrifier",
+        "Calls _detector.detect()",
+        "Writes JSON to stdout via click.echo"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "Transmogrifier instance",
+          "description": "Creates new instance"
+        },
+        {
+          "kind": "logging",
+          "target": "stdout",
+          "description": "Outputs JSON result"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "classify",
+      "description": "Classify the task type of input text and output JSON with task_type value and confidence score.",
+      "inputs": [
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Input text to classify",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [
+        "text must be provided as click argument"
+      ],
+      "postconditions": [
+        "JSON output written to stdout with task_type and confidence fields"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Instantiates Transmogrifier",
+        "Calls _task_classifier.classify()",
+        "Writes JSON to stdout via click.echo"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "Transmogrifier instance",
+          "description": "Creates new instance"
+        },
+        {
+          "kind": "logging",
+          "target": "stdout",
+          "description": "Outputs JSON result"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "translate",
+      "description": "Translate text to optimal register for the target model. Outputs either JSON or human-readable formatted result.",
+      "inputs": [
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Input text to translate",
+          "validators": []
+        },
+        {
+          "name": "model",
+          "type_ref": "str",
+          "required": true,
+          "default": "\"\"",
+          "description": "Target model name for profile lookup",
+          "validators": []
+        },
+        {
+          "name": "target",
+          "type_ref": "str | None",
+          "required": true,
+          "default": "None",
+          "description": "Force target register override",
+          "validators": []
+        },
+        {
+          "name": "as_json",
+          "type_ref": "bool",
+          "required": true,
+          "default": "False",
+          "description": "Enable JSON output format",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [
+        {
+          "name": "invalid_register",
+          "condition": "target parameter is not a valid Register enum value",
+          "error_type": "ValueError",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [
+        "text must be provided as click argument",
+        "if target is provided, it must be a valid Register enum value"
+      ],
+      "postconditions": [
+        "Translation result written to stdout in JSON or formatted text"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Creates TranslationConfig",
+        "May set config.target_register if target provided",
+        "Instantiates Transmogrifier",
+        "Calls t.translate()",
+        "Writes result to stdout"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "TranslationConfig instance",
+          "description": "Creates and optionally modifies config"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "Transmogrifier instance",
+          "description": "Creates new instance"
+        },
+        {
+          "kind": "logging",
+          "target": "stdout",
+          "description": "Outputs translation result"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "profile",
+      "description": "CLI subgroup for managing model register sensitivity profiles. Parent command for list, show, and calibrate.",
+      "inputs": [],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Click subgroup registered under main group"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Registers click subgroup"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "click.group registry",
+          "description": "Registers profile subgroup"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "profile_list",
+      "description": "List all cached model profiles with spread, best register, and per-task breakdown.",
+      "inputs": [],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Profile list written to stdout"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Imports ProfileCache from .profiles",
+        "Instantiates ProfileCache",
+        "Calls cache.list_profiles()",
+        "Writes formatted output to stdout"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "ProfileCache instance",
+          "description": "Creates cache instance"
+        },
+        {
+          "kind": "reads_file",
+          "target": "profile cache storage",
+          "description": "Reads cached profiles"
+        },
+        {
+          "kind": "logging",
+          "target": "stdout",
+          "description": "Outputs profile list"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "profile_show",
+      "description": "Show detailed profile information for a specific model, including accuracies by register and task type.",
+      "inputs": [
+        {
+          "name": "model_name",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Name of model to show profile for",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [
+        "model_name must be provided as click argument"
+      ],
+      "postconditions": [
+        "Detailed profile written to stdout if found, or not-found message if missing"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Imports ProfileCache from .profiles",
+        "Instantiates ProfileCache",
+        "Calls cache.get(model_name)",
+        "Writes formatted output to stdout"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "ProfileCache instance",
+          "description": "Creates cache instance"
+        },
+        {
+          "kind": "reads_file",
+          "target": "profile cache storage",
+          "description": "Reads cached profile"
+        },
+        {
+          "kind": "logging",
+          "target": "stdout",
+          "description": "Outputs profile details or not-found message"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "profile_calibrate",
+      "description": "Run calibration benchmark for a model across multiple registers and tasks, then cache the resulting profile.",
+      "inputs": [
+        {
+          "name": "model_name",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Name for the profile being calibrated",
+          "validators": []
+        },
+        {
+          "name": "provider",
+          "type_ref": "str",
+          "required": true,
+          "default": "\"anthropic\"",
+          "description": "Backend provider name",
+          "validators": []
+        },
+        {
+          "name": "model_id",
+          "type_ref": "str | None",
+          "required": true,
+          "default": "None",
+          "description": "API model ID if different from model_name",
+          "validators": []
+        },
+        {
+          "name": "version",
+          "type_ref": "str",
+          "required": true,
+          "default": "\"\"",
+          "description": "Model version string",
+          "validators": []
+        },
+        {
+          "name": "quick",
+          "type_ref": "bool",
+          "required": true,
+          "default": "False",
+          "description": "Use reduced task set (10 tasks instead of full)",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [
+        {
+          "name": "invalid_provider",
+          "condition": "provider is not a recognized backend",
+          "error_type": "ValueError or KeyError",
+          "error_data": {}
+        },
+        {
+          "name": "api_credentials_missing",
+          "condition": "Backend API credentials not configured",
+          "error_type": "EnvironmentError or AuthenticationError",
+          "error_data": {}
+        },
+        {
+          "name": "api_call_failure",
+          "condition": "Network or API errors during calibration",
+          "error_type": "NetworkError or APIError",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [
+        "model_name must be provided",
+        "provider must be valid backend provider",
+        "Backend API credentials must be available"
+      ],
+      "postconditions": [
+        "Calibration completed and profile cached",
+        "Summary written to stdout"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Imports create_backend, BENCHMARK_TASKS, CalibrationRunner, ProfileCache",
+        "Creates backend instance",
+        "Creates ProfileCache instance",
+        "Creates CalibrationRunner instance",
+        "Selects task subset if quick=True",
+        "Writes progress to stdout",
+        "Calls runner.run() which makes API calls",
+        "Caches resulting profile"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "backend, cache, runner instances",
+          "description": "Creates multiple service instances"
+        },
+        {
+          "kind": "network_call",
+          "target": "model API",
+          "description": "Makes 5*len(tasks) API calls for calibration"
+        },
+        {
+          "kind": "writes_file",
+          "target": "profile cache storage",
+          "description": "Saves calibration profile"
+        },
+        {
+          "kind": "logging",
+          "target": "stdout",
+          "description": "Outputs calibration progress and summary"
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "click",
+    "json",
+    "sys",
+    "src.transmogrifier.core",
+    "src.transmogrifier.profiles",
+    "src.transmogrifier.backends",
+    "src.transmogrifier.calibrate"
+  ],
+  "dependency_contracts": {},
+  "invariants": [
+    "Module exits with code 1 if click is not installed",
+    "All CLI commands write output to stdout via click.echo",
+    "Profile commands lazy-import dependencies to avoid startup overhead",
+    "Calibration uses 5 registers per task",
+    "Quick calibration uses exactly 10 tasks"
+  ],
+  "requires": [
+    "click library must be installed or module exits",
+    "Backend API credentials for calibration",
+    "Valid Register enum values for translate target override"
+  ],
+  "processing_register": "",
+  "data_access": {
+    "reads": [
+      "profile cache storage (via ProfileCache)"
+    ],
+    "writes": [
+      "stdout (all commands)",
+      "profile cache storage (calibrate command)"
+    ],
+    "rationale": "CLI reads cached profiles and writes both console output and calibration results",
+    "side_effects": [
+      {
+        "type": "network_call",
+        "classification": "external_api",
+        "fields": [
+          "model API calls during calibration"
+        ],
+        "rationale": "profile_calibrate makes multiple API calls to benchmark model"
+      },
+      {
+        "type": "file_io",
+        "classification": "cache_persistence",
+        "fields": [
+          "profile cache files"
+        ],
+        "rationale": "Reads and writes model calibration profiles"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

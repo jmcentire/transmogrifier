@@ -1,0 +1,132 @@
+{
+  "component_id": "contracts_src_transmogrifier_rules_interface",
+  "name": "Register Rewrite Rule Engine",
+  "description": "Rule-based register rewriting engine that transforms text between linguistic registers (casual, academic, narrative, technical → direct) using deterministic regex patterns. Zero API calls, sub-millisecond performance.",
+  "version": 1,
+  "types": [
+    {
+      "name": "RewriteRule",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "pattern",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Regex pattern to match in source text",
+          "validators": []
+        },
+        {
+          "name": "replacement",
+          "type_ref": "str | Callable",
+          "required": true,
+          "default": "",
+          "description": "Replacement string or callable for matched pattern",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Dataclass representing a single regex-based rewrite transformation",
+      "owner_component": ""
+    },
+    {
+      "name": "RuleEngine",
+      "kind": "struct",
+      "fields": [],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Stateless engine that applies register rewrite rules deterministically",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "rewrite",
+      "description": "Rewrite text from source register to target register using regex-based rules. Returns original text if source equals target or no rules exist. Falls back through 'direct' register if no direct path exists.",
+      "inputs": [
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Text to be rewritten",
+          "validators": []
+        },
+        {
+          "name": "source",
+          "type_ref": "str | enum",
+          "required": true,
+          "default": "",
+          "description": "Source register (either string or object with .value attribute)",
+          "validators": []
+        },
+        {
+          "name": "target",
+          "type_ref": "str | enum",
+          "required": true,
+          "default": "",
+          "description": "Target register (either string or object with .value attribute)",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [],
+      "preconditions": [
+        "text is a string",
+        "source and target are either strings or objects with .value attribute"
+      ],
+      "postconditions": [
+        "Returns original text if source == target",
+        "Returns original text if result after all rules is empty string",
+        "Returns stripped result otherwise",
+        "If no direct (src, tgt) rules exist and tgt != 'direct', attempts (src, 'direct') first"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": {
+        "p95_latency_ms": 1,
+        "max_memory_mb": null,
+        "complexity": "O(n*m)"
+      }
+    }
+  ],
+  "dependencies": [
+    "re",
+    "dataclasses"
+  ],
+  "dependency_contracts": {},
+  "invariants": [
+    "All rule transformations use case-insensitive regex matching (re.IGNORECASE)",
+    "Supported register mappings: (casual→direct), (academic→direct), (narrative→direct), (technical→direct)",
+    "Empty results after rule application fall back to original text",
+    "Rules are applied sequentially in list order",
+    "Both string replacements and callable replacements use re.sub with same flags"
+  ],
+  "requires": [
+    "RewriteRule",
+    "RuleEngine",
+    "rewrite"
+  ],
+  "processing_register": "",
+  "data_access": {
+    "reads": [],
+    "writes": [],
+    "rationale": "",
+    "side_effects": []
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

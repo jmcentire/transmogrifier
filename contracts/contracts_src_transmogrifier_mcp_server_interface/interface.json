@@ -1,0 +1,261 @@
+{
+  "component_id": "contracts_src_transmogrifier_mcp_server_interface",
+  "name": "Transmogrifier MCP Server Interface",
+  "description": "FastMCP server entrypoint that exposes Transmogrifier linguistic register normalization as MCP tools for Claude Code integration. Provides tools for translating text to optimal registers, detecting input register, and listing cached model profiles.",
+  "version": 1,
+  "types": [],
+  "functions": [
+    {
+      "name": "main",
+      "description": "MCP server entry point. Initializes FastMCP server with transmogrifier tools and runs stdio transport.",
+      "inputs": [],
+      "output_type": "None",
+      "error_cases": [
+        {
+          "name": "missing_mcp_dependency",
+          "condition": "mcp.server.fastmcp cannot be imported",
+          "error_type": "ImportError",
+          "error_data": {
+            "exit_code": "1",
+            "stderr_message": "MCP server requires: pip install 'transmogrifier[mcp]'"
+          }
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "FastMCP server is initialized with name 'transmogrifier'",
+        "Three MCP tools are registered: transmog_translate, transmog_detect, transmog_profiles",
+        "Server runs on stdio transport (blocking call)"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Prints error message to stderr if mcp.server.fastmcp is not installed",
+        "Exits process with code 1 if dependencies missing",
+        "Initializes Transmogrifier instance (may load models/profiles)",
+        "Runs blocking stdio server loop"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "writes_file",
+          "target": "stderr",
+          "description": "Error message if mcp.server.fastmcp is not installed"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "process",
+          "description": "Exits process with code 1 if dependencies missing"
+        },
+        {
+          "kind": "network_call",
+          "target": "stdio transport",
+          "description": "Runs blocking stdio server loop"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "transmog_translate",
+      "description": "Translate text to optimal register for the target model. Nested function registered as MCP tool within main().",
+      "inputs": [
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Text to translate",
+          "validators": []
+        },
+        {
+          "name": "model",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "Target model identifier",
+          "validators": []
+        },
+        {
+          "name": "target_register",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "Target register enum value",
+          "validators": []
+        }
+      ],
+      "output_type": "dict",
+      "error_cases": [
+        {
+          "name": "invalid_register",
+          "condition": "target_register is provided but not a valid Register enum value",
+          "error_type": "ValueError",
+          "error_data": {}
+        },
+        {
+          "name": "translation_failure",
+          "condition": "Transmogrifier.translate() fails (backend errors, validation errors)",
+          "error_type": "Exception",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [
+        "text is non-empty string (implicit)",
+        "target_register, if provided, must be valid Register enum value"
+      ],
+      "postconditions": [
+        "Returns dict representation of TranslationResult via model_dump()",
+        "Result contains translated text and metadata"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Calls Transmogrifier.translate() which may invoke LLM backend",
+        "May cache translation results internally"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "network_call",
+          "target": "LLM backend",
+          "description": "Transmogrifier.translate() may invoke LLM backend"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "translation cache",
+          "description": "May cache translation results internally"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "transmog_detect",
+      "description": "Detect the register of input text. Nested function registered as MCP tool within main().",
+      "inputs": [
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Text to analyze for register detection",
+          "validators": []
+        }
+      ],
+      "output_type": "dict",
+      "error_cases": [
+        {
+          "name": "detection_failure",
+          "condition": "_detector.detect() fails",
+          "error_type": "Exception",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [
+        "text is non-empty string (implicit)"
+      ],
+      "postconditions": [
+        "Returns dict with 'register' (str) and 'confidence' (float) keys",
+        "register is the enum value string representation"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Accesses _t._detector (RegisterDetector instance)"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "_t._detector",
+          "description": "Accesses RegisterDetector instance"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "transmog_profiles",
+      "description": "List all cached model register sensitivity profiles. Nested function registered as MCP tool within main().",
+      "inputs": [],
+      "output_type": "list[dict]",
+      "error_cases": [
+        {
+          "name": "profile_list_failure",
+          "condition": "_profile_cache.list_profiles() fails",
+          "error_type": "Exception",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "Returns list of dicts, each representing a model profile via model_dump()",
+        "May return empty list if no profiles cached"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Accesses _t._profile_cache to read cached profiles"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "_t._profile_cache",
+          "description": "Reads cached model profiles"
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "sys",
+    "mcp.server.fastmcp",
+    "src.transmogrifier.core"
+  ],
+  "dependency_contracts": {},
+  "invariants": [
+    "Transmogrifier instance (_t) is initialized once per main() invocation",
+    "All nested tool functions close over the same _t instance",
+    "Server name is always 'transmogrifier'",
+    "Transport is always 'stdio'"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [
+      "stdio",
+      "model profiles cache",
+      "RegisterDetector state"
+    ],
+    "writes": [
+      "stderr",
+      "translation cache"
+    ],
+    "rationale": "Module performs I/O operations including stdio transport, stderr writing, and potential network calls to LLM backends",
+    "side_effects": [
+      {
+        "type": "stdio_transport",
+        "classification": "blocking_io",
+        "fields": [],
+        "rationale": "Server runs blocking stdio transport loop"
+      },
+      {
+        "type": "stderr_write",
+        "classification": "logging",
+        "fields": [],
+        "rationale": "Error messages written to stderr on import failure"
+      },
+      {
+        "type": "llm_backend_call",
+        "classification": "network_io",
+        "fields": [],
+        "rationale": "Translation may invoke external LLM APIs"
+      },
+      {
+        "type": "process_exit",
+        "classification": "control_flow",
+        "fields": [],
+        "rationale": "Process exits with code 1 on dependency failure"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

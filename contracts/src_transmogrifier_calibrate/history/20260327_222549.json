@@ -1,0 +1,334 @@
+{
+  "component_id": "src_transmogrifier_calibrate",
+  "name": "Calibration Benchmark Runner",
+  "description": "Measures register sensitivity per model by running a comprehensive benchmark suite across multiple task categories (factual, reasoning, code, analysis, creative, instruction) and linguistic registers (direct, casual, technical, academic, narrative). Produces calibrated ModelProfile artifacts for downstream register selection.",
+  "version": 1,
+  "types": [
+    {
+      "name": "CalibrationRunner",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "_backend",
+          "type_ref": "Backend",
+          "required": true,
+          "default": "",
+          "description": "Backend implementation providing complete() method for model inference",
+          "validators": []
+        },
+        {
+          "name": "_cache",
+          "type_ref": "ProfileCache",
+          "required": true,
+          "default": "",
+          "description": "Cache for storing and retrieving ModelProfile artifacts",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Orchestrates register sensitivity benchmarking for a model using a Backend implementation",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "score_response",
+      "description": "Scores a model response against accept/reject patterns defined in a task dictionary. For reasoning tasks, presence of reject patterns overrides accept matches.",
+      "inputs": [
+        {
+          "name": "response",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "The model's response text to evaluate",
+          "validators": []
+        },
+        {
+          "name": "task",
+          "type_ref": "dict",
+          "required": true,
+          "default": "",
+          "description": "Task definition containing 'accept', 'reject', and 'category' keys",
+          "validators": []
+        }
+      ],
+      "output_type": "bool",
+      "error_cases": [],
+      "preconditions": [
+        "task must contain 'accept' key with list of strings",
+        "task must contain 'reject' key (may be empty list)",
+        "task must contain 'category' key with string value"
+      ],
+      "postconditions": [
+        "Returns True if any accept pattern matches AND no reject pattern matches",
+        "For reasoning category: returns False if any reject pattern matches, even if accept pattern also matches"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "CalibrationRunner.__init__",
+      "description": "Initializes CalibrationRunner with a backend and optional profile cache. Creates default ProfileCache if none provided.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "CalibrationRunner",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "backend",
+          "type_ref": "Backend",
+          "required": true,
+          "default": "",
+          "description": "Backend implementation for model inference",
+          "validators": []
+        },
+        {
+          "name": "profile_cache",
+          "type_ref": "ProfileCache | None",
+          "required": false,
+          "default": "None",
+          "description": "Optional profile cache; creates new ProfileCache() if None",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [
+        "backend must implement complete(system, messages, max_tokens) method"
+      ],
+      "postconditions": [
+        "self._backend is set to provided backend",
+        "self._cache is set to provided profile_cache or new ProfileCache() instance"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "self._backend",
+          "description": "Sets instance backend"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._cache",
+          "description": "Sets instance cache"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "CalibrationRunner.run",
+      "description": "Executes synchronous calibration benchmark across all register transforms and tasks. For each (register, task) pair, transforms the prompt, calls backend.complete(), scores the response, and aggregates results into a ModelProfile with per-register and per-category accuracy metrics.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "CalibrationRunner",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "model_name",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Canonical model name for the profile",
+          "validators": []
+        },
+        {
+          "name": "model_version",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "Version string for the model",
+          "validators": []
+        },
+        {
+          "name": "provider",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "Provider name (e.g., 'anthropic', 'openai')",
+          "validators": []
+        },
+        {
+          "name": "tasks",
+          "type_ref": "list[dict] | None",
+          "required": false,
+          "default": "None",
+          "description": "Override benchmark tasks; defaults to BENCHMARK_TASKS (50+ tasks)",
+          "validators": []
+        },
+        {
+          "name": "registers",
+          "type_ref": "list[str] | None",
+          "required": false,
+          "default": "None",
+          "description": "Override registers to test; defaults to all keys in REGISTER_TRANSFORMS",
+          "validators": []
+        },
+        {
+          "name": "delay",
+          "type_ref": "float",
+          "required": false,
+          "default": "0.3",
+          "description": "Seconds to sleep between API calls (rate limiting)",
+          "validators": []
+        },
+        {
+          "name": "verbose",
+          "type_ref": "bool",
+          "required": false,
+          "default": "False",
+          "description": "Print progress updates to stdout",
+          "validators": []
+        }
+      ],
+      "output_type": "ModelProfile",
+      "error_cases": [
+        {
+          "name": "backend_exception",
+          "condition": "self._backend.complete() raises any exception during inference",
+          "error_type": "Exception",
+          "error_data": {
+            "handling": "Caught and treated as incorrect response (correct=False), continues to next task"
+          }
+        }
+      ],
+      "preconditions": [
+        "self._backend must be initialized",
+        "self._cache must be initialized",
+        "tasks (if provided) must be list of dicts with 'category', 'prompt', 'accept', 'reject' keys",
+        "registers (if provided) must contain keys present in REGISTER_TRANSFORMS"
+      ],
+      "postconditions": [
+        "Returns ModelProfile with aggregate and per-task accuracies",
+        "ModelProfile.calibrated_at is set to current UTC timestamp in ISO format",
+        "ModelProfile.calibration_version is '2.0'",
+        "Profile is saved to cache via self._cache.put(profile)",
+        "If verbose=True, progress and summary printed to stdout"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Calls self._backend.complete() once per (register, task) pair (blocking I/O)",
+        "Calls time.sleep(delay) after each task",
+        "Writes profile to cache directory via self._cache.put()",
+        "If verbose=True, prints to stdout"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "network_call",
+          "target": "self._backend.complete",
+          "description": "Makes synchronous API calls to model backend for each (register, task) pair"
+        },
+        {
+          "kind": "writes_file",
+          "target": "ProfileCache directory",
+          "description": "Persists ModelProfile via self._cache.put()"
+        },
+        {
+          "kind": "logging",
+          "target": "stdout",
+          "description": "Prints progress and summary if verbose=True"
+        }
+      ],
+      "performance_budget": {
+        "p95_latency_ms": null,
+        "max_memory_mb": null,
+        "complexity": "O(R * T) where R = number of registers, T = number of tasks"
+      }
+    }
+  ],
+  "dependencies": [
+    "time",
+    "datetime",
+    "src.transmogrifier.core",
+    "src.transmogrifier.profiles"
+  ],
+  "dependency_contracts": {
+    "time": [
+      "sleep"
+    ],
+    "datetime": [
+      "datetime",
+      "timezone"
+    ],
+    "src.transmogrifier.core": [
+      "Register"
+    ],
+    "src.transmogrifier.profiles": [
+      "ModelProfile",
+      "ProfileCache",
+      "RegisterAccuracy",
+      "TaskRegisterProfile"
+    ]
+  },
+  "invariants": [
+    "REGISTER_TRANSFORMS contains exactly 5 transforms: direct, casual, technical, academic, narrative",
+    "BENCHMARK_TASKS contains 50 tasks across 6 categories: factual (10), reasoning (10), code (8), analysis (8), creative (6), instruction (8)",
+    "Each task dict has keys: category, prompt, accept (list), reject (list)",
+    "Accept/reject patterns are case-insensitive substring matches",
+    "Reasoning category tasks have special scoring: reject patterns override accept matches",
+    "Default delay is 0.3 seconds between API calls",
+    "Calibration version is always '2.0'",
+    "All timestamps are UTC ISO format"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [],
+    "writes": [
+      "filesystem"
+    ],
+    "rationale": "Calibration runner performs model inference (network I/O), caches results (filesystem writes), and optionally logs progress (stdout)",
+    "side_effects": [
+      {
+        "type": "network_io",
+        "classification": "external_api",
+        "fields": [
+          "backend.complete"
+        ],
+        "rationale": "Makes synchronous API calls to LLM providers via backend.complete()"
+      },
+      {
+        "type": "filesystem_write",
+        "classification": "cache_storage",
+        "fields": [
+          "ProfileCache directory"
+        ],
+        "rationale": "Persists ModelProfile artifacts to cache directory"
+      },
+      {
+        "type": "stdout",
+        "classification": "logging",
+        "fields": [
+          "progress updates",
+          "summary statistics"
+        ],
+        "rationale": "Optional verbose logging of benchmark progress"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

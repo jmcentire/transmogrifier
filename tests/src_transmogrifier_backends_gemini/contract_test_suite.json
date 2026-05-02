@@ -1,0 +1,430 @@
+{
+  "component_id": "src_transmogrifier_backends_gemini",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_init_with_explicit_parameters",
+      "description": "Initialize GeminiBackend with explicit API key and model parameters",
+      "function": "__init__",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "test-api-key-123",
+        "model": "gemini-pro"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._api_key == 'test-api-key-123'",
+        "self._model == 'gemini-pro'",
+        "self._configured == False"
+      ]
+    },
+    {
+      "id": "test_init_with_none_parameters_uses_env_vars",
+      "description": "Initialize GeminiBackend with None parameters falls back to environment variables",
+      "function": "__init__",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {
+        "os.environ.get": "GEMINI_API_KEY for api_key, TRANSMOG_MODEL for model"
+      },
+      "input_values": {
+        "api_key": "None",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._api_key == env_api_key",
+        "self._model == env_model",
+        "self._configured == False"
+      ]
+    },
+    {
+      "id": "test_init_with_missing_env_vars_uses_defaults",
+      "description": "Initialize GeminiBackend when environment variables are not set uses empty string for api_key and default model",
+      "function": "__init__",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "os.environ.get": "returns None for both"
+      },
+      "input_values": {
+        "api_key": "None",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._api_key == ''",
+        "self._model == 'gemini-2.5-flash'",
+        "self._configured == False"
+      ]
+    },
+    {
+      "id": "test_init_with_partial_env_vars",
+      "description": "Initialize GeminiBackend with only API key in env var, model defaults",
+      "function": "__init__",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "os.environ.get": "GEMINI_API_KEY='env-key', TRANSMOG_MODEL=None"
+      },
+      "input_values": {
+        "api_key": "None",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._api_key == 'env-key'",
+        "self._model == 'gemini-2.5-flash'",
+        "self._configured == False"
+      ]
+    },
+    {
+      "id": "test_ensure_configured_first_call",
+      "description": "First call to _ensure_configured sets configured to True and configures genai",
+      "function": "_ensure_configured",
+      "category": "happy_path",
+      "setup_description": "Initialize backend with valid API key",
+      "mock_dependencies": {
+        "google.generativeai.configure": "mocked"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._configured == True",
+        "genai.configure called once with api_key"
+      ]
+    },
+    {
+      "id": "test_ensure_configured_subsequent_calls",
+      "description": "Subsequent calls to _ensure_configured are no-ops",
+      "function": "_ensure_configured",
+      "category": "happy_path",
+      "setup_description": "Backend already configured",
+      "mock_dependencies": {
+        "google.generativeai.configure": "mocked"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "genai.configure not called on second invocation"
+      ]
+    },
+    {
+      "id": "test_ensure_configured_import_error",
+      "description": "Raises import error when google.generativeai is not available",
+      "function": "_ensure_configured",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "google.generativeai": "ImportError on import"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "import_error",
+      "assertions": []
+    },
+    {
+      "id": "test_ensure_configured_empty_api_key",
+      "description": "Raises invalid_api_key error when API key is empty string",
+      "function": "_ensure_configured",
+      "category": "error_case",
+      "setup_description": "Initialize backend with empty API key",
+      "mock_dependencies": {
+        "google.generativeai.configure": "raises error on empty key"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "invalid_api_key",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_happy_path",
+      "description": "Successfully generate completion with valid messages",
+      "function": "complete",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {
+        "google.generativeai": "mocked model and response"
+      },
+      "input_values": {
+        "system": "You are a helpful assistant",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hello\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "returns string response",
+        "self._configured == True",
+        "genai.GenerativeModel called with correct model name",
+        "model.generate_content called with user message",
+        "temperature == 0"
+      ]
+    },
+    {
+      "id": "test_complete_multiple_user_messages",
+      "description": "Complete with multiple user messages joins them with double newlines",
+      "function": "complete",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {
+        "google.generativeai": "mocked"
+      },
+      "input_values": {
+        "system": "System prompt",
+        "messages": "[{\"role\": \"user\", \"content\": \"First\"}, {\"role\": \"user\", \"content\": \"Second\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "prompt contains 'First\\n\\nSecond'",
+        "returns string response"
+      ]
+    },
+    {
+      "id": "test_complete_filters_non_user_messages",
+      "description": "Complete filters out non-user role messages",
+      "function": "complete",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {
+        "google.generativeai": "mocked"
+      },
+      "input_values": {
+        "system": "System",
+        "messages": "[{\"role\": \"user\", \"content\": \"User msg\"}, {\"role\": \"assistant\", \"content\": \"Assistant msg\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "prompt only contains user message",
+        "prompt does not contain assistant message"
+      ]
+    },
+    {
+      "id": "test_complete_empty_messages_error",
+      "description": "Raises error when messages list is empty",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "System",
+        "messages": "[]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "empty_messages",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_no_user_messages_error",
+      "description": "Raises error when no user role messages found",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "System",
+        "messages": "[{\"role\": \"assistant\", \"content\": \"Only assistant\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "empty_messages",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_missing_content_key",
+      "description": "Raises error when message dict missing content key",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "System",
+        "messages": "[{\"role\": \"user\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "missing_content_key",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_missing_role_key",
+      "description": "Raises error when message dict missing role key",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "System",
+        "messages": "[{\"content\": \"Hello\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "missing_content_key",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_api_error",
+      "description": "Raises api_error when Gemini API call fails",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "google.generativeai": "raises API exception"
+      },
+      "input_values": {
+        "system": "System",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hello\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "api_error",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_response_blocked",
+      "description": "Raises response_blocked when response.text is unavailable due to safety filters",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "google.generativeai": "response.text raises AttributeError"
+      },
+      "input_values": {
+        "system": "System",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hello\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "response_blocked",
+      "assertions": []
+    },
+    {
+      "id": "test_complete_import_error",
+      "description": "Raises import_error when google.generativeai not available",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {
+        "google.generativeai": "ImportError"
+      },
+      "input_values": {
+        "system": "System",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hello\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "import_error",
+      "assertions": []
+    },
+    {
+      "id": "test_invariant_configured_never_reverts",
+      "description": "Verify _configured never transitions from True back to False",
+      "function": "_ensure_configured",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._configured starts False",
+        "after _ensure_configured, self._configured is True",
+        "multiple calls keep self._configured as True"
+      ]
+    },
+    {
+      "id": "test_invariant_default_model",
+      "description": "Verify default model is gemini-2.5-flash when not overridden",
+      "function": "__init__",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "test-key",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._model == 'gemini-2.5-flash'"
+      ]
+    },
+    {
+      "id": "test_invariant_temperature_zero",
+      "description": "Verify temperature is always 0 for deterministic output",
+      "function": "complete",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {
+        "google.generativeai": "mocked"
+      },
+      "input_values": {
+        "system": "System",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "generation_config has temperature=0"
+      ]
+    },
+    {
+      "id": "test_complete_configures_backend_if_not_configured",
+      "description": "Complete call ensures backend is configured",
+      "function": "complete",
+      "category": "happy_path",
+      "setup_description": "Backend starts unconfigured",
+      "mock_dependencies": {
+        "google.generativeai": "mocked"
+      },
+      "input_values": {
+        "system": "System",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hello\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "self._configured == True after complete"
+      ]
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract tests for GeminiBackend component.\nTests verify behavior against the contract specification with mocked dependencies.\n\"\"\"\n\nimport pytest\nfrom unittest.mock import Mock, patch, MagicMock, call\nimport os\n\n\n# Mock the google.generativeai module before importing the component\nimport sys\nmock_genai = MagicMock()\nsys.modules['google.generativeai'] = mock_genai\n\n\nfrom src.transmogrifier.backends.gemini import GeminiBackend\n\n\nclass TestGeminiBackendInit:\n    \"\"\"Test cases for __init__ method.\"\"\"\n    \n    def test_init_with_explicit_parameters(self):\n        \"\"\"Initialize GeminiBackend with explicit API key and model parameters.\"\"\"\n        backend = GeminiBackend(api_key=\"test-api-key-123\", model=\"gemini-pro\")\n        \n        assert backend._api_key == \"test-api-key-123\"\n        assert backend._model == \"gemini-pro\"\n        assert backend._configured == False\n    \n    @patch.dict(os.environ, {'GEMINI_API_KEY': 'env-api-key', 'TRANSMOG_MODEL': 'env-model'})\n    def test_init_with_none_parameters_uses_env_vars(self):\n        \"\"\"Initialize GeminiBackend with None parameters falls back to environment variables.\"\"\"\n        backend = GeminiBackend(api_key=None, model=None)\n        \n        assert backend._api_key == 'env-api-key'\n        assert backend._model == 'env-model'\n        assert backend._configured == False\n    \n    @patch.dict(os.environ, {}, clear=True)\n    def test_init_with_missing_env_vars_uses_defaults(self):\n        \"\"\"Initialize GeminiBackend when environment variables are not set uses empty string for api_key and default model.\"\"\"\n        backend = GeminiBackend(api_key=None, model=None)\n        \n        assert backend._api_key == ''\n        assert backend._model == 'gemini-2.5-flash'\n        assert backend._configured == False\n    \n    @patch.dict(os.environ, {'GEMINI_API_KEY': 'env-key'}, clear=True)\n    def test_init_with_partial_env_vars(self):\n        \"\"\"Initialize GeminiBackend with only API key in env var, model defaults.\"\"\"\n        backend = GeminiBackend(api_key=None, model=None)\n        \n        assert backend._api_key == 'env-key'\n        assert backend._model == 'gemini-2.5-flash'\n        assert backend._configured == False\n    \n    @patch.dict(os.environ, {}, clear=True)\n    def test_invariant_default_model(self):\n        \"\"\"Verify default model is gemini-2.5-flash when not overridden.\"\"\"\n        backend = GeminiBackend(api_key=\"test-key\", model=None)\n        \n        assert backend._model == 'gemini-2.5-flash'\n\n\nclass TestGeminiBackendEnsureConfigured:\n    \"\"\"Test cases for _ensure_configured method.\"\"\"\n    \n    @patch('google.generativeai.configure')\n    def test_ensure_configured_first_call(self, mock_configure):\n        \"\"\"First call to _ensure_configured sets configured to True and configures genai.\"\"\"\n        backend = GeminiBackend(api_key=\"test-api-key\", model=\"gemini-pro\")\n        \n        assert backend._configured == False\n        backend._ensure_configured()\n        \n        assert backend._configured == True\n        mock_configure.assert_called_once_with(api_key=\"test-api-key\")\n    \n    @patch('google.generativeai.configure')\n    def test_ensure_configured_subsequent_calls(self, mock_configure):\n        \"\"\"Subsequent calls to _ensure_configured are no-ops.\"\"\"\n        backend = GeminiBackend(api_key=\"test-api-key\", model=\"gemini-pro\")\n        \n        backend._ensure_configured()\n        mock_configure.reset_mock()\n        \n        backend._ensure_configured()\n        backend._ensure_configured()\n        \n        mock_configure.assert_not_called()\n    \n    def test_ensure_configured_import_error(self):\n        \"\"\"Raises import error when google.generativeai is not available.\"\"\"\n        # Temporarily replace the module with one that raises ImportError\n        original_module = sys.modules.get('google.generativeai')\n        \n        # Create a module that raises ImportError on attribute access\n        class FailingModule:\n            def __getattr__(self, name):\n                raise ImportError(\"google.generativeai not installed\")\n        \n        sys.modules['google.generativeai'] = FailingModule()\n        \n        try:\n            # Reimport to get the failing module\n            import importlib\n            import src_transmogrifier_backends_gemini\n            importlib.reload(src_transmogrifier_backends_gemini)\n            \n            backend = src_transmogrifier_backends_gemini.GeminiBackend(api_key=\"test-key\", model=\"test-model\")\n            \n            with pytest.raises(ImportError):\n                backend._ensure_configured()\n        finally:\n            # Restore the original mock module\n            sys.modules['google.generativeai'] = original_module\n            importlib.reload(src_transmogrifier_backends_gemini)\n    \n    @patch('google.generativeai.configure')\n    def test_ensure_configured_empty_api_key(self, mock_configure):\n        \"\"\"Raises invalid_api_key error when API key is empty string.\"\"\"\n        mock_configure.side_effect = ValueError(\"Invalid API key\")\n        \n        backend = GeminiBackend(api_key=\"\", model=\"gemini-pro\")\n        \n        with pytest.raises(ValueError, match=\"Invalid API key\"):\n            backend._ensure_configured()\n    \n    @patch('google.generativeai.configure')\n    def test_invariant_configured_never_reverts(self, mock_configure):\n        \"\"\"Verify _configured never transitions from True back to False.\"\"\"\n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        \n        assert backend._configured == False\n        \n        backend._ensure_configured()\n        assert backend._configured == True\n        \n        backend._ensure_configured()\n        backend._ensure_configured()\n        assert backend._configured == True\n\n\nclass TestGeminiBackendComplete:\n    \"\"\"Test cases for complete method.\"\"\"\n    \n    @patch('google.generativeai.GenerativeModel')\n    @patch('google.generativeai.configure')\n    def test_complete_happy_path(self, mock_configure, mock_model_class):\n        \"\"\"Successfully generate completion with valid messages.\"\"\"\n        # Setup mocks\n        mock_model = Mock()\n        mock_response = Mock()\n        mock_response.text = \"Generated response\"\n        mock_model.generate_content.return_value = mock_response\n        mock_model_class.return_value = mock_model\n        \n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [{'role': 'user', 'content': 'Hello'}]\n        \n        result = backend.complete(system=\"You are a helpful assistant\", messages=messages, max_tokens=100)\n        \n        assert isinstance(result, str)\n        assert result == \"Generated response\"\n        assert backend._configured == True\n        mock_model_class.assert_called_once_with(\"gemini-pro\")\n        mock_model.generate_content.assert_called_once()\n        \n        # Verify generation config has temperature=0\n        call_args = mock_model.generate_content.call_args\n        assert 'generation_config' in call_args.kwargs\n        assert call_args.kwargs['generation_config']['temperature'] == 0\n    \n    @patch('google.generativeai.GenerativeModel')\n    @patch('google.generativeai.configure')\n    def test_complete_multiple_user_messages(self, mock_configure, mock_model_class):\n        \"\"\"Complete with multiple user messages joins them with double newlines.\"\"\"\n        mock_model = Mock()\n        mock_response = Mock()\n        mock_response.text = \"Response\"\n        mock_model.generate_content.return_value = mock_response\n        mock_model_class.return_value = mock_model\n        \n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [\n            {'role': 'user', 'content': 'First'},\n            {'role': 'user', 'content': 'Second'}\n        ]\n        \n        result = backend.complete(system=\"System prompt\", messages=messages, max_tokens=100)\n        \n        # Check that the prompt contains joined messages\n        call_args = mock_model.generate_content.call_args\n        prompt = call_args[0][0]\n        assert 'First' in prompt\n        assert 'Second' in prompt\n        assert '\\n\\n' in prompt\n        assert isinstance(result, str)\n    \n    @patch('google.generativeai.GenerativeModel')\n    @patch('google.generativeai.configure')\n    def test_complete_filters_non_user_messages(self, mock_configure, mock_model_class):\n        \"\"\"Complete filters out non-user role messages.\"\"\"\n        mock_model = Mock()\n        mock_response = Mock()\n        mock_response.text = \"Response\"\n        mock_model.generate_content.return_value = mock_response\n        mock_model_class.return_value = mock_model\n        \n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [\n            {'role': 'user', 'content': 'User msg'},\n            {'role': 'assistant', 'content': 'Assistant msg'}\n        ]\n        \n        result = backend.complete(system=\"System\", messages=messages, max_tokens=100)\n        \n        call_args = mock_model.generate_content.call_args\n        prompt = call_args[0][0]\n        assert 'User msg' in prompt\n        assert 'Assistant msg' not in prompt\n    \n    def test_complete_empty_messages_error(self):\n        \"\"\"Raises error when messages list is empty.\"\"\"\n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = []\n        \n        with pytest.raises((ValueError, RuntimeError, KeyError)):\n            backend.complete(system=\"System\", messages=messages, max_tokens=100)\n    \n    def test_complete_no_user_messages_error(self):\n        \"\"\"Raises error when no user role messages found.\"\"\"\n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [{'role': 'assistant', 'content': 'Only assistant'}]\n        \n        with pytest.raises((ValueError, RuntimeError, KeyError)):\n            backend.complete(system=\"System\", messages=messages, max_tokens=100)\n    \n    def test_complete_missing_content_key(self):\n        \"\"\"Raises error when message dict missing content key.\"\"\"\n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [{'role': 'user'}]\n        \n        with pytest.raises(KeyError):\n            backend.complete(system=\"System\", messages=messages, max_tokens=100)\n    \n    def test_complete_missing_role_key(self):\n        \"\"\"Raises error when message dict missing role key.\"\"\"\n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [{'content': 'Hello'}]\n        \n        with pytest.raises(KeyError):\n            backend.complete(system=\"System\", messages=messages, max_tokens=100)\n    \n    @patch('google.generativeai.GenerativeModel')\n    @patch('google.generativeai.configure')\n    def test_complete_api_error(self, mock_configure, mock_model_class):\n        \"\"\"Raises api_error when Gemini API call fails.\"\"\"\n        mock_model = Mock()\n        mock_model.generate_content.side_effect = Exception(\"API call failed\")\n        mock_model_class.return_value = mock_model\n        \n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [{'role': 'user', 'content': 'Hello'}]\n        \n        with pytest.raises(Exception, match=\"API call failed\"):\n            backend.complete(system=\"System\", messages=messages, max_tokens=100)\n    \n    @patch('google.generativeai.GenerativeModel')\n    @patch('google.generativeai.configure')\n    def test_complete_response_blocked(self, mock_configure, mock_model_class):\n        \"\"\"Raises response_blocked when response.text is unavailable due to safety filters.\"\"\"\n        mock_model = Mock()\n        mock_response = Mock()\n        # Simulate response.text raising AttributeError\n        type(mock_response).text = property(lambda self: (_ for _ in ()).throw(AttributeError(\"Response blocked\")))\n        mock_model.generate_content.return_value = mock_response\n        mock_model_class.return_value = mock_model\n        \n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [{'role': 'user', 'content': 'Hello'}]\n        \n        with pytest.raises(AttributeError):\n            backend.complete(system=\"System\", messages=messages, max_tokens=100)\n    \n    def test_complete_import_error(self):\n        \"\"\"Raises import_error when google.generativeai not available.\"\"\"\n        original_module = sys.modules.get('google.generativeai')\n        \n        class FailingModule:\n            def __getattr__(self, name):\n                raise ImportError(\"google.generativeai not installed\")\n        \n        sys.modules['google.generativeai'] = FailingModule()\n        \n        try:\n            import importlib\n            import src_transmogrifier_backends_gemini\n            importlib.reload(src_transmogrifier_backends_gemini)\n            \n            backend = src_transmogrifier_backends_gemini.GeminiBackend(api_key=\"test-key\", model=\"test-model\")\n            messages = [{'role': 'user', 'content': 'Hello'}]\n            \n            with pytest.raises(ImportError):\n                backend.complete(system=\"System\", messages=messages, max_tokens=100)\n        finally:\n            sys.modules['google.generativeai'] = original_module\n            importlib.reload(src_transmogrifier_backends_gemini)\n    \n    @patch('google.generativeai.GenerativeModel')\n    @patch('google.generativeai.configure')\n    def test_complete_configures_backend_if_not_configured(self, mock_configure, mock_model_class):\n        \"\"\"Complete call ensures backend is configured.\"\"\"\n        mock_model = Mock()\n        mock_response = Mock()\n        mock_response.text = \"Response\"\n        mock_model.generate_content.return_value = mock_response\n        mock_model_class.return_value = mock_model\n        \n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [{'role': 'user', 'content': 'Hello'}]\n        \n        assert backend._configured == False\n        backend.complete(system=\"System\", messages=messages, max_tokens=100)\n        assert backend._configured == True\n    \n    @patch('google.generativeai.GenerativeModel')\n    @patch('google.generativeai.configure')\n    def test_invariant_temperature_zero(self, mock_configure, mock_model_class):\n        \"\"\"Verify temperature is always 0 for deterministic output.\"\"\"\n        mock_model = Mock()\n        mock_response = Mock()\n        mock_response.text = \"Response\"\n        mock_model.generate_content.return_value = mock_response\n        mock_model_class.return_value = mock_model\n        \n        backend = GeminiBackend(api_key=\"test-key\", model=\"gemini-pro\")\n        messages = [{'role': 'user', 'content': 'Test'}]\n        \n        backend.complete(system=\"System\", messages=messages, max_tokens=100)\n        \n        call_args = mock_model.generate_content.call_args\n        generation_config = call_args.kwargs['generation_config']\n        assert generation_config['temperature'] == 0\n"
+}

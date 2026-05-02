@@ -1,0 +1,419 @@
+{
+  "component_id": "src_transmogrifier_core",
+  "name": "Transmogrifier Core",
+  "description": "Core orchestrator for register-aware prompt translation. Detects input register, determines optimal target register (optionally task-aware), and rewrites prompts using rule-based transformations with system prompt injection.",
+  "version": 1,
+  "types": [
+    {
+      "name": "Register",
+      "kind": "enum",
+      "fields": [],
+      "item_type": "",
+      "variants": [
+        "direct",
+        "casual",
+        "technical",
+        "academic",
+        "narrative"
+      ],
+      "inner_types": [],
+      "description": "Available linguistic registers for prompt translation",
+      "owner_component": ""
+    },
+    {
+      "name": "TranslationLevel",
+      "kind": "enum",
+      "fields": [],
+      "item_type": "",
+      "variants": [
+        "system_prompt",
+        "rule_rewrite",
+        "llm_translate"
+      ],
+      "inner_types": [],
+      "description": "Transformation level applied during translation",
+      "owner_component": ""
+    },
+    {
+      "name": "TranslationResult",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "input_text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Original input text",
+          "validators": []
+        },
+        {
+          "name": "output_text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Translated/rewritten output text",
+          "validators": []
+        },
+        {
+          "name": "detected_register",
+          "type_ref": "Register",
+          "required": true,
+          "default": "",
+          "description": "Register detected in input",
+          "validators": []
+        },
+        {
+          "name": "target_register",
+          "type_ref": "Register",
+          "required": true,
+          "default": "",
+          "description": "Target register used for translation",
+          "validators": []
+        },
+        {
+          "name": "detected_task",
+          "type_ref": "str",
+          "required": false,
+          "default": "",
+          "description": "Task type classified from input",
+          "validators": []
+        },
+        {
+          "name": "level_applied",
+          "type_ref": "TranslationLevel",
+          "required": true,
+          "default": "",
+          "description": "Highest translation level applied",
+          "validators": []
+        },
+        {
+          "name": "system_prompt",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "Generated system prompt for LLM injection",
+          "validators": []
+        },
+        {
+          "name": "semantic_similarity",
+          "type_ref": "float | None",
+          "required": false,
+          "default": "None",
+          "description": "Semantic similarity score (unused in current code)",
+          "validators": []
+        },
+        {
+          "name": "skipped",
+          "type_ref": "bool",
+          "required": false,
+          "default": "False",
+          "description": "Whether translation was skipped",
+          "validators": []
+        },
+        {
+          "name": "skip_reason",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "Reason for skipping translation",
+          "validators": []
+        },
+        {
+          "name": "elapsed_ms",
+          "type_ref": "float",
+          "required": false,
+          "default": "0.0",
+          "description": "Translation duration in milliseconds",
+          "validators": []
+        },
+        {
+          "name": "trace_id",
+          "type_ref": "str",
+          "required": false,
+          "default": "",
+          "description": "12-character hex trace ID generated via uuid4",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Complete result of a translation operation with metadata",
+      "owner_component": ""
+    },
+    {
+      "name": "TranslationConfig",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "target_register",
+          "type_ref": "Register | None",
+          "required": false,
+          "default": "None",
+          "description": "Force specific target register",
+          "validators": []
+        },
+        {
+          "name": "max_level",
+          "type_ref": "TranslationLevel",
+          "required": false,
+          "default": "TranslationLevel.rule_rewrite",
+          "description": "Maximum translation level to apply",
+          "validators": []
+        },
+        {
+          "name": "semantic_threshold",
+          "type_ref": "float",
+          "required": false,
+          "default": "0.95",
+          "description": "Semantic similarity threshold (unused in current code)",
+          "validators": []
+        },
+        {
+          "name": "spread_threshold_pp",
+          "type_ref": "float",
+          "required": false,
+          "default": "10.0",
+          "description": "Percentage point spread threshold for invariance",
+          "validators": []
+        },
+        {
+          "name": "passthrough_on_failure",
+          "type_ref": "bool",
+          "required": false,
+          "default": "True",
+          "description": "Return input text on failure (unused in current code)",
+          "validators": []
+        },
+        {
+          "name": "task_aware",
+          "type_ref": "bool",
+          "required": false,
+          "default": "True",
+          "description": "Use per-task optimal register when available",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Configuration parameters for translation behavior",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "__init__",
+      "description": "Initialize Transmogrifier with detector, task classifier, profile cache, rule engine, and configuration. Creates default instances if not provided.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "Transmogrifier",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "profile_cache",
+          "type_ref": "ProfileCache | None",
+          "required": false,
+          "default": "None",
+          "description": "Cache for model performance profiles",
+          "validators": []
+        },
+        {
+          "name": "config",
+          "type_ref": "TranslationConfig | None",
+          "required": false,
+          "default": "None",
+          "description": "Translation configuration parameters",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "self._detector is RegisterDetector instance",
+        "self._task_classifier is TaskClassifier instance",
+        "self._profile_cache is ProfileCache instance (provided or default)",
+        "self._rule_engine is RuleEngine instance",
+        "self._config is TranslationConfig instance (provided or default)"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Creates RegisterDetector, TaskClassifier, RuleEngine instances",
+        "Creates default ProfileCache if not provided",
+        "Creates default TranslationConfig if not provided"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "self._detector",
+          "description": "Initializes RegisterDetector"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._task_classifier",
+          "description": "Initializes TaskClassifier"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._profile_cache",
+          "description": "Sets or creates ProfileCache"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._rule_engine",
+          "description": "Initializes RuleEngine"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._config",
+          "description": "Sets or creates TranslationConfig"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "translate",
+      "description": "Translate input text to optimal register using rule-based rewriting and system prompt generation. Detects input register, classifies task type, determines target register (from config, model profile, or default to direct), generates system prompt, and applies rule rewriting if registers differ. Skips translation for invariant models with low task-specific spread. Zero API calls.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "Transmogrifier",
+          "required": true,
+          "default": "",
+          "description": "",
+          "validators": []
+        },
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Input text to translate",
+          "validators": []
+        },
+        {
+          "name": "model",
+          "type_ref": "str",
+          "required": false,
+          "default": "",
+          "description": "Model identifier for profile lookup",
+          "validators": []
+        },
+        {
+          "name": "config",
+          "type_ref": "TranslationConfig | None",
+          "required": false,
+          "default": "None",
+          "description": "Override configuration for this translation",
+          "validators": []
+        }
+      ],
+      "output_type": "TranslationResult",
+      "error_cases": [
+        {
+          "name": "ValueError_on_invalid_register_string",
+          "condition": "target from profile.best_register or profile.best_register_for_task is a string not in Register enum",
+          "error_type": "ValueError",
+          "error_data": {
+            "source": "Register(target) conversion"
+          }
+        }
+      ],
+      "preconditions": [
+        "self._detector, self._task_classifier, self._profile_cache, self._rule_engine, self._config are initialized"
+      ],
+      "postconditions": [
+        "Returns TranslationResult with input_text == text",
+        "result.detected_register is the detected register from input",
+        "result.target_register is determined from config, profile, or defaults to Register.direct",
+        "result.system_prompt is generated by get_system_prompt(detected, target)",
+        "result.output_text == text if skipped or detected == target",
+        "result.output_text is rewritten by RuleEngine if detected != target",
+        "result.level_applied is TranslationLevel.system_prompt if detected == target",
+        "result.level_applied is TranslationLevel.rule_rewrite if detected != target",
+        "result.skipped == True if profile.is_invariant and task_spread < 2.0",
+        "result.elapsed_ms is measured execution time in milliseconds"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [
+        "Calls self._detector.detect(text)",
+        "Calls self._task_classifier.classify(text)",
+        "Calls self._profile_cache.get(model) if model is non-empty",
+        "Calls get_system_prompt(detected, target)",
+        "Calls self._rule_engine.rewrite(text, detected, target) if detected != target",
+        "Measures elapsed time using time.perf_counter()"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": "Pure computation with no external I/O or persistent state changes"
+        }
+      ],
+      "performance_budget": {
+        "p95_latency_ms": null,
+        "max_memory_mb": null,
+        "complexity": "O(n)"
+      }
+    }
+  ],
+  "dependencies": [
+    "time",
+    "uuid",
+    "pydantic",
+    "src.transmogrifier.detector",
+    "src.transmogrifier.profiles",
+    "src.transmogrifier.rules",
+    "src.transmogrifier.system_prompts",
+    "src.transmogrifier.task_classifier"
+  ],
+  "dependency_contracts": {
+    "src.transmogrifier.detector": [
+      "RegisterDetector.detect(text: str) -> tuple[Register, float]"
+    ],
+    "src.transmogrifier.task_classifier": [
+      "TaskClassifier.classify(text: str) -> tuple[TaskType, float]"
+    ],
+    "src.transmogrifier.profiles": [
+      "ProfileCache.get(model: str) -> Profile | None",
+      "Profile.is_invariant: bool",
+      "Profile.spread_pp: float",
+      "Profile.spread_for_task(task: str) -> float",
+      "Profile.best_register: Register | str",
+      "Profile.best_register_for_task(task: str) -> Register | str"
+    ],
+    "src.transmogrifier.rules": [
+      "RuleEngine.rewrite(text: str, source: Register, target: Register) -> str"
+    ],
+    "src.transmogrifier.system_prompts": [
+      "get_system_prompt(detected: Register, target: Register) -> str"
+    ]
+  },
+  "invariants": [
+    "TranslationLevel.system_prompt (1) < TranslationLevel.rule_rewrite (2) < TranslationLevel.llm_translate (3)",
+    "task_spread threshold for skipping is hardcoded to 2.0",
+    "Default target register is Register.direct when no config or profile available",
+    "System prompt is always generated regardless of skip status",
+    "trace_id is generated via uuid.uuid4().hex[:12] for each TranslationResult",
+    "elapsed_ms is always measured and populated in result"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [],
+    "writes": [],
+    "rationale": "",
+    "side_effects": []
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

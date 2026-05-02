@@ -1,0 +1,149 @@
+{
+  "component_id": "src_transmogrifier_backends___init__",
+  "name": "Transmogrifier Backend Protocol and Factory",
+  "description": "Backend protocol and factory for Level 3 LLM-based translation. Defines the Backend protocol interface for LLM completion and provides a factory function to instantiate backend implementations (Anthropic, OpenAI, Gemini) based on environment variables or explicit parameters.",
+  "version": 1,
+  "types": [
+    {
+      "name": "Backend",
+      "kind": "struct",
+      "fields": [],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Protocol class defining the interface for LLM backend implementations. Any conforming backend must implement the complete() method.",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "create_backend",
+      "description": "Factory function that creates a backend instance from environment variables or explicit arguments. Reads TRANSMOG_BACKEND env var (defaults to 'anthropic') and dynamically imports the corresponding backend implementation.",
+      "inputs": [
+        {
+          "name": "backend",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "Backend type to instantiate ('anthropic', 'openai', or 'gemini'). If None, reads from TRANSMOG_BACKEND env var.",
+          "validators": []
+        },
+        {
+          "name": "kwargs",
+          "type_ref": "dict",
+          "required": false,
+          "default": "{}",
+          "description": "Additional keyword arguments passed to the backend constructor.",
+          "validators": []
+        }
+      ],
+      "output_type": "Backend",
+      "error_cases": [
+        {
+          "name": "unknown_backend",
+          "condition": "backend parameter (or TRANSMOG_BACKEND env var) is not one of 'anthropic', 'openai', or 'gemini'",
+          "error_type": "ValueError",
+          "error_data": {
+            "message": "Unknown backend: {backend}"
+          }
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "Returns a Backend instance that implements the complete() method",
+        "The returned backend is one of: AnthropicBackend, OpenAIBackend, or GeminiBackend"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Reads environment variable TRANSMOG_BACKEND",
+        "Dynamically imports backend modules based on selection"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "os.environ.TRANSMOG_BACKEND",
+          "description": "Reads environment variable to determine backend"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "complete",
+      "description": "Protocol method for LLM completion. Takes a system prompt, message list, and max token count, returns a string completion. This is a protocol method signature, not a concrete implementation.",
+      "inputs": [
+        {
+          "name": "system",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "System prompt for the LLM",
+          "validators": []
+        },
+        {
+          "name": "messages",
+          "type_ref": "list[dict]",
+          "required": true,
+          "default": "",
+          "description": "List of message dictionaries for the conversation history",
+          "validators": []
+        },
+        {
+          "name": "max_tokens",
+          "type_ref": "int",
+          "required": false,
+          "default": "1024",
+          "description": "Maximum number of tokens to generate",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns a string completion from the LLM"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "os",
+    "typing.Protocol",
+    "src.transmogrifier.backends.anthropic.AnthropicBackend",
+    "src.transmogrifier.backends.openai.OpenAIBackend",
+    "src.transmogrifier.backends.gemini.GeminiBackend"
+  ],
+  "dependency_contracts": {},
+  "invariants": [
+    "Default backend is 'anthropic' when TRANSMOG_BACKEND is not set",
+    "Only three backend types are supported: 'anthropic', 'openai', 'gemini'",
+    "All backends must implement the Backend protocol (complete method)"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [
+      "environment_variables"
+    ],
+    "writes": [],
+    "rationale": "Reads TRANSMOG_BACKEND environment variable to determine which backend to instantiate",
+    "side_effects": [
+      {
+        "type": "environment_read",
+        "classification": "configuration",
+        "fields": [
+          "TRANSMOG_BACKEND"
+        ],
+        "rationale": "Required to select backend implementation when not explicitly specified"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

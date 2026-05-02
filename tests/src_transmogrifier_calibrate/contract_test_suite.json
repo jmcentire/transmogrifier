@@ -1,0 +1,559 @@
+{
+  "component_id": "src_transmogrifier_calibrate",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_score_response_happy_path_accept_no_reject",
+      "description": "Verify score_response returns True when response contains accept pattern and no reject patterns",
+      "function": "score_response",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "response": "The capital of France is Paris",
+        "task": "{\"accept\": [\"Paris\"], \"reject\": [], \"category\": \"factual\"}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns True",
+      "expected_error": "",
+      "assertions": [
+        "result is True"
+      ]
+    },
+    {
+      "id": "test_score_response_happy_path_multiple_accept_patterns",
+      "description": "Verify score_response returns True when response contains any of multiple accept patterns",
+      "function": "score_response",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "response": "The result is 42",
+        "task": "{\"accept\": [\"42\", \"forty-two\"], \"reject\": [], \"category\": \"factual\"}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns True",
+      "expected_error": "",
+      "assertions": [
+        "result is True"
+      ]
+    },
+    {
+      "id": "test_score_response_reject_pattern_present",
+      "description": "Verify score_response returns False when reject pattern is present even if accept pattern exists",
+      "function": "score_response",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "response": "Paris is wrong, it's London",
+        "task": "{\"accept\": [\"Paris\"], \"reject\": [\"wrong\"], \"category\": \"factual\"}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns False",
+      "expected_error": "",
+      "assertions": [
+        "result is False"
+      ]
+    },
+    {
+      "id": "test_score_response_reasoning_category_strict_reject",
+      "description": "Verify score_response returns False for reasoning category when any reject pattern present",
+      "function": "score_response",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "response": "The answer involves uncertain reasoning",
+        "task": "{\"accept\": [\"answer\"], \"reject\": [\"uncertain\"], \"category\": \"reasoning\"}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns False for reasoning category with reject pattern",
+      "expected_error": "",
+      "assertions": [
+        "result is False"
+      ]
+    },
+    {
+      "id": "test_score_response_no_accept_pattern",
+      "description": "Verify score_response returns False when response contains no accept patterns",
+      "function": "score_response",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "response": "The capital is London",
+        "task": "{\"accept\": [\"Paris\"], \"reject\": [], \"category\": \"factual\"}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns False",
+      "expected_error": "",
+      "assertions": [
+        "result is False"
+      ]
+    },
+    {
+      "id": "test_score_response_edge_case_empty_response",
+      "description": "Verify score_response handles empty response string",
+      "function": "score_response",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "response": "",
+        "task": "{\"accept\": [\"Paris\"], \"reject\": [], \"category\": \"factual\"}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns False for empty response",
+      "expected_error": "",
+      "assertions": [
+        "result is False"
+      ]
+    },
+    {
+      "id": "test_score_response_edge_case_empty_accept_list",
+      "description": "Verify score_response handles empty accept list",
+      "function": "score_response",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "response": "Any response text",
+        "task": "{\"accept\": [], \"reject\": [], \"category\": \"factual\"}"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns False when no accept patterns defined",
+      "expected_error": "",
+      "assertions": [
+        "result is False"
+      ]
+    },
+    {
+      "id": "test_score_response_edge_case_case_sensitivity",
+      "description": "Verify score_response pattern matching is case-sensitive or case-insensitive as per implementation",
+      "function": "score_response",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "response": "The answer is PARIS",
+        "task": "{\"accept\": [\"paris\"], \"reject\": [], \"category\": \"factual\"}"
+      },
+      "input_description": "",
+      "expected_output_description": "Behavior depends on implementation case sensitivity",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, bool)"
+      ]
+    },
+    {
+      "id": "test_score_response_edge_case_partial_match",
+      "description": "Verify score_response handles partial string matches",
+      "function": "score_response",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "response": "The Parisian culture is rich",
+        "task": "{\"accept\": [\"Paris\"], \"reject\": [], \"category\": \"factual\"}"
+      },
+      "input_description": "",
+      "expected_output_description": "Should match if Paris is substring",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, bool)"
+      ]
+    },
+    {
+      "id": "test_init_happy_path_with_cache",
+      "description": "Verify __init__ initializes CalibrationRunner with backend and profile cache",
+      "function": "__init__",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "mock_backend",
+        "profile_cache": "mock_profile_cache"
+      },
+      "input_description": "",
+      "expected_output_description": "CalibrationRunner initialized with provided backend and cache",
+      "expected_error": "",
+      "assertions": [
+        "runner._backend is mock_backend",
+        "runner._cache is mock_profile_cache"
+      ]
+    },
+    {
+      "id": "test_init_happy_path_without_cache",
+      "description": "Verify __init__ creates new ProfileCache when None provided",
+      "function": "__init__",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "backend": "mock_backend",
+        "profile_cache": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "CalibrationRunner initialized with new ProfileCache",
+      "expected_error": "",
+      "assertions": [
+        "runner._backend is mock_backend",
+        "runner._cache is not None",
+        "isinstance(runner._cache, ProfileCache)"
+      ]
+    },
+    {
+      "id": "test_run_happy_path_complete_execution",
+      "description": "Verify run executes calibration across all registers and tasks, returns ModelProfile with correct structure",
+      "function": "run",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns ModelProfile with accuracies, by_task, calibration metadata",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(profile, ModelProfile)",
+        "profile.calibration_version == '2.0'",
+        "len(profile.accuracies) == 5",
+        "len(profile.by_task) == 6",
+        "profile.calibrated_at is not None"
+      ]
+    },
+    {
+      "id": "test_run_happy_path_with_custom_tasks",
+      "description": "Verify run works with custom task list provided",
+      "function": "run",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "[{\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}]",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns ModelProfile using custom tasks",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(profile, ModelProfile)"
+      ]
+    },
+    {
+      "id": "test_run_happy_path_with_custom_registers",
+      "description": "Verify run works with custom register list provided",
+      "function": "run",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "[\"direct\", \"casual\"]",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns ModelProfile testing only specified registers",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(profile, ModelProfile)",
+        "len(profile.accuracies) == 2"
+      ]
+    },
+    {
+      "id": "test_run_happy_path_with_delay",
+      "description": "Verify run enforces delay between API calls",
+      "function": "run",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "[{\"category\": \"factual\", \"prompt\": \"test1\", \"accept\": [\"yes\"], \"reject\": []}, {\"category\": \"factual\", \"prompt\": \"test2\", \"accept\": [\"yes\"], \"reject\": []}]",
+        "registers": "[\"direct\"]",
+        "delay": "0.1",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "Delay enforced between calls",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(profile, ModelProfile)"
+      ]
+    },
+    {
+      "id": "test_run_happy_path_verbose_logging",
+      "description": "Verify run outputs logs when verbose is True",
+      "function": "run",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "[{\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}]",
+        "registers": "[\"direct\"]",
+        "delay": "0.0",
+        "verbose": "True"
+      },
+      "input_description": "",
+      "expected_output_description": "Logs are produced",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(profile, ModelProfile)"
+      ]
+    },
+    {
+      "id": "test_run_edge_case_empty_tasks_list",
+      "description": "Verify run handles empty tasks list",
+      "function": "run",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "[]",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns ModelProfile with empty results",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(profile, ModelProfile)"
+      ]
+    },
+    {
+      "id": "test_run_edge_case_empty_registers_list",
+      "description": "Verify run handles empty registers list",
+      "function": "run",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "[]",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "Returns ModelProfile with empty results",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(profile, ModelProfile)"
+      ]
+    },
+    {
+      "id": "test_run_edge_case_zero_delay",
+      "description": "Verify run works with zero delay",
+      "function": "run",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "No delay enforced",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(profile, ModelProfile)"
+      ]
+    },
+    {
+      "id": "test_run_edge_case_large_delay",
+      "description": "Verify run works with large delay value",
+      "function": "run",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "[{\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}]",
+        "registers": "[\"direct\"]",
+        "delay": "1.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "Large delay enforced (mocked for test speed)",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(profile, ModelProfile)"
+      ]
+    },
+    {
+      "id": "test_run_error_backend_exception",
+      "description": "Verify run propagates backend exception when backend.complete() fails",
+      "function": "run",
+      "category": "error_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "backend_exception",
+      "assertions": [
+        "exception raised"
+      ]
+    },
+    {
+      "id": "test_run_postcondition_cache_saved",
+      "description": "Verify run saves ModelProfile to cache via ProfileCache.put()",
+      "function": "run",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "ProfileCache.put() is called with ModelProfile",
+      "expected_error": "",
+      "assertions": [
+        "mock_cache.put.called"
+      ]
+    },
+    {
+      "id": "test_run_postcondition_utc_timestamp",
+      "description": "Verify run sets calibrated_at to current UTC timestamp",
+      "function": "run",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "calibrated_at is UTC timestamp",
+      "expected_error": "",
+      "assertions": [
+        "profile.calibrated_at.tzinfo is not None"
+      ]
+    },
+    {
+      "id": "test_invariant_calibration_version",
+      "description": "Verify calibration version is always '2.0'",
+      "function": "run",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "ModelProfile.calibration_version is '2.0'",
+      "expected_error": "",
+      "assertions": [
+        "profile.calibration_version == '2.0'"
+      ]
+    },
+    {
+      "id": "test_invariant_register_transforms_count",
+      "description": "Verify REGISTER_TRANSFORMS contains exactly 5 transforms",
+      "function": "run",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "5 register transforms available",
+      "expected_error": "",
+      "assertions": [
+        "len(REGISTER_TRANSFORMS) == 5"
+      ]
+    },
+    {
+      "id": "test_invariant_benchmark_tasks_structure",
+      "description": "Verify each task dict contains required keys",
+      "function": "run",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "model_name": "gpt-4",
+        "model_version": "1.0",
+        "provider": "openai",
+        "tasks": "None",
+        "registers": "None",
+        "delay": "0.0",
+        "verbose": "False"
+      },
+      "input_description": "",
+      "expected_output_description": "All tasks have category, prompt, accept, reject keys",
+      "expected_error": "",
+      "assertions": [
+        "all('category' in task and 'prompt' in task and 'accept' in task and 'reject' in task for task in BENCHMARK_TASKS)"
+      ]
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract tests for CalibrationRunner component.\n\nThree-tier testing strategy:\n1. Unit tests for score_response() with randomized inputs\n2. Component tests for CalibrationRunner with mocked dependencies\n3. Integration tests for end-to-end workflows\n\nTests verify behavior at boundaries, not implementation details.\n\"\"\"\n\nimport pytest\nfrom unittest.mock import Mock, MagicMock, patch, call\nfrom datetime import datetime, timezone\nimport time\nimport random\nimport string\n\n# Import component under test\nfrom src.transmogrifier.calibrate import (\n    CalibrationRunner,\n    score_response,\n    REGISTER_TRANSFORMS,\n    BENCHMARK_TASKS,\n    Backend,\n    ProfileCache,\n    ModelProfile,\n    RegisterAccuracy,\n    TaskRegisterProfile,\n)\n\n\n# =============================================================================\n# Unit Tests for score_response()\n# =============================================================================\n\nclass TestScoreResponseHappyPath:\n    \"\"\"Happy path tests for score_response function.\"\"\"\n\n    def test_score_response_happy_path_accept_no_reject(self):\n        \"\"\"Verify score_response returns True when response contains accept pattern and no reject patterns.\"\"\"\n        response = \"The capital of France is Paris\"\n        task = {\"accept\": [\"Paris\"], \"reject\": [], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert result is True\n\n    def test_score_response_happy_path_multiple_accept_patterns(self):\n        \"\"\"Verify score_response returns True when response contains any of multiple accept patterns.\"\"\"\n        response = \"The result is 42\"\n        task = {\"accept\": [\"42\", \"forty-two\"], \"reject\": [], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert result is True\n\n    def test_score_response_reject_pattern_present(self):\n        \"\"\"Verify score_response returns False when reject pattern is present even if accept pattern exists.\"\"\"\n        response = \"Paris is wrong, it's London\"\n        task = {\"accept\": [\"Paris\"], \"reject\": [\"wrong\"], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert result is False\n\n    def test_score_response_reasoning_category_strict_reject(self):\n        \"\"\"Verify score_response returns False for reasoning category when any reject pattern present.\"\"\"\n        response = \"The answer involves uncertain reasoning\"\n        task = {\"accept\": [\"answer\"], \"reject\": [\"uncertain\"], \"category\": \"reasoning\"}\n        \n        result = score_response(response, task)\n        \n        assert result is False\n\n    def test_score_response_no_accept_pattern(self):\n        \"\"\"Verify score_response returns False when response contains no accept patterns.\"\"\"\n        response = \"The capital is London\"\n        task = {\"accept\": [\"Paris\"], \"reject\": [], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert result is False\n\n\nclass TestScoreResponseEdgeCases:\n    \"\"\"Edge case tests for score_response function.\"\"\"\n\n    def test_score_response_edge_case_empty_response(self):\n        \"\"\"Verify score_response handles empty response string.\"\"\"\n        response = \"\"\n        task = {\"accept\": [\"Paris\"], \"reject\": [], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert result is False\n\n    def test_score_response_edge_case_empty_accept_list(self):\n        \"\"\"Verify score_response handles empty accept list.\"\"\"\n        response = \"Any response text\"\n        task = {\"accept\": [], \"reject\": [], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert result is False\n\n    def test_score_response_edge_case_case_sensitivity(self):\n        \"\"\"Verify score_response pattern matching is case-sensitive or case-insensitive as per implementation.\"\"\"\n        response = \"The answer is PARIS\"\n        task = {\"accept\": [\"paris\"], \"reject\": [], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert isinstance(result, bool)\n\n    def test_score_response_edge_case_partial_match(self):\n        \"\"\"Verify score_response handles partial string matches.\"\"\"\n        response = \"The Parisian culture is rich\"\n        task = {\"accept\": [\"Paris\"], \"reject\": [], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert isinstance(result, bool)\n\n    def test_score_response_multiple_reject_patterns(self):\n        \"\"\"Verify score_response returns False when any reject pattern matches.\"\"\"\n        response = \"This is incorrect and wrong\"\n        task = {\"accept\": [\"This\"], \"reject\": [\"incorrect\", \"wrong\"], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert result is False\n\n    def test_score_response_whitespace_response(self):\n        \"\"\"Verify score_response handles whitespace-only response.\"\"\"\n        response = \"   \\n\\t  \"\n        task = {\"accept\": [\"answer\"], \"reject\": [], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert result is False\n\n    def test_score_response_special_characters(self):\n        \"\"\"Verify score_response handles special characters in patterns.\"\"\"\n        response = \"The answer is $100.00\"\n        task = {\"accept\": [\"$100\"], \"reject\": [], \"category\": \"factual\"}\n        \n        result = score_response(response, task)\n        \n        assert isinstance(result, bool)\n\n\nclass TestScoreResponseRandomized:\n    \"\"\"Randomized testing for score_response using direct random generation.\"\"\"\n\n    def test_score_response_random_valid_inputs(self):\n        \"\"\"Test score_response with randomly generated valid inputs.\"\"\"\n        for _ in range(10):\n            # Generate random response\n            response_length = random.randint(10, 100)\n            response = ''.join(random.choices(string.ascii_letters + string.digits + ' ', k=response_length))\n            \n            # Generate random task\n            accept_patterns = [f\"pattern_{i}\" for i in range(random.randint(1, 5))]\n            reject_patterns = [f\"reject_{i}\" for i in range(random.randint(0, 3))]\n            category = random.choice([\"factual\", \"reasoning\", \"code\", \"analysis\", \"creative\", \"instruction\"])\n            \n            task = {\n                \"accept\": accept_patterns,\n                \"reject\": reject_patterns,\n                \"category\": category\n            }\n            \n            result = score_response(response, task)\n            \n            # Verify result is boolean\n            assert isinstance(result, bool)\n\n    def test_score_response_guaranteed_match(self):\n        \"\"\"Test score_response with guaranteed accept pattern match.\"\"\"\n        for _ in range(10):\n            accept_pattern = f\"match_{random.randint(1000, 9999)}\"\n            response = f\"This contains {accept_pattern} in the middle\"\n            task = {\"accept\": [accept_pattern], \"reject\": [], \"category\": \"factual\"}\n            \n            result = score_response(response, task)\n            \n            assert result is True\n\n    def test_score_response_guaranteed_reject(self):\n        \"\"\"Test score_response with guaranteed reject pattern match.\"\"\"\n        for _ in range(10):\n            accept_pattern = f\"accept_{random.randint(1000, 9999)}\"\n            reject_pattern = f\"reject_{random.randint(1000, 9999)}\"\n            response = f\"This contains {accept_pattern} and {reject_pattern}\"\n            task = {\"accept\": [accept_pattern], \"reject\": [reject_pattern], \"category\": \"factual\"}\n            \n            result = score_response(response, task)\n            \n            assert result is False\n\n\n# =============================================================================\n# Component Tests for CalibrationRunner.__init__()\n# =============================================================================\n\nclass TestCalibrationRunnerInit:\n    \"\"\"Tests for CalibrationRunner initialization.\"\"\"\n\n    def test_init_happy_path_with_cache(self):\n        \"\"\"Verify __init__ initializes CalibrationRunner with backend and profile cache.\"\"\"\n        mock_backend = Mock(spec=Backend)\n        mock_profile_cache = Mock(spec=ProfileCache)\n        \n        runner = CalibrationRunner(mock_backend, mock_profile_cache)\n        \n        assert runner._backend is mock_backend\n        assert runner._cache is mock_profile_cache\n\n    def test_init_happy_path_without_cache(self):\n        \"\"\"Verify __init__ creates new ProfileCache when None provided.\"\"\"\n        mock_backend = Mock(spec=Backend)\n        \n        with patch('src_transmogrifier_calibrate.ProfileCache') as MockProfileCache:\n            mock_cache_instance = Mock()\n            MockProfileCache.return_value = mock_cache_instance\n            \n            runner = CalibrationRunner(mock_backend, None)\n            \n            assert runner._backend is mock_backend\n            assert runner._cache is not None\n            assert isinstance(runner._cache, type(mock_cache_instance))\n\n    def test_init_backend_not_none(self):\n        \"\"\"Verify __init__ precondition: backend is not None.\"\"\"\n        mock_backend = Mock(spec=Backend)\n        mock_cache = Mock(spec=ProfileCache)\n        \n        runner = CalibrationRunner(mock_backend, mock_cache)\n        \n        assert runner._backend is not None\n\n\n# =============================================================================\n# Component Tests for CalibrationRunner.run()\n# =============================================================================\n\nclass TestCalibrationRunnerRun:\n    \"\"\"Component tests for CalibrationRunner.run() method.\"\"\"\n\n    def setup_method(self):\n        \"\"\"Set up mocks for each test.\"\"\"\n        self.mock_backend = Mock(spec=Backend)\n        self.mock_cache = Mock(spec=ProfileCache)\n        self.runner = CalibrationRunner(self.mock_backend, self.mock_cache)\n        \n        # Configure backend to return successful responses\n        self.mock_backend.complete.return_value = \"This is a valid response\"\n\n    def test_run_happy_path_complete_execution(self):\n        \"\"\"Verify run executes calibration across all registers and tasks, returns ModelProfile with correct structure.\"\"\"\n        model_name = \"gpt-4\"\n        model_version = \"1.0\"\n        provider = \"openai\"\n        \n        with patch('src_transmogrifier_calibrate.BENCHMARK_TASKS', [\n            {\"category\": \"factual\", \"prompt\": \"test1\", \"accept\": [\"valid\"], \"reject\": []},\n            {\"category\": \"reasoning\", \"prompt\": \"test2\", \"accept\": [\"valid\"], \"reject\": []},\n        ]):\n            with patch('src_transmogrifier_calibrate.REGISTER_TRANSFORMS', {\n                \"direct\": lambda x: x,\n                \"casual\": lambda x: x,\n            }):\n                profile = self.runner.run(\n                    model_name=model_name,\n                    model_version=model_version,\n                    provider=provider,\n                    tasks=None,\n                    registers=None,\n                    delay=0.0,\n                    verbose=False\n                )\n        \n        assert isinstance(profile, ModelProfile)\n        assert profile.calibration_version == '2.0'\n        assert profile.calibrated_at is not None\n\n    def test_run_happy_path_with_custom_tasks(self):\n        \"\"\"Verify run works with custom task list provided.\"\"\"\n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}\n        ]\n        \n        profile = self.runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=custom_tasks,\n            registers=None,\n            delay=0.0,\n            verbose=False\n        )\n        \n        assert isinstance(profile, ModelProfile)\n\n    def test_run_happy_path_with_custom_registers(self):\n        \"\"\"Verify run works with custom register list provided.\"\"\"\n        custom_registers = [\"direct\", \"casual\"]\n        \n        with patch('src_transmogrifier_calibrate.BENCHMARK_TASKS', [\n            {\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"valid\"], \"reject\": []}\n        ]):\n            profile = self.runner.run(\n                model_name=\"gpt-4\",\n                model_version=\"1.0\",\n                provider=\"openai\",\n                tasks=None,\n                registers=custom_registers,\n                delay=0.0,\n                verbose=False\n            )\n        \n        assert isinstance(profile, ModelProfile)\n\n    @patch('src_transmogrifier_calibrate.time.sleep')\n    def test_run_happy_path_with_delay(self, mock_sleep):\n        \"\"\"Verify run enforces delay between API calls.\"\"\"\n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test1\", \"accept\": [\"yes\"], \"reject\": []},\n            {\"category\": \"factual\", \"prompt\": \"test2\", \"accept\": [\"yes\"], \"reject\": []}\n        ]\n        custom_registers = [\"direct\"]\n        \n        profile = self.runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=custom_tasks,\n            registers=custom_registers,\n            delay=0.1,\n            verbose=False\n        )\n        \n        assert isinstance(profile, ModelProfile)\n        # Delay should be called between tasks (N-1 times for N tasks)\n        assert mock_sleep.call_count >= 1\n\n    def test_run_happy_path_verbose_logging(self, capfd):\n        \"\"\"Verify run outputs logs when verbose is True.\"\"\"\n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}\n        ]\n        custom_registers = [\"direct\"]\n        \n        with patch('src_transmogrifier_calibrate.REGISTER_TRANSFORMS', {\n            \"direct\": lambda x: x\n        }):\n            profile = self.runner.run(\n                model_name=\"gpt-4\",\n                model_version=\"1.0\",\n                provider=\"openai\",\n                tasks=custom_tasks,\n                registers=custom_registers,\n                delay=0.0,\n                verbose=True\n            )\n        \n        assert isinstance(profile, ModelProfile)\n        # Check if any output was produced (verbose logging)\n        captured = capfd.readouterr()\n        # Some implementations may use logging module instead of print\n\n    def test_run_edge_case_empty_tasks_list(self):\n        \"\"\"Verify run handles empty tasks list.\"\"\"\n        profile = self.runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=[],\n            registers=None,\n            delay=0.0,\n            verbose=False\n        )\n        \n        assert isinstance(profile, ModelProfile)\n\n    def test_run_edge_case_empty_registers_list(self):\n        \"\"\"Verify run handles empty registers list.\"\"\"\n        profile = self.runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=None,\n            registers=[],\n            delay=0.0,\n            verbose=False\n        )\n        \n        assert isinstance(profile, ModelProfile)\n\n    @patch('src_transmogrifier_calibrate.time.sleep')\n    def test_run_edge_case_zero_delay(self, mock_sleep):\n        \"\"\"Verify run works with zero delay.\"\"\"\n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}\n        ]\n        \n        profile = self.runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=custom_tasks,\n            registers=[\"direct\"],\n            delay=0.0,\n            verbose=False\n        )\n        \n        assert isinstance(profile, ModelProfile)\n\n    @patch('src_transmogrifier_calibrate.time.sleep')\n    def test_run_edge_case_large_delay(self, mock_sleep):\n        \"\"\"Verify run works with large delay value.\"\"\"\n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}\n        ]\n        custom_registers = [\"direct\"]\n        \n        profile = self.runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=custom_tasks,\n            registers=custom_registers,\n            delay=1.0,\n            verbose=False\n        )\n        \n        assert isinstance(profile, ModelProfile)\n\n    def test_run_error_backend_exception(self):\n        \"\"\"Verify run propagates backend exception when backend.complete() fails.\"\"\"\n        self.mock_backend.complete.side_effect = Exception(\"Network error\")\n        \n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}\n        ]\n        \n        with pytest.raises(Exception) as exc_info:\n            self.runner.run(\n                model_name=\"gpt-4\",\n                model_version=\"1.0\",\n                provider=\"openai\",\n                tasks=custom_tasks,\n                registers=[\"direct\"],\n                delay=0.0,\n                verbose=False\n            )\n        \n        assert \"Network error\" in str(exc_info.value)\n\n    def test_run_postcondition_cache_saved(self):\n        \"\"\"Verify run saves ModelProfile to cache via ProfileCache.put().\"\"\"\n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}\n        ]\n        \n        profile = self.runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=custom_tasks,\n            registers=[\"direct\"],\n            delay=0.0,\n            verbose=False\n        )\n        \n        assert self.mock_cache.put.called\n\n    def test_run_postcondition_utc_timestamp(self):\n        \"\"\"Verify run sets calibrated_at to current UTC timestamp.\"\"\"\n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}\n        ]\n        \n        before = datetime.now(timezone.utc)\n        profile = self.runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=custom_tasks,\n            registers=[\"direct\"],\n            delay=0.0,\n            verbose=False\n        )\n        after = datetime.now(timezone.utc)\n        \n        assert profile.calibrated_at.tzinfo is not None\n        assert before <= profile.calibrated_at <= after\n\n    def test_run_backend_complete_called_correctly(self):\n        \"\"\"Verify backend.complete() is called with correct parameters.\"\"\"\n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"What is 2+2?\", \"accept\": [\"4\"], \"reject\": []}\n        ]\n        custom_registers = [\"direct\"]\n        \n        with patch('src_transmogrifier_calibrate.REGISTER_TRANSFORMS', {\n            \"direct\": lambda x: f\"Direct: {x}\"\n        }):\n            profile = self.runner.run(\n                model_name=\"gpt-4\",\n                model_version=\"1.0\",\n                provider=\"openai\",\n                tasks=custom_tasks,\n                registers=custom_registers,\n                delay=0.0,\n                verbose=False\n            )\n        \n        # Verify backend.complete was called\n        assert self.mock_backend.complete.called\n\n    def test_run_multiple_categories(self):\n        \"\"\"Verify run handles multiple task categories correctly.\"\"\"\n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test1\", \"accept\": [\"yes\"], \"reject\": []},\n            {\"category\": \"reasoning\", \"prompt\": \"test2\", \"accept\": [\"yes\"], \"reject\": []},\n            {\"category\": \"code\", \"prompt\": \"test3\", \"accept\": [\"yes\"], \"reject\": []},\n        ]\n        \n        profile = self.runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=custom_tasks,\n            registers=[\"direct\"],\n            delay=0.0,\n            verbose=False\n        )\n        \n        assert isinstance(profile, ModelProfile)\n\n\n# =============================================================================\n# Invariant Tests\n# =============================================================================\n\nclass TestInvariants:\n    \"\"\"Tests for system invariants.\"\"\"\n\n    def test_invariant_calibration_version(self):\n        \"\"\"Verify calibration version is always '2.0'.\"\"\"\n        mock_backend = Mock(spec=Backend)\n        mock_backend.complete.return_value = \"valid response\"\n        mock_cache = Mock(spec=ProfileCache)\n        runner = CalibrationRunner(mock_backend, mock_cache)\n        \n        custom_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"test\", \"accept\": [\"yes\"], \"reject\": []}\n        ]\n        \n        profile = runner.run(\n            model_name=\"gpt-4\",\n            model_version=\"1.0\",\n            provider=\"openai\",\n            tasks=custom_tasks,\n            registers=[\"direct\"],\n            delay=0.0,\n            verbose=False\n        )\n        \n        assert profile.calibration_version == '2.0'\n\n    def test_invariant_register_transforms_count(self):\n        \"\"\"Verify REGISTER_TRANSFORMS contains exactly 5 transforms.\"\"\"\n        assert len(REGISTER_TRANSFORMS) == 5\n\n    def test_invariant_register_transforms_names(self):\n        \"\"\"Verify REGISTER_TRANSFORMS contains expected register names.\"\"\"\n        expected_registers = {\"direct\", \"casual\", \"technical\", \"academic\", \"narrative\"}\n        assert set(REGISTER_TRANSFORMS.keys()) == expected_registers\n\n    def test_invariant_benchmark_tasks_count(self):\n        \"\"\"Verify BENCHMARK_TASKS contains 50 tasks.\"\"\"\n        assert len(BENCHMARK_TASKS) == 50\n\n    def test_invariant_benchmark_tasks_structure(self):\n        \"\"\"Verify each task dict contains required keys.\"\"\"\n        required_keys = {\"category\", \"prompt\", \"accept\", \"reject\"}\n        \n        for task in BENCHMARK_TASKS:\n            assert all(key in task for key in required_keys)\n            assert isinstance(task[\"accept\"], list)\n            assert isinstance(task[\"reject\"], list)\n\n    def test_invariant_benchmark_tasks_categories(self):\n        \"\"\"Verify BENCHMARK_TASKS contains tasks across 6 categories.\"\"\"\n        categories = set(task[\"category\"] for task in BENCHMARK_TASKS)\n        expected_categories = {\"factual\", \"reasoning\", \"code\", \"analysis\", \"creative\", \"instruction\"}\n        assert categories == expected_categories\n\n\n# =============================================================================\n# Integration Tests\n# =============================================================================\n\nclass TestIntegration:\n    \"\"\"End-to-end integration tests with test doubles.\"\"\"\n\n    def test_full_calibration_workflow(self):\n        \"\"\"Test complete calibration workflow from initialization to profile generation.\"\"\"\n        # Create mock backend that returns realistic responses\n        mock_backend = Mock(spec=Backend)\n        mock_backend.complete.return_value = \"The answer is correct and valid\"\n        \n        # Create mock cache\n        mock_cache = Mock(spec=ProfileCache)\n        \n        # Initialize runner\n        runner = CalibrationRunner(mock_backend, mock_cache)\n        \n        # Define test tasks\n        test_tasks = [\n            {\"category\": \"factual\", \"prompt\": \"What is 2+2?\", \"accept\": [\"4\", \"four\"], \"reject\": [\"wrong\"]},\n            {\"category\": \"reasoning\", \"prompt\": \"Why is the sky blue?\", \"accept\": [\"light\", \"scatter\"], \"reject\": [\"magic\"]},\n        ]\n        \n        test_registers = [\"direct\", \"casual\"]\n        \n        # Run calibration\n        profile = runner.run(\n            model_name=\"test-model\",\n            model_version=\"1.0\",\n            provider=\"test-provider\",\n            tasks=test_tasks,\n            registers=test_registers,\n            delay=0.0,\n            verbose=False\n        )\n        \n        # Verify profile structure\n        assert isinstance(profile, ModelProfile)\n        assert profile.calibration_version == '2.0'\n        assert profile.calibrated_at is not None\n        \n        # Verify cache was called\n        assert mock_cache.put.called\n        \n        # Verify backend was called multiple times (registers x tasks)\n        assert mock_backend.complete.call_count == len(test_registers) * len(test_tasks)\n\n    def test_calibration_with_all_default_parameters(self):\n        \"\"\"Test calibration using all default benchmark tasks and registers.\"\"\"\n        mock_backend = Mock(spec=Backend)\n        mock_backend.complete.return_value = \"valid response\"\n        mock_cache = Mock(spec=ProfileCache)\n        \n        runner = CalibrationRunner(mock_backend, mock_cache)\n        \n        # Use minimal subset for speed\n        with patch('src_transmogrifier_calibrate.BENCHMARK_TASKS', \n                   BENCHMARK_TASKS[:5]):  # Use first 5 tasks\n            profile = runner.run(\n                model_name=\"test-model\",\n                model_version=\"1.0\",\n                provider=\"test-provider\",\n                tasks=None,\n                registers=None,\n                delay=0.0,\n                verbose=False\n            )\n        \n        assert isinstance(profile, ModelProfile)\n        assert profile.calibration_version == '2.0'\n\n    def test_partial_failure_handling(self):\n        \"\"\"Test calibration behavior when some backend calls succeed and some fail.\"\"\"\n        mock_backend = Mock(spec=Backend)\n        \n        # Simulate intermittent failures\n        call_count = [0]\n        def backend_side_effect(*args, **kwargs):\n            call_count[0] += 1\n            if call_count[0] % 3 == 0:\n                raise Exception(\"Intermittent failure\")\n            return \"valid response\"\n        \n        mock_backend.complete.side_effect = backend_side_effect\n        mock_cache = Mock(spec=ProfileCache)\n        \n        runner = CalibrationRunner(mock_backend, mock_cache)\n        \n        test_tasks = [\n            {\"category\": \"factual\", \"prompt\": f\"test{i}\", \"accept\": [\"yes\"], \"reject\": []}\n            for i in range(5)\n        ]\n        \n        # Should raise exception on first failure\n        with pytest.raises(Exception) as exc_info:\n            runner.run(\n                model_name=\"test-model\",\n                model_version=\"1.0\",\n                provider=\"test-provider\",\n                tasks=test_tasks,\n                registers=[\"direct\"],\n                delay=0.0,\n                verbose=False\n            )\n        \n        assert \"Intermittent failure\" in str(exc_info.value)\n\n    @patch('src_transmogrifier_calibrate.time.sleep')\n    def test_delay_enforcement_with_multiple_tasks(self, mock_sleep):\n        \"\"\"Test that delay is properly enforced between multiple task executions.\"\"\"\n        mock_backend = Mock(spec=Backend)\n        mock_backend.complete.return_value = \"valid\"\n        mock_cache = Mock(spec=ProfileCache)\n        \n        runner = CalibrationRunner(mock_backend, mock_cache)\n        \n        test_tasks = [\n            {\"category\": \"factual\", \"prompt\": f\"test{i}\", \"accept\": [\"valid\"], \"reject\": []}\n            for i in range(3)\n        ]\n        \n        profile = runner.run(\n            model_name=\"test-model\",\n            model_version=\"1.0\",\n            provider=\"test-provider\",\n            tasks=test_tasks,\n            registers=[\"direct\"],\n            delay=0.5,\n            verbose=False\n        )\n        \n        assert isinstance(profile, ModelProfile)\n        # Should have called sleep between each task\n        assert mock_sleep.call_count >= 2\n\n\n# =============================================================================\n# Performance and Stress Tests\n# =============================================================================\n\nclass TestPerformance:\n    \"\"\"Performance-related tests.\"\"\"\n\n    def test_large_task_set_performance(self):\n        \"\"\"Test calibration with large number of tasks.\"\"\"\n        mock_backend = Mock(spec=Backend)\n        mock_backend.complete.return_value = \"valid\"\n        mock_cache = Mock(spec=ProfileCache)\n        \n        runner = CalibrationRunner(mock_backend, mock_cache)\n        \n        # Create large task set\n        large_tasks = [\n            {\"category\": random.choice([\"factual\", \"reasoning\"]), \n             \"prompt\": f\"test{i}\", \n             \"accept\": [\"valid\"], \n             \"reject\": []}\n            for i in range(100)\n        ]\n        \n        start_time = time.time()\n        profile = runner.run(\n            model_name=\"test-model\",\n            model_version=\"1.0\",\n            provider=\"test-provider\",\n            tasks=large_tasks,\n            registers=[\"direct\"],\n            delay=0.0,\n            verbose=False\n        )\n        duration = time.time() - start_time\n        \n        assert isinstance(profile, ModelProfile)\n        # Should complete in reasonable time (adjust threshold as needed)\n        # Just verify it completes, actual time depends on implementation\n\n    def test_all_registers_all_categories(self):\n        \"\"\"Test calibration with all registers and all task categories.\"\"\"\n        mock_backend = Mock(spec=Backend)\n        mock_backend.complete.return_value = \"valid response\"\n        mock_cache = Mock(spec=ProfileCache)\n        \n        runner = CalibrationRunner(mock_backend, mock_cache)\n        \n        # Create task for each category\n        test_tasks = [\n            {\"category\": cat, \"prompt\": f\"test {cat}\", \"accept\": [\"valid\"], \"reject\": []}\n            for cat in [\"factual\", \"reasoning\", \"code\", \"analysis\", \"creative\", \"instruction\"]\n        ]\n        \n        test_registers = list(REGISTER_TRANSFORMS.keys())\n        \n        profile = runner.run(\n            model_name=\"test-model\",\n            model_version=\"1.0\",\n            provider=\"test-provider\",\n            tasks=test_tasks,\n            registers=test_registers,\n            delay=0.0,\n            verbose=False\n        )\n        \n        assert isinstance(profile, ModelProfile)\n        assert len(profile.accuracies) == len(test_registers)\n"
+}

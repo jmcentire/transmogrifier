@@ -1,0 +1,302 @@
+{
+  "component_id": "src_transmogrifier_backends_gemini",
+  "name": "Gemini Backend",
+  "description": "Gemini backend for Level 3 translation and calibration. Provides integration with Google's Generative AI (Gemini) API for text completion tasks with configurable models and system instructions.",
+  "version": 1,
+  "types": [
+    {
+      "name": "GeminiBackend",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "_api_key",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Gemini API key from parameter or GEMINI_API_KEY environment variable",
+          "validators": []
+        },
+        {
+          "name": "_model",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Model identifier (default: 'gemini-2.5-flash')",
+          "validators": []
+        },
+        {
+          "name": "_configured",
+          "type_ref": "bool",
+          "required": true,
+          "default": "",
+          "description": "Flag indicating whether google.generativeai has been configured",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Backend implementation for Google Gemini API integration. Manages API configuration, model selection, and text completion requests with lazy initialization pattern.",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "__init__",
+      "description": "Initialize GeminiBackend with API key and model configuration. Falls back to environment variables GEMINI_API_KEY and TRANSMOG_MODEL if parameters not provided. Sets internal configuration state to unconfigured.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "GeminiBackend",
+          "required": true,
+          "default": "",
+          "description": "Instance reference",
+          "validators": []
+        },
+        {
+          "name": "api_key",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "Gemini API key, falls back to GEMINI_API_KEY environment variable",
+          "validators": []
+        },
+        {
+          "name": "model",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "Model identifier, falls back to TRANSMOG_MODEL environment variable or 'gemini-2.5-flash'",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "self._api_key is set to api_key parameter or GEMINI_API_KEY env var or empty string",
+        "self._model is set to model parameter or TRANSMOG_MODEL env var or 'gemini-2.5-flash'",
+        "self._configured is False"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "reads environment variables GEMINI_API_KEY and TRANSMOG_MODEL"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "environment variables",
+          "description": "Reads GEMINI_API_KEY and TRANSMOG_MODEL"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "_ensure_configured",
+      "description": "Lazy configuration method that configures the google.generativeai library with the API key on first call. Subsequent calls are no-ops. Mutates self._configured state.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "GeminiBackend",
+          "required": true,
+          "default": "",
+          "description": "Instance reference",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [
+        {
+          "name": "import_error",
+          "condition": "google.generativeai package not installed",
+          "error_type": "ImportError",
+          "error_data": {}
+        },
+        {
+          "name": "invalid_api_key",
+          "condition": "API key is invalid or empty when genai.configure is called",
+          "error_type": "ValueError or AuthenticationError",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "self._configured is True",
+        "google.generativeai is configured with self._api_key"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [
+        "imports google.generativeai module",
+        "configures google.generativeai with API key",
+        "mutates self._configured state"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "self._configured",
+          "description": "Sets _configured flag to True"
+        },
+        {
+          "kind": "network_call",
+          "target": "google.generativeai configuration",
+          "description": "Configures genai library with API key (may trigger validation)"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "complete",
+      "description": "Generate text completion using Gemini model. Extracts user messages from messages list, constructs prompt, and returns generated text. Uses zero temperature for deterministic output.",
+      "inputs": [
+        {
+          "name": "self",
+          "type_ref": "GeminiBackend",
+          "required": true,
+          "default": "",
+          "description": "Instance reference",
+          "validators": []
+        },
+        {
+          "name": "system",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "System instruction for the model (set to None if empty string)",
+          "validators": []
+        },
+        {
+          "name": "messages",
+          "type_ref": "list[dict]",
+          "required": true,
+          "default": "",
+          "description": "List of message dictionaries with 'role' and 'content' keys. Only 'user' role messages are extracted.",
+          "validators": []
+        },
+        {
+          "name": "max_tokens",
+          "type_ref": "int",
+          "required": false,
+          "default": "1024",
+          "description": "Maximum number of output tokens",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [
+        {
+          "name": "import_error",
+          "condition": "google.generativeai package not installed",
+          "error_type": "ImportError",
+          "error_data": {}
+        },
+        {
+          "name": "api_error",
+          "condition": "Gemini API call fails (network, quota, invalid model, etc.)",
+          "error_type": "google.api_core.exceptions.GoogleAPIError or subclasses",
+          "error_data": {}
+        },
+        {
+          "name": "empty_messages",
+          "condition": "No user messages found in messages list",
+          "error_type": "ValueError or empty prompt may trigger API error",
+          "error_data": {}
+        },
+        {
+          "name": "missing_content_key",
+          "condition": "Message dict missing 'content' or 'role' key",
+          "error_type": "KeyError",
+          "error_data": {}
+        },
+        {
+          "name": "response_blocked",
+          "condition": "Response blocked by safety filters or response.text unavailable",
+          "error_type": "AttributeError or ValueError",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [
+        "messages contains at least one dict with keys 'role' and 'content'",
+        "messages with role='user' should have string 'content' field"
+      ],
+      "postconditions": [
+        "returns string response from Gemini model",
+        "self._configured is True after execution"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "calls _ensure_configured which may configure google.generativeai",
+        "imports google.generativeai module",
+        "makes network call to Gemini API"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "network_call",
+          "target": "Gemini API",
+          "description": "Calls model.generate_content with prompt"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._configured",
+          "description": "May set _configured to True via _ensure_configured"
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "os",
+    "google.generativeai"
+  ],
+  "dependency_contracts": {
+    "google.generativeai": [
+      "configure",
+      "GenerativeModel",
+      "types.GenerationConfig"
+    ],
+    "os": [
+      "environ.get"
+    ]
+  },
+  "invariants": [
+    "self._configured transitions from False to True and never back to False",
+    "Default model is 'gemini-2.5-flash' if not overridden",
+    "Temperature is always 0 for deterministic output",
+    "Only user role messages are included in prompt construction",
+    "User messages are joined with double newlines"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [
+      "environment variables"
+    ],
+    "writes": [],
+    "rationale": "Reads GEMINI_API_KEY and TRANSMOG_MODEL environment variables for configuration fallback",
+    "side_effects": [
+      {
+        "type": "network_call",
+        "classification": "external_api",
+        "fields": [
+          "Gemini API"
+        ],
+        "rationale": "complete() makes HTTP requests to Google Gemini API for text generation"
+      },
+      {
+        "type": "environment_read",
+        "classification": "configuration",
+        "fields": [
+          "GEMINI_API_KEY",
+          "TRANSMOG_MODEL"
+        ],
+        "rationale": "Reads environment variables in __init__ for API key and model configuration"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

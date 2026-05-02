@@ -1,0 +1,281 @@
+{
+  "component_id": "src_transmogrifier_validator",
+  "name": "Semantic Validator",
+  "description": "Embedding-based semantic similarity validation between input and output text. Optionally uses sentence-transformers library for cosine similarity computation. Gracefully degrades when dependencies are unavailable.",
+  "version": 1,
+  "types": [
+    {
+      "name": "SemanticValidator",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "_model_name",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Name of the sentence-transformers model to use",
+          "validators": []
+        },
+        {
+          "name": "_model",
+          "type_ref": "SentenceTransformer | bool | None",
+          "required": true,
+          "default": "",
+          "description": "Loaded model instance, False if import failed, None if not yet loaded",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Embedding-based similarity checker with lazy model loading. Maintains internal state for model name and loaded model instance.",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "__init__",
+      "description": "Initialize the SemanticValidator with a specified sentence-transformers model name. Does not load the model immediately (lazy loading).",
+      "inputs": [
+        {
+          "name": "model_name",
+          "type_ref": "str",
+          "required": false,
+          "default": "all-MiniLM-L6-v2",
+          "description": "Name of the sentence-transformers model to use",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "_model_name is set to the provided model_name",
+        "_model is set to None (not yet loaded)"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Assigns instance attributes _model_name and _model"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "self._model_name",
+          "description": "Sets model name"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "self._model",
+          "description": "Initializes model to None"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "_load",
+      "description": "Lazy-load the sentence-transformers model. Attempts to import sentence_transformers and instantiate the model. Sets _model to False if ImportError occurs, and logs a warning. Does nothing if model is already loaded.",
+      "inputs": [],
+      "output_type": "None",
+      "error_cases": [
+        {
+          "name": "import_failure",
+          "condition": "sentence_transformers package not installed",
+          "error_type": "ImportError",
+          "error_data": {
+            "handling": "Caught and logged; _model set to False"
+          }
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "_model is not None after execution",
+        "_model is SentenceTransformer instance if import succeeds",
+        "_model is False if ImportError occurs"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Lazy-imports sentence_transformers module",
+        "Instantiates SentenceTransformer model (may download weights)",
+        "Logs warning if sentence-transformers not installed",
+        "Mutates _model attribute"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "self._model",
+          "description": "Sets to SentenceTransformer or False"
+        },
+        {
+          "kind": "logging",
+          "target": "logger.warning",
+          "description": "Logs warning if ImportError occurs"
+        },
+        {
+          "kind": "network_call",
+          "target": "SentenceTransformer model weights",
+          "description": "May download model weights if not cached"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "validate",
+      "description": "Compute cosine similarity between input_text and output_text using sentence embeddings. Returns None if model loading failed. Normalizes embeddings and computes dot product.",
+      "inputs": [
+        {
+          "name": "input_text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Original input text to compare",
+          "validators": []
+        },
+        {
+          "name": "output_text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Transformed output text to compare",
+          "validators": []
+        }
+      ],
+      "output_type": "float | None",
+      "error_cases": [
+        {
+          "name": "dependencies_unavailable",
+          "condition": "_model is False after _load()",
+          "error_type": "graceful_degradation",
+          "error_data": {
+            "return_value": "None"
+          }
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "Returns None if _model is False (dependencies unavailable)",
+        "Returns float in range [-1.0, 1.0] representing cosine similarity if model available",
+        "Typically returns values in [0.0, 1.0] for normalized embeddings"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Calls _load() which may trigger model loading",
+        "Lazy-imports numpy",
+        "Encodes texts using model (computation)"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "self._model",
+          "description": "Via _load() call"
+        },
+        {
+          "kind": "logging",
+          "target": "logger.warning",
+          "description": "Via _load() if import fails"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "is_valid",
+      "description": "Check if semantic similarity between input and output exceeds a threshold. Returns True if similarity >= threshold, False otherwise, or None if validation unavailable.",
+      "inputs": [
+        {
+          "name": "input_text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Original input text",
+          "validators": []
+        },
+        {
+          "name": "output_text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Transformed output text",
+          "validators": []
+        },
+        {
+          "name": "threshold",
+          "type_ref": "float",
+          "required": false,
+          "default": "0.95",
+          "description": "Minimum similarity score to consider valid",
+          "validators": []
+        }
+      ],
+      "output_type": "bool | None",
+      "error_cases": [
+        {
+          "name": "validation_unavailable",
+          "condition": "validate() returns None",
+          "error_type": "graceful_degradation",
+          "error_data": {
+            "return_value": "None"
+          }
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "Returns None if validate() returns None",
+        "Returns True if similarity >= threshold",
+        "Returns False if similarity < threshold"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Calls validate() which triggers model loading and encoding"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "self._model",
+          "description": "Via validate() -> _load() call chain"
+        },
+        {
+          "kind": "logging",
+          "target": "logger.warning",
+          "description": "Via validate() -> _load() if import fails"
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "logging",
+    "sentence_transformers",
+    "numpy"
+  ],
+  "dependency_contracts": {},
+  "invariants": [
+    "_model is either None (not loaded), False (failed to load), or a SentenceTransformer instance",
+    "_model_name remains constant after initialization",
+    "Default model is 'all-MiniLM-L6-v2'",
+    "Default similarity threshold is 0.95"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [],
+    "writes": [],
+    "rationale": "No persistent data access. All operations are in-memory computation with optional model weight caching by sentence-transformers library.",
+    "side_effects": [
+      {
+        "type": "model_loading",
+        "classification": "network_io",
+        "fields": [
+          "_model"
+        ],
+        "rationale": "SentenceTransformer may download weights from HuggingFace on first use"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

@@ -1,0 +1,435 @@
+{
+  "component_id": "src_transmogrifier_backends_anthropic",
+  "contract_version": 1,
+  "test_cases": [
+    {
+      "id": "test_init_with_explicit_params",
+      "description": "Verify __init__ sets _api_key, _model, and _client=None when both parameters provided",
+      "function": "__init__",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "sk-test-key-123",
+        "model": "claude-opus-4"
+      },
+      "input_description": "",
+      "expected_output_description": "_api_key='sk-test-key-123', _model='claude-opus-4', _client=None",
+      "expected_error": "",
+      "assertions": [
+        "backend._api_key == 'sk-test-key-123'",
+        "backend._model == 'claude-opus-4'",
+        "backend._client is None"
+      ]
+    },
+    {
+      "id": "test_init_with_none_params_uses_env",
+      "description": "Verify __init__ falls back to environment variables when parameters are None",
+      "function": "__init__",
+      "category": "happy_path",
+      "setup_description": "Set ANTHROPIC_API_KEY='env-key' and TRANSMOG_MODEL='env-model' in environment",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "None",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "_api_key='env-key', _model='env-model', _client=None",
+      "expected_error": "",
+      "assertions": [
+        "backend._api_key == 'env-key'",
+        "backend._model == 'env-model'",
+        "backend._client is None"
+      ]
+    },
+    {
+      "id": "test_init_with_default_model",
+      "description": "Verify __init__ uses default model 'claude-haiku-4-5-20251001' when not specified",
+      "function": "__init__",
+      "category": "happy_path",
+      "setup_description": "No TRANSMOG_MODEL environment variable set",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "sk-test-key",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "_model='claude-haiku-4-5-20251001'",
+      "expected_error": "",
+      "assertions": [
+        "backend._model == 'claude-haiku-4-5-20251001'"
+      ]
+    },
+    {
+      "id": "test_init_api_key_empty_string_fallback",
+      "description": "Verify __init__ sets _api_key to empty string when no API key available",
+      "function": "__init__",
+      "category": "edge_case",
+      "setup_description": "No ANTHROPIC_API_KEY environment variable set",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "None",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "_api_key=''",
+      "expected_error": "",
+      "assertions": [
+        "backend._api_key == ''"
+      ]
+    },
+    {
+      "id": "test_init_parameter_precedence_over_env",
+      "description": "Verify explicit parameters take precedence over environment variables",
+      "function": "__init__",
+      "category": "edge_case",
+      "setup_description": "Environment has ANTHROPIC_API_KEY='env-key' and TRANSMOG_MODEL='env-model'",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "param-key",
+        "model": "param-model"
+      },
+      "input_description": "",
+      "expected_output_description": "_api_key='param-key', _model='param-model'",
+      "expected_error": "",
+      "assertions": [
+        "backend._api_key == 'param-key'",
+        "backend._model == 'param-model'"
+      ]
+    },
+    {
+      "id": "test_ensure_client_lazy_initialization",
+      "description": "Verify _ensure_client creates client on first call and _client is not None",
+      "function": "_ensure_client",
+      "category": "happy_path",
+      "setup_description": "Backend initialized with valid API key, anthropic module mocked",
+      "mock_dependencies": {
+        "anthropic.Anthropic": "Mock client instance"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "_client is instance of anthropic.Anthropic",
+      "expected_error": "",
+      "assertions": [
+        "backend._client is not None",
+        "isinstance(backend._client, mock_anthropic_class)"
+      ]
+    },
+    {
+      "id": "test_ensure_client_idempotent",
+      "description": "Verify _ensure_client does not recreate client on subsequent calls",
+      "function": "_ensure_client",
+      "category": "edge_case",
+      "setup_description": "Call _ensure_client twice, verify Anthropic constructor called only once",
+      "mock_dependencies": {
+        "anthropic.Anthropic": "Mock with call count tracking"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "mock_anthropic_class.call_count == 1"
+      ]
+    },
+    {
+      "id": "test_ensure_client_import_error",
+      "description": "Verify _ensure_client raises ImportError when anthropic package not installed",
+      "function": "_ensure_client",
+      "category": "error_case",
+      "setup_description": "Mock import to raise ImportError",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "ImportError",
+      "assertions": [
+        "pytest.raises(ImportError)"
+      ]
+    },
+    {
+      "id": "test_ensure_client_authentication_error",
+      "description": "Verify _ensure_client raises AuthenticationError with invalid API key",
+      "function": "_ensure_client",
+      "category": "error_case",
+      "setup_description": "Backend with empty _api_key, mock Anthropic to raise AuthenticationError",
+      "mock_dependencies": {
+        "anthropic.Anthropic": "Raises AuthenticationError on instantiation"
+      },
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "AuthenticationError",
+      "assertions": [
+        "pytest.raises(Exception, match='authentication|api.?key')"
+      ]
+    },
+    {
+      "id": "test_complete_success_single_message",
+      "description": "Verify complete returns text content for single message with system prompt",
+      "function": "complete",
+      "category": "happy_path",
+      "setup_description": "Mock client returns response with single text block",
+      "mock_dependencies": {
+        "client.messages.create": "Returns mock response with content[0].text='Hello, how can I help?'"
+      },
+      "input_values": {
+        "system": "You are a helpful assistant",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hello\"}]",
+        "max_tokens": "1024"
+      },
+      "input_description": "",
+      "expected_output_description": "Text from response.content[0].text",
+      "expected_error": "",
+      "assertions": [
+        "result == 'Hello, how can I help?'",
+        "backend._client is not None"
+      ]
+    },
+    {
+      "id": "test_complete_success_multiple_messages",
+      "description": "Verify complete handles multi-turn conversation",
+      "function": "complete",
+      "category": "happy_path",
+      "setup_description": "",
+      "mock_dependencies": {
+        "client.messages.create": "Returns response with text='I am doing well'"
+      },
+      "input_values": {
+        "system": "You are helpful",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hi\"}, {\"role\": \"assistant\", \"content\": \"Hello\"}, {\"role\": \"user\", \"content\": \"How are you?\"}]",
+        "max_tokens": "2048"
+      },
+      "input_description": "",
+      "expected_output_description": "Text from first content block",
+      "expected_error": "",
+      "assertions": [
+        "result == 'I am doing well'"
+      ]
+    },
+    {
+      "id": "test_complete_empty_system_prompt",
+      "description": "Verify complete works with empty system prompt",
+      "function": "complete",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "Successfully returns response text",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_complete_large_max_tokens",
+      "description": "Verify complete handles large max_tokens value",
+      "function": "complete",
+      "category": "edge_case",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Test\"}]",
+        "max_tokens": "1000000"
+      },
+      "input_description": "",
+      "expected_output_description": "Passes max_tokens to API",
+      "expected_error": "",
+      "assertions": [
+        "isinstance(result, str)"
+      ]
+    },
+    {
+      "id": "test_complete_import_error",
+      "description": "Verify complete raises ImportError when anthropic not installed",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "Mock import to fail",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hi\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "ImportError",
+      "assertions": [
+        "pytest.raises(ImportError)"
+      ]
+    },
+    {
+      "id": "test_complete_authentication_error",
+      "description": "Verify complete raises AuthenticationError with invalid API key",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "Mock client.messages.create to raise AuthenticationError",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hi\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "AuthenticationError",
+      "assertions": [
+        "pytest.raises(Exception)"
+      ]
+    },
+    {
+      "id": "test_complete_api_error_invalid_model",
+      "description": "Verify complete raises APIError for invalid model",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "Mock API to return error for invalid model",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hi\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "APIError",
+      "assertions": [
+        "pytest.raises(Exception)"
+      ]
+    },
+    {
+      "id": "test_complete_api_error_rate_limit",
+      "description": "Verify complete raises APIError for rate limit",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "Mock API to return rate limit error",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hi\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "APIError",
+      "assertions": [
+        "pytest.raises(Exception)"
+      ]
+    },
+    {
+      "id": "test_complete_index_error_empty_content",
+      "description": "Verify complete raises IndexError when response.content is empty",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "Mock response with empty content list",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hi\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "IndexError",
+      "assertions": [
+        "pytest.raises(IndexError)"
+      ]
+    },
+    {
+      "id": "test_complete_attribute_error_no_text",
+      "description": "Verify complete raises AttributeError when content[0] has no .text attribute",
+      "function": "complete",
+      "category": "error_case",
+      "setup_description": "Mock response with content block missing .text",
+      "mock_dependencies": {},
+      "input_values": {
+        "system": "Test",
+        "messages": "[{\"role\": \"user\", \"content\": \"Hi\"}]",
+        "max_tokens": "100"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "AttributeError",
+      "assertions": [
+        "pytest.raises(AttributeError)"
+      ]
+    },
+    {
+      "id": "test_invariant_default_model",
+      "description": "Verify default model is 'claude-haiku-4-5-20251001' when not specified",
+      "function": "__init__",
+      "category": "invariant",
+      "setup_description": "No model in environment",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "test-key",
+        "model": "None"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "backend._model == 'claude-haiku-4-5-20251001'"
+      ]
+    },
+    {
+      "id": "test_invariant_client_none_until_first_use",
+      "description": "Verify _client is None until first use, then remains initialized",
+      "function": "_ensure_client",
+      "category": "invariant",
+      "setup_description": "Check _client is None after __init__, not None after _ensure_client",
+      "mock_dependencies": {},
+      "input_values": {},
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "backend._client is None before first use",
+        "backend._client is not None after _ensure_client"
+      ]
+    },
+    {
+      "id": "test_invariant_api_key_immutable",
+      "description": "Verify _api_key remains unchanged after initialization",
+      "function": "__init__",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "original-key",
+        "model": "test-model"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "backend._api_key == 'original-key' throughout lifecycle"
+      ]
+    },
+    {
+      "id": "test_invariant_model_immutable",
+      "description": "Verify _model remains unchanged after initialization",
+      "function": "__init__",
+      "category": "invariant",
+      "setup_description": "",
+      "mock_dependencies": {},
+      "input_values": {
+        "api_key": "test-key",
+        "model": "original-model"
+      },
+      "input_description": "",
+      "expected_output_description": "",
+      "expected_error": "",
+      "assertions": [
+        "backend._model == 'original-model' throughout lifecycle"
+      ]
+    }
+  ],
+  "test_language": "python",
+  "generated_code": "\"\"\"\nContract tests for AnthropicBackend component.\n\nTests verify the contract behavior of the AnthropicBackend class including:\n- Constructor initialization with API key and model parameter precedence\n- Lazy client initialization via _ensure_client()\n- Complete method for chat completions\n- Error handling for all specified exception types\n- Invariants around default values and immutability\n\nAll dependencies are mocked using unittest.mock.\n\"\"\"\n\nimport pytest\nimport os\nfrom unittest.mock import Mock, patch, MagicMock\nfrom src.transmogrifier.backends.anthropic import AnthropicBackend\n\n\nclass TestAnthropicBackendInit:\n    \"\"\"Test suite for __init__ method covering parameter precedence and defaults.\"\"\"\n    \n    def test_init_with_explicit_params(self):\n        \"\"\"Verify __init__ sets _api_key, _model, and _client=None when both parameters provided.\"\"\"\n        backend = AnthropicBackend(api_key=\"sk-test-key-123\", model=\"claude-opus-4\")\n        \n        assert backend._api_key == \"sk-test-key-123\"\n        assert backend._model == \"claude-opus-4\"\n        assert backend._client is None\n    \n    def test_init_with_none_params_uses_env(self, monkeypatch):\n        \"\"\"Verify __init__ falls back to environment variables when parameters are None.\"\"\"\n        monkeypatch.setenv(\"ANTHROPIC_API_KEY\", \"env-key\")\n        monkeypatch.setenv(\"TRANSMOG_MODEL\", \"env-model\")\n        \n        backend = AnthropicBackend(api_key=None, model=None)\n        \n        assert backend._api_key == \"env-key\"\n        assert backend._model == \"env-model\"\n        assert backend._client is None\n    \n    def test_init_with_default_model(self, monkeypatch):\n        \"\"\"Verify __init__ uses default model 'claude-haiku-4-5-20251001' when not specified.\"\"\"\n        monkeypatch.delenv(\"TRANSMOG_MODEL\", raising=False)\n        \n        backend = AnthropicBackend(api_key=\"sk-test-key\", model=None)\n        \n        assert backend._model == \"claude-haiku-4-5-20251001\"\n    \n    def test_init_api_key_empty_string_fallback(self, monkeypatch):\n        \"\"\"Verify __init__ sets _api_key to empty string when no API key available.\"\"\"\n        monkeypatch.delenv(\"ANTHROPIC_API_KEY\", raising=False)\n        \n        backend = AnthropicBackend(api_key=None, model=None)\n        \n        assert backend._api_key == \"\"\n    \n    def test_init_parameter_precedence_over_env(self, monkeypatch):\n        \"\"\"Verify explicit parameters take precedence over environment variables.\"\"\"\n        monkeypatch.setenv(\"ANTHROPIC_API_KEY\", \"env-key\")\n        monkeypatch.setenv(\"TRANSMOG_MODEL\", \"env-model\")\n        \n        backend = AnthropicBackend(api_key=\"param-key\", model=\"param-model\")\n        \n        assert backend._api_key == \"param-key\"\n        assert backend._model == \"param-model\"\n\n\nclass TestEnsureClient:\n    \"\"\"Test suite for _ensure_client method covering lazy initialization.\"\"\"\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_ensure_client_lazy_initialization(self, mock_anthropic_module):\n        \"\"\"Verify _ensure_client creates client on first call and _client is not None.\"\"\"\n        mock_client_instance = Mock()\n        mock_anthropic_module.Anthropic.return_value = mock_client_instance\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        assert backend._client is None\n        \n        backend._ensure_client()\n        \n        assert backend._client is not None\n        assert backend._client == mock_client_instance\n        mock_anthropic_module.Anthropic.assert_called_once_with(api_key=\"test-key\")\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_ensure_client_idempotent(self, mock_anthropic_module):\n        \"\"\"Verify _ensure_client does not recreate client on subsequent calls.\"\"\"\n        mock_client_instance = Mock()\n        mock_anthropic_module.Anthropic.return_value = mock_client_instance\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        \n        backend._ensure_client()\n        backend._ensure_client()\n        backend._ensure_client()\n        \n        assert mock_anthropic_module.Anthropic.call_count == 1\n        assert backend._client is not None\n    \n    def test_ensure_client_import_error(self):\n        \"\"\"Verify _ensure_client raises ImportError when anthropic package not installed.\"\"\"\n        with patch('src_transmogrifier_backends_anthropic.anthropic', None):\n            backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n            \n            # Trigger import error by attempting to use anthropic when it's None\n            with patch.dict('sys.modules', {'anthropic': None}):\n                with pytest.raises((ImportError, AttributeError)):\n                    backend._ensure_client()\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_ensure_client_authentication_error(self, mock_anthropic_module):\n        \"\"\"Verify _ensure_client raises AuthenticationError with invalid API key.\"\"\"\n        # Create a mock exception class that mimics anthropic's AuthenticationError\n        mock_auth_error = type('AuthenticationError', (Exception,), {})\n        mock_anthropic_module.AuthenticationError = mock_auth_error\n        mock_anthropic_module.Anthropic.side_effect = mock_auth_error(\"Invalid API key\")\n        \n        backend = AnthropicBackend(api_key=\"\", model=\"test-model\")\n        \n        with pytest.raises(Exception) as exc_info:\n            backend._ensure_client()\n        \n        assert \"Invalid API key\" in str(exc_info.value) or isinstance(exc_info.value, type(mock_auth_error))\n\n\nclass TestComplete:\n    \"\"\"Test suite for complete method covering success and error paths.\"\"\"\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_complete_success_single_message(self, mock_anthropic_module):\n        \"\"\"Verify complete returns text content for single message with system prompt.\"\"\"\n        # Setup mock response\n        mock_content_block = Mock()\n        mock_content_block.text = \"Hello, how can I help?\"\n        \n        mock_response = Mock()\n        mock_response.content = [mock_content_block]\n        \n        mock_client = Mock()\n        mock_client.messages.create.return_value = mock_response\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        \n        result = backend.complete(\n            system=\"You are a helpful assistant\",\n            messages=[{\"role\": \"user\", \"content\": \"Hello\"}],\n            max_tokens=1024\n        )\n        \n        assert result == \"Hello, how can I help?\"\n        assert backend._client is not None\n        mock_client.messages.create.assert_called_once()\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_complete_success_multiple_messages(self, mock_anthropic_module):\n        \"\"\"Verify complete handles multi-turn conversation.\"\"\"\n        mock_content_block = Mock()\n        mock_content_block.text = \"I am doing well\"\n        \n        mock_response = Mock()\n        mock_response.content = [mock_content_block]\n        \n        mock_client = Mock()\n        mock_client.messages.create.return_value = mock_response\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        \n        messages = [\n            {\"role\": \"user\", \"content\": \"Hi\"},\n            {\"role\": \"assistant\", \"content\": \"Hello\"},\n            {\"role\": \"user\", \"content\": \"How are you?\"}\n        ]\n        \n        result = backend.complete(\n            system=\"You are helpful\",\n            messages=messages,\n            max_tokens=2048\n        )\n        \n        assert result == \"I am doing well\"\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_complete_empty_system_prompt(self, mock_anthropic_module):\n        \"\"\"Verify complete works with empty system prompt.\"\"\"\n        mock_content_block = Mock()\n        mock_content_block.text = \"Response text\"\n        \n        mock_response = Mock()\n        mock_response.content = [mock_content_block]\n        \n        mock_client = Mock()\n        mock_client.messages.create.return_value = mock_response\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        \n        result = backend.complete(\n            system=\"\",\n            messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n            max_tokens=100\n        )\n        \n        assert isinstance(result, str)\n        assert result == \"Response text\"\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_complete_large_max_tokens(self, mock_anthropic_module):\n        \"\"\"Verify complete handles large max_tokens value.\"\"\"\n        mock_content_block = Mock()\n        mock_content_block.text = \"Response\"\n        \n        mock_response = Mock()\n        mock_response.content = [mock_content_block]\n        \n        mock_client = Mock()\n        mock_client.messages.create.return_value = mock_response\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        \n        result = backend.complete(\n            system=\"Test\",\n            messages=[{\"role\": \"user\", \"content\": \"Test\"}],\n            max_tokens=1000000\n        )\n        \n        assert isinstance(result, str)\n        # Verify the large max_tokens was passed to the API\n        call_kwargs = mock_client.messages.create.call_args[1]\n        assert call_kwargs['max_tokens'] == 1000000\n    \n    def test_complete_import_error(self):\n        \"\"\"Verify complete raises ImportError when anthropic not installed.\"\"\"\n        with patch.dict('sys.modules', {'anthropic': None}):\n            backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n            \n            with pytest.raises((ImportError, AttributeError)):\n                backend.complete(\n                    system=\"Test\",\n                    messages=[{\"role\": \"user\", \"content\": \"Hi\"}],\n                    max_tokens=100\n                )\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_complete_authentication_error(self, mock_anthropic_module):\n        \"\"\"Verify complete raises AuthenticationError with invalid API key.\"\"\"\n        mock_auth_error = type('AuthenticationError', (Exception,), {})\n        mock_anthropic_module.AuthenticationError = mock_auth_error\n        \n        mock_client = Mock()\n        mock_client.messages.create.side_effect = mock_auth_error(\"Invalid API key\")\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"invalid-key\", model=\"test-model\")\n        \n        with pytest.raises(Exception):\n            backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Hi\"}],\n                max_tokens=100\n            )\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_complete_api_error_invalid_model(self, mock_anthropic_module):\n        \"\"\"Verify complete raises APIError for invalid model.\"\"\"\n        mock_api_error = type('APIError', (Exception,), {})\n        mock_anthropic_module.APIError = mock_api_error\n        \n        mock_client = Mock()\n        mock_client.messages.create.side_effect = mock_api_error(\"Invalid model specified\")\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"invalid-model\")\n        \n        with pytest.raises(Exception):\n            backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Hi\"}],\n                max_tokens=100\n            )\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_complete_api_error_rate_limit(self, mock_anthropic_module):\n        \"\"\"Verify complete raises APIError for rate limit.\"\"\"\n        mock_api_error = type('RateLimitError', (Exception,), {})\n        mock_anthropic_module.RateLimitError = mock_api_error\n        \n        mock_client = Mock()\n        mock_client.messages.create.side_effect = mock_api_error(\"Rate limit exceeded\")\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        \n        with pytest.raises(Exception):\n            backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Hi\"}],\n                max_tokens=100\n            )\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_complete_index_error_empty_content(self, mock_anthropic_module):\n        \"\"\"Verify complete raises IndexError when response.content is empty.\"\"\"\n        mock_response = Mock()\n        mock_response.content = []  # Empty content list\n        \n        mock_client = Mock()\n        mock_client.messages.create.return_value = mock_response\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        \n        with pytest.raises(IndexError):\n            backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Hi\"}],\n                max_tokens=100\n            )\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_complete_attribute_error_no_text(self, mock_anthropic_module):\n        \"\"\"Verify complete raises AttributeError when content[0] has no .text attribute.\"\"\"\n        mock_content_block = Mock(spec=[])  # Mock with no attributes\n        del mock_content_block.text  # Ensure .text doesn't exist\n        \n        mock_response = Mock()\n        mock_response.content = [mock_content_block]\n        \n        mock_client = Mock()\n        mock_client.messages.create.return_value = mock_response\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        \n        with pytest.raises(AttributeError):\n            backend.complete(\n                system=\"Test\",\n                messages=[{\"role\": \"user\", \"content\": \"Hi\"}],\n                max_tokens=100\n            )\n\n\nclass TestInvariants:\n    \"\"\"Test suite for verifying contract invariants.\"\"\"\n    \n    def test_invariant_default_model(self, monkeypatch):\n        \"\"\"Verify default model is 'claude-haiku-4-5-20251001' when not specified.\"\"\"\n        monkeypatch.delenv(\"TRANSMOG_MODEL\", raising=False)\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=None)\n        \n        assert backend._model == \"claude-haiku-4-5-20251001\"\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_invariant_client_none_until_first_use(self, mock_anthropic_module):\n        \"\"\"Verify _client is None until first use, then remains initialized.\"\"\"\n        mock_client = Mock()\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"test-model\")\n        \n        # Before first use\n        assert backend._client is None\n        \n        # After _ensure_client\n        backend._ensure_client()\n        assert backend._client is not None\n        \n        # Verify it remains initialized\n        first_client = backend._client\n        backend._ensure_client()\n        assert backend._client is first_client  # Same instance\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_invariant_api_key_immutable(self, mock_anthropic_module):\n        \"\"\"Verify _api_key remains unchanged after initialization.\"\"\"\n        mock_client = Mock()\n        mock_content_block = Mock()\n        mock_content_block.text = \"response\"\n        mock_response = Mock()\n        mock_response.content = [mock_content_block]\n        mock_client.messages.create.return_value = mock_response\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"original-key\", model=\"test-model\")\n        \n        original_api_key = backend._api_key\n        assert original_api_key == \"original-key\"\n        \n        # Perform operations that might change state\n        backend._ensure_client()\n        assert backend._api_key == \"original-key\"\n        \n        backend.complete(system=\"test\", messages=[{\"role\": \"user\", \"content\": \"hi\"}], max_tokens=10)\n        assert backend._api_key == \"original-key\"\n    \n    @patch('src_transmogrifier_backends_anthropic.anthropic')\n    def test_invariant_model_immutable(self, mock_anthropic_module):\n        \"\"\"Verify _model remains unchanged after initialization.\"\"\"\n        mock_client = Mock()\n        mock_content_block = Mock()\n        mock_content_block.text = \"response\"\n        mock_response = Mock()\n        mock_response.content = [mock_content_block]\n        mock_client.messages.create.return_value = mock_response\n        mock_anthropic_module.Anthropic.return_value = mock_client\n        \n        backend = AnthropicBackend(api_key=\"test-key\", model=\"original-model\")\n        \n        original_model = backend._model\n        assert original_model == \"original-model\"\n        \n        # Perform operations that might change state\n        backend._ensure_client()\n        assert backend._model == \"original-model\"\n        \n        backend.complete(system=\"test\", messages=[{\"role\": \"user\", \"content\": \"hi\"}], max_tokens=10)\n        assert backend._model == \"original-model\"\n\n\nclass TestIntegration:\n    \"\"\"Optional integration tests for real API calls (marked for CI skip).\"\"\"\n    \n    @pytest.mark.integration\n    @pytest.mark.skip(reason=\"Integration test - requires real API key and network\")\n    def test_complete_real_api_call(self):\n        \"\"\"Integration test with real Anthropic API (requires valid API key in environment).\"\"\"\n        backend = AnthropicBackend(api_key=None, model=None)\n        \n        result = backend.complete(\n            system=\"You are a helpful assistant.\",\n            messages=[{\"role\": \"user\", \"content\": \"Say 'test successful' and nothing else.\"}],\n            max_tokens=50\n        )\n        \n        assert isinstance(result, str)\n        assert len(result) > 0\n"
+}

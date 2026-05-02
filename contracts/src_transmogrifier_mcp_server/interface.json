@@ -1,0 +1,330 @@
+{
+  "component_id": "src_transmogrifier_mcp_server",
+  "name": "MCP Server",
+  "description": "FastMCP server providing MCP tool interface for linguistic register detection and translation. Exposes Transmogrifier functionality via stdio transport for Claude Code integration.",
+  "version": 1,
+  "types": [
+    {
+      "name": "TransmogTranslateResult",
+      "kind": "struct",
+      "fields": [],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Dictionary returned by transmog_translate, serialized from TranslationResult.model_dump()",
+      "owner_component": ""
+    },
+    {
+      "name": "TransmogDetectResult",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "register",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Detected register enum value as string",
+          "validators": []
+        },
+        {
+          "name": "confidence",
+          "type_ref": "float",
+          "required": true,
+          "default": "",
+          "description": "Detection confidence score",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Dictionary returned by transmog_detect containing register classification",
+      "owner_component": ""
+    },
+    {
+      "name": "ProfileDict",
+      "kind": "struct",
+      "fields": [],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Dictionary serialized from profile.model_dump()",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "main",
+      "description": "MCP server entry point. Initializes FastMCP server with transmogrifier tools and runs stdio transport. Exits with code 1 if mcp.server.fastmcp import fails.",
+      "inputs": [],
+      "output_type": "None",
+      "error_cases": [
+        {
+          "name": "mcp_not_installed",
+          "condition": "ImportError raised when importing mcp.server.fastmcp",
+          "error_type": "SystemExit",
+          "error_data": {
+            "exit_code": "1",
+            "stderr_message": "MCP server requires: pip install 'transmogrifier[mcp]'"
+          }
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "FastMCP server instance created with name 'transmogrifier'",
+        "Three tools registered: transmog_translate, transmog_detect, transmog_profiles",
+        "Transmogrifier instance initialized and stored in closure",
+        "Server running on stdio transport (blocking call)"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Writes to sys.stderr on import failure",
+        "Calls sys.exit(1) on import failure",
+        "Runs blocking MCP server loop",
+        "Reads from stdin and writes to stdout via stdio transport"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "network_call",
+          "target": "stdio transport (stdin/stdout)",
+          "description": "MCP server communicates via stdio"
+        },
+        {
+          "kind": "writes_file",
+          "target": "sys.stderr",
+          "description": "Error message on missing dependency"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "process exit",
+          "description": "sys.exit(1) terminates process"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "transmog_translate",
+      "description": "Translate text to optimal register for the target model. Decorated as @mcp.tool() for MCP exposure. Uses Transmogrifier.translate() and returns serialized result.",
+      "inputs": [
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Input text to translate",
+          "validators": []
+        },
+        {
+          "name": "model",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "Target model identifier for register optimization",
+          "validators": []
+        },
+        {
+          "name": "target_register",
+          "type_ref": "str",
+          "required": false,
+          "default": "\"\"",
+          "description": "Explicit target register name (overrides model-based detection)",
+          "validators": []
+        }
+      ],
+      "output_type": "dict",
+      "error_cases": [
+        {
+          "name": "invalid_register",
+          "condition": "target_register string not valid Register enum value",
+          "error_type": "ValueError",
+          "error_data": {
+            "source": "Register(target_register) constructor"
+          }
+        },
+        {
+          "name": "translation_failure",
+          "condition": "_t.translate() raises exception",
+          "error_type": "Exception",
+          "error_data": {
+            "propagated_from": "Transmogrifier.translate()"
+          }
+        }
+      ],
+      "preconditions": [
+        "_t (Transmogrifier instance) must be initialized in closure"
+      ],
+      "postconditions": [
+        "Returns dictionary serialized from TranslationResult via model_dump()",
+        "If target_register provided, config.target_register set to Register(target_register)",
+        "Translation performed with specified model and config"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Calls _t.translate() which may perform LLM API calls",
+        "May access or update _t internal caches"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "network_call",
+          "target": "LLM API",
+          "description": "Transmogrifier.translate() may call backend API"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "_t internal state",
+          "description": "May update profile cache or detector state"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "transmog_detect",
+      "description": "Detect the register of input text. Decorated as @mcp.tool() for MCP exposure. Uses Transmogrifier._detector.detect() and returns register value and confidence.",
+      "inputs": [
+        {
+          "name": "text",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Input text to classify",
+          "validators": []
+        }
+      ],
+      "output_type": "dict",
+      "error_cases": [
+        {
+          "name": "detector_failure",
+          "condition": "_t._detector.detect() raises exception",
+          "error_type": "Exception",
+          "error_data": {
+            "propagated_from": "RegisterDetector.detect()"
+          }
+        }
+      ],
+      "preconditions": [
+        "_t (Transmogrifier instance) must be initialized in closure",
+        "_t._detector must be initialized"
+      ],
+      "postconditions": [
+        "Returns dict with keys 'register' (str) and 'confidence' (float)",
+        "register is the .value attribute of detected Register enum",
+        "confidence is the numeric confidence score from detector"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Accesses _t._detector (private attribute)"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "_t._detector state",
+          "description": "Reads detector configuration and heuristics"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "transmog_profiles",
+      "description": "List all cached model register sensitivity profiles. Decorated as @mcp.tool() for MCP exposure. Returns serialized profile list from _t._profile_cache.",
+      "inputs": [],
+      "output_type": "list[dict]",
+      "error_cases": [
+        {
+          "name": "profile_cache_failure",
+          "condition": "_t._profile_cache.list_profiles() raises exception",
+          "error_type": "Exception",
+          "error_data": {
+            "propagated_from": "ProfileCache.list_profiles()"
+          }
+        }
+      ],
+      "preconditions": [
+        "_t (Transmogrifier instance) must be initialized in closure",
+        "_t._profile_cache must be initialized"
+      ],
+      "postconditions": [
+        "Returns list of dictionaries, each serialized from profile.model_dump()",
+        "List contains all profiles from _t._profile_cache.list_profiles()"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Accesses _t._profile_cache (private attribute)"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "_t._profile_cache",
+          "description": "Reads cached profile data"
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "mcp.server.fastmcp",
+    "sys",
+    "src.transmogrifier.core"
+  ],
+  "dependency_contracts": {
+    "src.transmogrifier.core": [
+      "Transmogrifier",
+      "TranslationConfig",
+      "Register"
+    ],
+    "mcp.server.fastmcp": [
+      "FastMCP"
+    ]
+  },
+  "invariants": [
+    "FastMCP server name is always 'transmogrifier'",
+    "MCP transport is always 'stdio'",
+    "Single shared Transmogrifier instance (_t) used by all tool functions",
+    "Tool functions are closures over _t, only accessible after main() execution",
+    "TranslationConfig() creates new instance per transmog_translate call"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [
+      "_t._detector state",
+      "_t._profile_cache"
+    ],
+    "writes": [],
+    "rationale": "Reads detector and cache state via Transmogrifier instance. Writes occur indirectly through _t.translate() side effects.",
+    "side_effects": [
+      {
+        "type": "stdio_communication",
+        "classification": "network_io",
+        "fields": [
+          "stdin",
+          "stdout"
+        ],
+        "rationale": "MCP server reads requests from stdin and writes responses to stdout"
+      },
+      {
+        "type": "llm_api_calls",
+        "classification": "network_io",
+        "fields": [
+          "backend API endpoints"
+        ],
+        "rationale": "transmog_translate triggers LLM API calls via Transmogrifier.translate()"
+      },
+      {
+        "type": "process_exit",
+        "classification": "control_flow",
+        "fields": [
+          "sys.exit"
+        ],
+        "rationale": "main() calls sys.exit(1) on import failure"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [],
+    "rationale": "Server module, no data domain authority"
+  }
+}

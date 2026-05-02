@@ -1,0 +1,259 @@
+{
+  "component_id": "src_transmogrifier_backends_anthropic",
+  "name": "Anthropic Backend",
+  "description": "Anthropic backend for Level 3 translation and calibration. Provides a wrapper around the Anthropic API client for completing chat messages using Claude models.",
+  "version": 1,
+  "types": [
+    {
+      "name": "AnthropicBackend",
+      "kind": "struct",
+      "fields": [
+        {
+          "name": "_api_key",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Anthropic API key, sourced from parameter or ANTHROPIC_API_KEY env var",
+          "validators": []
+        },
+        {
+          "name": "_model",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "Model identifier, sourced from parameter or TRANSMOG_MODEL env var with default 'claude-haiku-4-5-20251001'",
+          "validators": []
+        },
+        {
+          "name": "_client",
+          "type_ref": "anthropic.Anthropic | None",
+          "required": true,
+          "default": "",
+          "description": "Lazily initialized Anthropic client instance",
+          "validators": []
+        }
+      ],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "Backend class that interfaces with Anthropic's API for chat completions. Lazy-loads the client on first use.",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "__init__",
+      "description": "Initializes the AnthropicBackend with optional API key and model. Falls back to environment variables ANTHROPIC_API_KEY and TRANSMOG_MODEL, with a default model of 'claude-haiku-4-5-20251001'. Client is not instantiated until first use.",
+      "inputs": [
+        {
+          "name": "api_key",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "Optional API key for Anthropic. If None, reads from ANTHROPIC_API_KEY env var, defaults to empty string",
+          "validators": []
+        },
+        {
+          "name": "model",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "Optional model identifier. If None, reads from TRANSMOG_MODEL env var, defaults to 'claude-haiku-4-5-20251001'",
+          "validators": []
+        }
+      ],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "_api_key is set to provided value or environment variable or empty string",
+        "_model is set to provided value or environment variable or 'claude-haiku-4-5-20251001'",
+        "_client is None (not yet initialized)"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "reads environment variables ANTHROPIC_API_KEY and TRANSMOG_MODEL"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "reads_file",
+          "target": "environment variables",
+          "description": "Reads ANTHROPIC_API_KEY and TRANSMOG_MODEL from os.environ"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "_ensure_client",
+      "description": "Lazy initialization method that creates the Anthropic client if it hasn't been created yet. Imports the anthropic module and instantiates the client with the stored API key.",
+      "inputs": [],
+      "output_type": "None",
+      "error_cases": [
+        {
+          "name": "ImportError",
+          "condition": "anthropic package is not installed",
+          "error_type": "ImportError",
+          "error_data": {}
+        },
+        {
+          "name": "AuthenticationError",
+          "condition": "_api_key is invalid or empty when client is instantiated",
+          "error_type": "anthropic.AuthenticationError",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "_client is not None after execution",
+        "_client is an instance of anthropic.Anthropic"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [
+        "imports anthropic module",
+        "instantiates anthropic.Anthropic client with stored API key"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "_client",
+          "description": "Sets _client to anthropic.Anthropic instance if currently None"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "complete",
+      "description": "Sends a chat completion request to Anthropic's API. Ensures the client is initialized, constructs the message payload with model, max_tokens, messages, and optional system prompt, then returns the text content from the first response block.",
+      "inputs": [
+        {
+          "name": "system",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "System prompt for the conversation. Only included in API call if non-empty",
+          "validators": []
+        },
+        {
+          "name": "messages",
+          "type_ref": "list[dict]",
+          "required": true,
+          "default": "",
+          "description": "List of message dictionaries with role and content keys",
+          "validators": []
+        },
+        {
+          "name": "max_tokens",
+          "type_ref": "int",
+          "required": false,
+          "default": "1024",
+          "description": "Maximum tokens to generate in the response",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [
+        {
+          "name": "ImportError",
+          "condition": "anthropic package not installed (raised during _ensure_client)",
+          "error_type": "ImportError",
+          "error_data": {}
+        },
+        {
+          "name": "AuthenticationError",
+          "condition": "Invalid or missing API key",
+          "error_type": "anthropic.AuthenticationError",
+          "error_data": {}
+        },
+        {
+          "name": "APIError",
+          "condition": "Anthropic API returns error response (invalid model, rate limit, etc.)",
+          "error_type": "anthropic.APIError",
+          "error_data": {}
+        },
+        {
+          "name": "IndexError",
+          "condition": "response.content is empty or does not contain expected structure",
+          "error_type": "IndexError",
+          "error_data": {}
+        },
+        {
+          "name": "AttributeError",
+          "condition": "response.content[0] does not have .text attribute",
+          "error_type": "AttributeError",
+          "error_data": {}
+        }
+      ],
+      "preconditions": [
+        "messages is a non-empty list of valid message dictionaries",
+        "max_tokens is positive"
+      ],
+      "postconditions": [
+        "returns text content from response.content[0].text",
+        "_client is initialized"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "calls _ensure_client which may initialize client",
+        "makes network call to Anthropic API"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "network_call",
+          "target": "Anthropic API",
+          "description": "Calls client.messages.create to generate chat completion"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "_client",
+          "description": "May initialize _client if not already set"
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "os",
+    "anthropic"
+  ],
+  "dependency_contracts": {},
+  "invariants": [
+    "Default model is 'claude-haiku-4-5-20251001' if not specified",
+    "_client is None until first use, then remains initialized",
+    "_api_key and _model are immutable after initialization"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [
+      "environment variables"
+    ],
+    "writes": [],
+    "rationale": "Reads ANTHROPIC_API_KEY and TRANSMOG_MODEL from environment. Makes network calls to external Anthropic API.",
+    "side_effects": [
+      {
+        "type": "environment_read",
+        "classification": "",
+        "fields": [
+          "ANTHROPIC_API_KEY",
+          "TRANSMOG_MODEL"
+        ],
+        "rationale": "Configuration sourced from environment variables as fallback"
+      },
+      {
+        "type": "network_call",
+        "classification": "external_api",
+        "fields": [
+          "Anthropic API"
+        ],
+        "rationale": "Sends chat completion requests to Anthropic's hosted service"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [],
+    "rationale": null
+  }
+}

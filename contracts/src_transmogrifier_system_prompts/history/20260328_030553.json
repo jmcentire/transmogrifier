@@ -1,0 +1,132 @@
+{
+  "component_id": "src_transmogrifier_system_prompts",
+  "name": "System Prompts",
+  "description": "Provides register-specific system prompt injection templates for normalizing user input across different communication registers (casual, academic, narrative, technical, direct). Implements Level 1 prompt engineering to interpret varied linguistic registers as precise technical queries.",
+  "version": 1,
+  "types": [
+    {
+      "name": "str",
+      "kind": "primitive",
+      "fields": [],
+      "item_type": "",
+      "variants": [],
+      "inner_types": [],
+      "description": "String type for prompts and register identifiers",
+      "owner_component": ""
+    }
+  ],
+  "functions": [
+    {
+      "name": "get_system_prompt",
+      "description": "Retrieves the appropriate Level 1 system prompt injection based on detected register. Returns empty string for 'direct' register. Falls back to GENERIC_NORMALIZATION for unknown registers. Accepts either Register enum instances (with .value attribute) or string values.",
+      "inputs": [
+        {
+          "name": "detected_register",
+          "type_ref": "str | Register",
+          "required": true,
+          "default": "",
+          "description": "The detected input register. Can be Register enum with .value attribute or string. Expected values: 'casual', 'academic', 'narrative', 'technical', 'direct'",
+          "validators": []
+        },
+        {
+          "name": "target_register",
+          "type_ref": "str | None",
+          "required": false,
+          "default": "None",
+          "description": "Optional target register override (currently unused in implementation)",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns empty string if detected_register == 'direct'",
+        "Returns register-specific prompt from _REGISTER_PROMPTS if key exists",
+        "Returns GENERIC_NORMALIZATION for unknown register values",
+        "Always returns a string (never None)"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "inject_system_prompt",
+      "description": "Prepends a register normalization instruction to an existing system prompt. Idempotent operation: if injection is already present in existing_system, returns unchanged. Handles empty/falsy inputs gracefully.",
+      "inputs": [
+        {
+          "name": "existing_system",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "The existing system prompt to augment",
+          "validators": []
+        },
+        {
+          "name": "injection",
+          "type_ref": "str",
+          "required": true,
+          "default": "",
+          "description": "The prompt injection to prepend",
+          "validators": []
+        }
+      ],
+      "output_type": "str",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "Returns existing_system unchanged if injection is empty/falsy",
+        "Returns injection if existing_system is empty/falsy",
+        "Returns existing_system unchanged if injection substring already present",
+        "Returns '{injection}\\n\\n{existing_system}' otherwise",
+        "Idempotent: calling with same arguments produces same result"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [],
+      "structured_side_effects": [
+        {
+          "kind": "none",
+          "target": "",
+          "description": ""
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [],
+  "dependency_contracts": {},
+  "invariants": [
+    "GENERIC_NORMALIZATION is a constant fallback prompt for unknown registers",
+    "_REGISTER_PROMPTS maps exactly 5 register keys: 'casual', 'academic', 'narrative', 'technical', 'direct'",
+    "_REGISTER_PROMPTS['direct'] is always empty string",
+    "get_system_prompt always returns a string (empty or populated)",
+    "inject_system_prompt is idempotent: multiple applications produce same result as single application"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [
+      "_REGISTER_PROMPTS constant",
+      "GENERIC_NORMALIZATION constant"
+    ],
+    "writes": [],
+    "rationale": "Pure functions operating on module-level constants. No I/O or persistent state.",
+    "side_effects": []
+  },
+  "authority": {
+    "domains": [
+      "system_prompt_templates",
+      "register_normalization"
+    ],
+    "rationale": "Owns the mapping between detected linguistic registers and corresponding system prompt injections"
+  }
+}

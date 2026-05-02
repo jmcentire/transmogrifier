@@ -1,0 +1,166 @@
+{
+  "component_id": "src_transmogrifier_kindex_integration",
+  "name": "Kindex Integration",
+  "description": "Optional Kindex integration module with graceful degradation. Manages lazy initialization of a Kindex Store singleton with memoized availability checking. Handles cases where kindex is not installed by catching exceptions during dynamic import.",
+  "version": 1,
+  "types": [],
+  "functions": [
+    {
+      "name": "is_available",
+      "description": "Checks if Kindex is available, lazily initializing the store on first call. Uses module-level _checked flag to memoize the result and avoid repeated initialization attempts.",
+      "inputs": [],
+      "output_type": "bool",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "_checked is set to True after first invocation",
+        "Returns True if _store was successfully initialized",
+        "Returns False if _store initialization failed or was never attempted"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [
+        "Mutates global _checked to True on first call",
+        "May trigger _init_store() which mutates global _store"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "_checked",
+          "description": "Sets global _checked flag to True"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "_store",
+          "description": "May initialize global _store via _init_store()"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "_init_store",
+      "description": "Attempts to dynamically import kindex modules and initialize a Store singleton. Catches all exceptions and logs them at debug level, returning False on any failure. This enables graceful degradation when kindex is not installed.",
+      "inputs": [],
+      "output_type": "bool",
+      "error_cases": [
+        {
+          "name": "kindex_import_failure",
+          "condition": "kindex.config or kindex.store cannot be imported",
+          "error_type": "Exception",
+          "error_data": {
+            "handling": "caught, logged at debug level, returns False"
+          }
+        },
+        {
+          "name": "kindex_initialization_failure",
+          "condition": "load_config() or Store() raises exception",
+          "error_type": "Exception",
+          "error_data": {
+            "handling": "caught, logged at debug level, returns False"
+          }
+        }
+      ],
+      "preconditions": [],
+      "postconditions": [
+        "Returns True if Store was successfully created and assigned to _store",
+        "Returns False if any exception occurred during import or initialization",
+        "_store is set to Store(config) on success, unchanged on failure"
+      ],
+      "idempotent": false,
+      "is_async": false,
+      "side_effects": [
+        "Mutates global _store on successful initialization",
+        "Logs debug message on failure"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "_store",
+          "description": "Assigns Store instance to global _store on success"
+        },
+        {
+          "kind": "logging",
+          "target": "logger.debug",
+          "description": "Logs exception details when kindex is unavailable"
+        }
+      ],
+      "performance_budget": null
+    },
+    {
+      "name": "close",
+      "description": "Closes the Kindex store if initialized and resets module state to uninitialized. Allows re-initialization on subsequent is_available() calls.",
+      "inputs": [],
+      "output_type": "None",
+      "error_cases": [],
+      "preconditions": [],
+      "postconditions": [
+        "_store is set to None",
+        "_checked is set to False",
+        "If _store was not None before call, _store.close() was invoked"
+      ],
+      "idempotent": true,
+      "is_async": false,
+      "side_effects": [
+        "Calls _store.close() if _store is not None",
+        "Mutates global _store to None",
+        "Mutates global _checked to False"
+      ],
+      "structured_side_effects": [
+        {
+          "kind": "mutates_state",
+          "target": "_store",
+          "description": "Calls close() method if present, then sets to None"
+        },
+        {
+          "kind": "mutates_state",
+          "target": "_checked",
+          "description": "Resets to False to allow re-initialization"
+        }
+      ],
+      "performance_budget": null
+    }
+  ],
+  "dependencies": [
+    "logging",
+    "kindex.config",
+    "kindex.store"
+  ],
+  "dependency_contracts": {
+    "kindex.config": [
+      "load_config"
+    ],
+    "kindex.store": [
+      "Store"
+    ]
+  },
+  "invariants": [
+    "_checked indicates whether initialization has been attempted",
+    "_store is None when kindex is unavailable or close() has been called",
+    "_store contains Store instance when kindex initialization succeeded",
+    "Once _checked is True, is_available() will not re-attempt initialization unless close() is called"
+  ],
+  "requires": [],
+  "processing_register": "",
+  "data_access": {
+    "reads": [],
+    "writes": [],
+    "rationale": "Module maintains singleton state in module-level globals for lazy initialization pattern",
+    "side_effects": [
+      {
+        "type": "module_state",
+        "classification": "singleton_management",
+        "fields": [
+          "_store",
+          "_checked"
+        ],
+        "rationale": "Manages lazy-initialized singleton Store instance with memoization flag"
+      }
+    ]
+  },
+  "authority": {
+    "domains": [
+      "kindex_integration"
+    ],
+    "rationale": "Owns the integration point between transmogrifier and optional kindex dependency, managing initialization lifecycle"
+  }
+}
