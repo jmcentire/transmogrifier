@@ -1,0 +1,5077 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "transmogrifier",
+    "description": "Code map exported from Kindex for transmogrifier.",
+    "languages": [
+      "Python",
+      "python"
+    ],
+    "frameworks": [],
+    "analyzedAt": "2026-05-24T15:09:29",
+    "gitCommitHash": "4aa3e2a17ef85c7b3e4bda75197bd32a8cae5a97"
+  },
+  "nodes": [
+    {
+      "id": "code-mod-transmogrifier-45065c66cf6f",
+      "type": "file",
+      "name": "src/src_transmogrifier_detector/detector.py",
+      "filePath": "src/src_transmogrifier_detector/detector.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_detector/detector.py | ~96 lines ## Classes - RegisterDetector",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-fa5da82d2741",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_backends_anthropic/interface.py",
+      "filePath": "contracts/src_transmogrifier_backends_anthropic/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_backends_anthropic/interface.py | ~50 lines ## Classes - AnthropicBackend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-167d92d21871",
+      "type": "file",
+      "name": "src/src_transmogrifier_backends_anthropic/anthropic.py",
+      "filePath": "src/src_transmogrifier_backends_anthropic/anthropic.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_backends_anthropic/anthropic.py | ~19 lines ## Classes - AnthropicBackend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-23f442c1cae7",
+      "type": "file",
+      "name": "src/src_transmogrifier_calibrate/calibrate.py",
+      "filePath": "src/src_transmogrifier_calibrate/calibrate.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_calibrate/calibrate.py | ~148 lines ## Classes - CalibrationRunner",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-26cd6a62979a",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_backends___init__/interface.py",
+      "filePath": "contracts/src_transmogrifier_backends___init__/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_backends___init__/interface.py | ~34 lines ## Classes - Backend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-1557d6e60697",
+      "type": "file",
+      "name": "src/src_transmogrifier_backends___init__/__init__.py",
+      "filePath": "src/src_transmogrifier_backends___init__/__init__.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_backends___init__/__init__.py | ~12 lines ## Classes - Backend(Protocol)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-30dc6d22648f",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_calibrate/interface.py",
+      "filePath": "contracts/src_transmogrifier_calibrate/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_calibrate/interface.py | ~61 lines ## Classes - CalibrationRunner",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-db92376b3d0d",
+      "type": "file",
+      "name": "src/src_transmogrifier_system_prompts/system_prompts.py",
+      "filePath": "src/src_transmogrifier_system_prompts/system_prompts.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_system_prompts/system_prompts.py | ~55 lines ## Functions - get_system_prompt(detected_register, target_register=None) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-615e4ac3c348",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_backends_gemini/interface.py",
+      "filePath": "contracts/src_transmogrifier_backends_gemini/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_backends_gemini/interface.py | ~55 lines ## Classes - GeminiBackend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-83c4711a98b5",
+      "type": "file",
+      "name": "src/src_transmogrifier_backends_gemini/gemini.py",
+      "filePath": "src/src_transmogrifier_backends_gemini/gemini.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_backends_gemini/gemini.py | ~22 lines ## Classes - GeminiBackend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-e25dd9e6894b",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_profiles/interface.py",
+      "filePath": "contracts/src_transmogrifier_profiles/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_profiles/interface.py | ~268 lines ## Classes - ModelProfile",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 19,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-a37452e5cc17",
+      "type": "file",
+      "name": "src/src_transmogrifier_profiles/profiles.py",
+      "filePath": "src/src_transmogrifier_profiles/profiles.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_profiles/profiles.py | ~299 lines ## Classes - ModelProfile(BaseModel)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-82e382024a74",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_backends_openai/interface.py",
+      "filePath": "contracts/src_transmogrifier_backends_openai/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_backends_openai/interface.py | ~54 lines ## Classes - OpenAIBackend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-4a6ce1f096a3",
+      "type": "file",
+      "name": "src/src_transmogrifier_backends_openai/openai.py",
+      "filePath": "src/src_transmogrifier_backends_openai/openai.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_backends_openai/openai.py | ~19 lines ## Classes - OpenAIBackend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-877af20083eb",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_mcp_server/interface.py",
+      "filePath": "contracts/src_transmogrifier_mcp_server/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_mcp_server/interface.py | ~96 lines ## Classes - ProfileDict",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 7,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-6a2a59f0f326",
+      "type": "file",
+      "name": "src/contracts_src_transmogrifier_mcp_server_interface/interface.py",
+      "filePath": "src/contracts_src_transmogrifier_mcp_server_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_src_transmogrifier_mcp_server_interface/interface.py | ~96 lines ## Classes - ProfileDict",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 7,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-ed87fd7c5e70",
+      "type": "file",
+      "name": "contracts/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py",
+      "filePath": "contracts/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py | ~39 lines ## Classes - Register(Enum)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-07af41d348ca",
+      "type": "file",
+      "name": "contracts/contracts_src_transmogrifier_core_interface/interface.py",
+      "filePath": "contracts/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_src_transmogrifier_core_interface/interface.py | ~71 lines ## Classes - Register(Enum)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 6,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-717cf1a9e473",
+      "type": "file",
+      "name": "contracts/contracts_src_transmogrifier_system_prompts_interface/interface.py",
+      "filePath": "contracts/contracts_src_transmogrifier_system_prompts_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_src_transmogrifier_system_prompts_interface/interface.py | ~39 lines ## Classes - Register(Enum)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-47b446829b14",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_core/interface.py",
+      "filePath": "contracts/src_transmogrifier_core/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_core/interface.py | ~80 lines ## Classes - Register(Enum)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 7,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-109b34e79d85",
+      "type": "file",
+      "name": "src/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py",
+      "filePath": "src/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py | ~39 lines ## Classes - Register(Enum)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-0fa935be69fd",
+      "type": "file",
+      "name": "src/contracts_src_transmogrifier_core_interface/interface.py",
+      "filePath": "src/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_src_transmogrifier_core_interface/interface.py | ~80 lines ## Classes - Register(Enum)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 7,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "file",
+      "name": "src/src_transmogrifier_core/core.py",
+      "filePath": "src/src_transmogrifier_core/core.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_core/core.py | ~77 lines ## Classes - Register(str, enum.Enum)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 5,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-3e8bddbe98bb",
+      "type": "file",
+      "name": "contracts/contracts_src_transmogrifier_detector_interface/interface.py",
+      "filePath": "contracts/contracts_src_transmogrifier_detector_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_src_transmogrifier_detector_interface/interface.py | ~53 lines ## Classes - RegisterDetector",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-76699ca63c3f",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_detector/interface.py",
+      "filePath": "contracts/src_transmogrifier_detector/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_detector/interface.py | ~57 lines ## Classes - RegisterDetector",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 5,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-5f123814cd04",
+      "type": "file",
+      "name": "src/contracts_src_transmogrifier_detector_interface/interface.py",
+      "filePath": "src/contracts_src_transmogrifier_detector_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_src_transmogrifier_detector_interface/interface.py | ~57 lines ## Classes - RegisterDetector",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 5,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-dad25b5b54c9",
+      "type": "file",
+      "name": "contracts/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "filePath": "contracts/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py | ~21 lines ## Classes - RewriteRule",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-b9003a412546",
+      "type": "file",
+      "name": "contracts/contracts_src_transmogrifier_rules_interface/interface.py",
+      "filePath": "contracts/contracts_src_transmogrifier_rules_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_src_transmogrifier_rules_interface/interface.py | ~21 lines ## Classes - RewriteRule",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-e463ad7045d2",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_rules/interface.py",
+      "filePath": "contracts/src_transmogrifier_rules/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_rules/interface.py | ~21 lines ## Classes - RewriteRule",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-38240006887a",
+      "type": "file",
+      "name": "src/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "filePath": "src/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py | ~21 lines ## Classes - RewriteRule",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-093e5bcea1c4",
+      "type": "file",
+      "name": "src/contracts_src_transmogrifier_rules_interface/interface.py",
+      "filePath": "src/contracts_src_transmogrifier_rules_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_src_transmogrifier_rules_interface/interface.py | ~21 lines ## Classes - RewriteRule",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-e42cae549a3f",
+      "type": "file",
+      "name": "src/src_transmogrifier_rules/rules.py",
+      "filePath": "src/src_transmogrifier_rules/rules.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_rules/rules.py | ~75 lines ## Classes - RewriteRule",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-71f927c40ce1",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_validator/interface.py",
+      "filePath": "contracts/src_transmogrifier_validator/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_validator/interface.py | ~70 lines ## Classes - SemanticValidator",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 5,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-3ec86660e582",
+      "type": "file",
+      "name": "src/src_transmogrifier_validator/validator.py",
+      "filePath": "src/src_transmogrifier_validator/validator.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_validator/validator.py | ~35 lines ## Classes - SemanticValidator",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-94198c3a9d54",
+      "type": "file",
+      "name": "contracts/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "filePath": "contracts/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py | ~30 lines ## Classes - TaskClassifier",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-156e48450622",
+      "type": "file",
+      "name": "contracts/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "filePath": "contracts/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_src_transmogrifier_task_classifier_interface/interface.py | ~30 lines ## Classes - TaskClassifier",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-bdf88864d96e",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_task_classifier/interface.py",
+      "filePath": "contracts/src_transmogrifier_task_classifier/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_task_classifier/interface.py | ~27 lines ## Classes - TaskClassifier",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-a634a92f3c41",
+      "type": "file",
+      "name": "src/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "filePath": "src/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py | ~30 lines ## Classes - TaskClassifier",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-5f8f602cb0ec",
+      "type": "file",
+      "name": "src/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "filePath": "src/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_src_transmogrifier_task_classifier_interface/interface.py | ~27 lines ## Classes - TaskClassifier",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-51594107cd07",
+      "type": "file",
+      "name": "src/src_transmogrifier_task_classifier/task_classifier.py",
+      "filePath": "src/src_transmogrifier_task_classifier/task_classifier.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_task_classifier/task_classifier.py | ~82 lines ## Classes - TaskClassifier",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-aee42fe45410",
+      "type": "file",
+      "name": "src/src_transmogrifier_kindex_integration/kindex_integration.py",
+      "filePath": "src/src_transmogrifier_kindex_integration/kindex_integration.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_kindex_integration/kindex_integration.py | ~34 lines ## Functions - close() -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-3908edccfa01",
+      "type": "file",
+      "name": "contracts/contracts_src_transmogrifier_kindex_integration_interface/interface.py",
+      "filePath": "contracts/contracts_src_transmogrifier_kindex_integration_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_src_transmogrifier_kindex_integration_interface/interface.py | ~43 lines ## Functions - close() -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-b5d3fdd8973c",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_kindex_integration/interface.py",
+      "filePath": "contracts/src_transmogrifier_kindex_integration/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_kindex_integration/interface.py | ~45 lines ## Functions - close() -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-6bfff8171662",
+      "type": "file",
+      "name": "src/contracts_src_transmogrifier_kindex_integration_interface/interface.py",
+      "filePath": "src/contracts_src_transmogrifier_kindex_integration_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_src_transmogrifier_kindex_integration_interface/interface.py | ~45 lines ## Functions - close() -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-1d4fc79f9512",
+      "type": "file",
+      "name": "contracts/contracts_contracts_src_transmogrifier_cli_interface_interface/interface.py",
+      "filePath": "contracts/contracts_contracts_src_transmogrifier_cli_interface_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_contracts_src_transmogrifier_cli_interface_interface/interface.py | ~131 lines ## Functions - classify( text: str, ) -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 8,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-7260dac385ee",
+      "type": "file",
+      "name": "contracts/contracts_src_transmogrifier_cli_interface/interface.py",
+      "filePath": "contracts/contracts_src_transmogrifier_cli_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_src_transmogrifier_cli_interface/interface.py | ~131 lines ## Functions - classify( text: str, ) -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 8,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-ff6d365509cb",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_cli/interface.py",
+      "filePath": "contracts/src_transmogrifier_cli/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_cli/interface.py | ~131 lines ## Functions - classify( text: str, ) -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 8,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-a306945006f9",
+      "type": "file",
+      "name": "src/contracts_contracts_src_transmogrifier_cli_interface_interface/interface.py",
+      "filePath": "src/contracts_contracts_src_transmogrifier_cli_interface_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_contracts_src_transmogrifier_cli_interface_interface/interface.py | ~131 lines ## Functions - classify( text: str, ) -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 8,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-63d14f6c0217",
+      "type": "file",
+      "name": "src/contracts_src_transmogrifier_cli_interface/interface.py",
+      "filePath": "src/contracts_src_transmogrifier_cli_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_src_transmogrifier_cli_interface/interface.py | ~131 lines ## Functions - classify( text: str, ) -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 8,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-274927e677c4",
+      "type": "file",
+      "name": "src/src_transmogrifier_cli/cli.py",
+      "filePath": "src/src_transmogrifier_cli/cli.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_cli/cli.py | ~124 lines ## Functions - classify(text: str)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 8,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-c20d684a047a",
+      "type": "file",
+      "name": "contracts/src_transmogrifier_system_prompts/interface.py",
+      "filePath": "contracts/src_transmogrifier_system_prompts/interface.py",
+      "summary": "Language: Python | Path: contracts/src_transmogrifier_system_prompts/interface.py | ~31 lines ## Functions - get_system_prompt( detected_register: str | Register, target_register: str | None = None, ) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-d00e1a504933",
+      "type": "file",
+      "name": "src/contracts_src_transmogrifier_system_prompts_interface/interface.py",
+      "filePath": "src/contracts_src_transmogrifier_system_prompts_interface/interface.py",
+      "summary": "Language: Python | Path: src/contracts_src_transmogrifier_system_prompts_interface/interface.py | ~31 lines ## Functions - get_system_prompt( detected_register: str | Register, target_register: str | None = None, ) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-5e0e7b017cfc",
+      "type": "file",
+      "name": "contracts/contracts_src_transmogrifier_mcp_server_interface/interface.py",
+      "filePath": "contracts/contracts_src_transmogrifier_mcp_server_interface/interface.py",
+      "summary": "Language: Python | Path: contracts/contracts_src_transmogrifier_mcp_server_interface/interface.py | ~76 lines ## Functions - main() -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-1eb0ba684484",
+      "type": "file",
+      "name": "src/src_transmogrifier_mcp_server/mcp_server.py",
+      "filePath": "src/src_transmogrifier_mcp_server/mcp_server.py",
+      "summary": "Language: Python | Path: src/src_transmogrifier_mcp_server/mcp_server.py | ~44 lines ## Functions - main()",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-6bf0bb533916",
+      "type": "class",
+      "name": "TaskClassifier",
+      "filePath": "src/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "summary": "class TaskClassifier (src/contracts_src_transmogrifier_task_classifier_interface/interface.py:23)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-1f9388913937",
+      "type": "class",
+      "name": "TaskType",
+      "filePath": "src/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "summary": "class TaskType(Enum) (src/contracts_src_transmogrifier_task_classifier_interface/interface.py:13)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-fa928ceace16",
+      "type": "class",
+      "name": "TaskClassifier",
+      "filePath": "src/src_transmogrifier_task_classifier/task_classifier.py",
+      "summary": "class TaskClassifier (src/src_transmogrifier_task_classifier/task_classifier.py:79) ## Methods - classify(self, text: str) -> tuple[TaskType,float]",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-09953f725c2d",
+      "type": "class",
+      "name": "TaskType",
+      "filePath": "src/src_transmogrifier_task_classifier/task_classifier.py",
+      "summary": "class TaskType(str, enum.Enum) (src/src_transmogrifier_task_classifier/task_classifier.py:9)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-359cdd3243ef",
+      "type": "class",
+      "name": "TaskClassifier",
+      "filePath": "src/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "summary": "class TaskClassifier (src/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py:26)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-2bc64a531313",
+      "type": "class",
+      "name": "TaskType",
+      "filePath": "src/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "summary": "class TaskType(Enum) (src/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py:16)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-6c4beedbda40",
+      "type": "class",
+      "name": "TaskClassifier",
+      "filePath": "contracts/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "summary": "class TaskClassifier (contracts/contracts_src_transmogrifier_task_classifier_interface/interface.py:26)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-00976a5e2373",
+      "type": "class",
+      "name": "TaskType",
+      "filePath": "contracts/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "summary": "class TaskType(Enum) (contracts/contracts_src_transmogrifier_task_classifier_interface/interface.py:16)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-bc46d5d1b5e2",
+      "type": "class",
+      "name": "TaskClassifier",
+      "filePath": "contracts/src_transmogrifier_task_classifier/interface.py",
+      "summary": "class TaskClassifier (contracts/src_transmogrifier_task_classifier/interface.py:23)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-44c54cd87318",
+      "type": "class",
+      "name": "TaskType",
+      "filePath": "contracts/src_transmogrifier_task_classifier/interface.py",
+      "summary": "class TaskType(Enum) (contracts/src_transmogrifier_task_classifier/interface.py:13)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-4e801fedcd94",
+      "type": "class",
+      "name": "TaskClassifier",
+      "filePath": "contracts/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "summary": "class TaskClassifier (contracts/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py:26)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-637e918b4447",
+      "type": "class",
+      "name": "TaskType",
+      "filePath": "contracts/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "summary": "class TaskType(Enum) (contracts/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py:16)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-ac82a98fddae",
+      "type": "class",
+      "name": "RuleEngine",
+      "filePath": "src/src_transmogrifier_rules/rules.py",
+      "summary": "class RuleEngine (src/src_transmogrifier_rules/rules.py:72) ## Methods - rewrite(self, text: str, source, target) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-a76c7494ac13",
+      "type": "class",
+      "name": "SemanticValidator",
+      "filePath": "contracts/src_transmogrifier_validator/interface.py",
+      "summary": "class SemanticValidator (contracts/src_transmogrifier_validator/interface.py:11)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-3c4e268a0636",
+      "type": "class",
+      "name": "SemanticValidator",
+      "filePath": "src/src_transmogrifier_validator/validator.py",
+      "summary": "class SemanticValidator (src/src_transmogrifier_validator/validator.py:10) ## Methods - is_valid(self, input_text: str, output_text: str, threshold: float = 0.95) -> bool|None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-ddc0d91a32de",
+      "type": "class",
+      "name": "RewriteRule",
+      "filePath": "src/contracts_src_transmogrifier_rules_interface/interface.py",
+      "summary": "class RewriteRule (src/contracts_src_transmogrifier_rules_interface/interface.py:12)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-3496fe9aea49",
+      "type": "class",
+      "name": "RuleEngine",
+      "filePath": "src/contracts_src_transmogrifier_rules_interface/interface.py",
+      "summary": "class RuleEngine (src/contracts_src_transmogrifier_rules_interface/interface.py:17)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-68f389d7e893",
+      "type": "class",
+      "name": "RewriteRule",
+      "filePath": "src/src_transmogrifier_rules/rules.py",
+      "summary": "class RewriteRule (src/src_transmogrifier_rules/rules.py:10)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-349440cfd255",
+      "type": "class",
+      "name": "RuleEngine",
+      "filePath": "contracts/src_transmogrifier_rules/interface.py",
+      "summary": "class RuleEngine (contracts/src_transmogrifier_rules/interface.py:17)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-0b31ddda9956",
+      "type": "class",
+      "name": "RewriteRule",
+      "filePath": "src/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "summary": "class RewriteRule (src/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py:12)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-2417b70b2035",
+      "type": "class",
+      "name": "RuleEngine",
+      "filePath": "src/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "summary": "class RuleEngine (src/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py:17)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-b6696329d1f5",
+      "type": "class",
+      "name": "RewriteRule",
+      "filePath": "contracts/contracts_src_transmogrifier_rules_interface/interface.py",
+      "summary": "class RewriteRule (contracts/contracts_src_transmogrifier_rules_interface/interface.py:12)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-01245ce44358",
+      "type": "class",
+      "name": "RuleEngine",
+      "filePath": "contracts/contracts_src_transmogrifier_rules_interface/interface.py",
+      "summary": "class RuleEngine (contracts/contracts_src_transmogrifier_rules_interface/interface.py:17)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-5b8c39135a77",
+      "type": "class",
+      "name": "RewriteRule",
+      "filePath": "contracts/src_transmogrifier_rules/interface.py",
+      "summary": "class RewriteRule (contracts/src_transmogrifier_rules/interface.py:12)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-302e63744859",
+      "type": "class",
+      "name": "tuple",
+      "filePath": "src/contracts_src_transmogrifier_detector_interface/interface.py",
+      "summary": "class tuple (src/contracts_src_transmogrifier_detector_interface/interface.py:29)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-f9362b55cc5e",
+      "type": "class",
+      "name": "RewriteRule",
+      "filePath": "contracts/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "summary": "class RewriteRule (contracts/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py:12)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-f06e9e44a6af",
+      "type": "class",
+      "name": "RuleEngine",
+      "filePath": "contracts/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "summary": "class RuleEngine (contracts/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py:17)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-59b95ab925f6",
+      "type": "class",
+      "name": "RegisterDetector",
+      "filePath": "contracts/src_transmogrifier_detector/interface.py",
+      "summary": "class RegisterDetector (contracts/src_transmogrifier_detector/interface.py:25)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-8a0f107e0920",
+      "type": "class",
+      "name": "tuple",
+      "filePath": "contracts/src_transmogrifier_detector/interface.py",
+      "summary": "class tuple (contracts/src_transmogrifier_detector/interface.py:29)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-c8d24a2a938d",
+      "type": "class",
+      "name": "RegisterDetector",
+      "filePath": "src/contracts_src_transmogrifier_detector_interface/interface.py",
+      "summary": "class RegisterDetector (src/contracts_src_transmogrifier_detector_interface/interface.py:25)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-1e439e6d0ee5",
+      "type": "class",
+      "name": "TranslationLevel",
+      "filePath": "src/src_transmogrifier_core/core.py",
+      "summary": "class TranslationLevel(int, enum.Enum) (src/src_transmogrifier_core/core.py:26)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-1585e2447c17",
+      "type": "class",
+      "name": "TranslationResult",
+      "filePath": "src/src_transmogrifier_core/core.py",
+      "summary": "class TranslationResult(BaseModel) (src/src_transmogrifier_core/core.py:32)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-311a7a9b9b7b",
+      "type": "class",
+      "name": "Transmogrifier",
+      "filePath": "src/src_transmogrifier_core/core.py",
+      "summary": "class Transmogrifier (src/src_transmogrifier_core/core.py:56) ## Methods - translate( self, text: str, model: str = \"\", config: TranslationConfig | None = None, ) -> TranslationResult",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-5083cdb38201",
+      "type": "class",
+      "name": "RegisterDetector",
+      "filePath": "contracts/contracts_src_transmogrifier_detector_interface/interface.py",
+      "summary": "class RegisterDetector (contracts/contracts_src_transmogrifier_detector_interface/interface.py:26)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-a1e076b0a049",
+      "type": "class",
+      "name": "Register",
+      "filePath": "src/src_transmogrifier_core/core.py",
+      "summary": "class Register(str, enum.Enum) (src/src_transmogrifier_core/core.py:18)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-ddd6ff0aac1d",
+      "type": "class",
+      "name": "TranslationConfig",
+      "filePath": "src/src_transmogrifier_core/core.py",
+      "summary": "class TranslationConfig(BaseModel) (src/src_transmogrifier_core/core.py:47)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-fd4e3fe3d878",
+      "type": "class",
+      "name": "TranslationConfig",
+      "filePath": "src/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "class TranslationConfig (src/contracts_src_transmogrifier_core_interface/interface.py:43)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-a9d2bfaae240",
+      "type": "class",
+      "name": "TranslationLevel",
+      "filePath": "src/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "class TranslationLevel(Enum) (src/contracts_src_transmogrifier_core_interface/interface.py:22)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-685e757a2d7c",
+      "type": "class",
+      "name": "TranslationResult",
+      "filePath": "src/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "class TranslationResult (src/contracts_src_transmogrifier_core_interface/interface.py:28)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-ca1c450db9db",
+      "type": "class",
+      "name": "Transmogrifier",
+      "filePath": "src/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "class Transmogrifier (src/contracts_src_transmogrifier_core_interface/interface.py:52)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-74e88193ea77",
+      "type": "class",
+      "name": "Transmogrifier",
+      "filePath": "contracts/src_transmogrifier_core/interface.py",
+      "summary": "class Transmogrifier (contracts/src_transmogrifier_core/interface.py:52)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-620c9b67b70f",
+      "type": "class",
+      "name": "Register",
+      "filePath": "src/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py",
+      "summary": "class Register(Enum) (src/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py:13)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-5ad9f4861416",
+      "type": "class",
+      "name": "Register",
+      "filePath": "src/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "class Register(Enum) (src/contracts_src_transmogrifier_core_interface/interface.py:14)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-d0f933ec2a02",
+      "type": "class",
+      "name": "TranslationConfig",
+      "filePath": "contracts/src_transmogrifier_core/interface.py",
+      "summary": "class TranslationConfig (contracts/src_transmogrifier_core/interface.py:43)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-f2032704f158",
+      "type": "class",
+      "name": "TranslationLevel",
+      "filePath": "contracts/src_transmogrifier_core/interface.py",
+      "summary": "class TranslationLevel(Enum) (contracts/src_transmogrifier_core/interface.py:22)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-42d567c1071e",
+      "type": "class",
+      "name": "TranslationResult",
+      "filePath": "contracts/src_transmogrifier_core/interface.py",
+      "summary": "class TranslationResult (contracts/src_transmogrifier_core/interface.py:28)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-bbc79544996e",
+      "type": "class",
+      "name": "Register",
+      "filePath": "contracts/contracts_src_transmogrifier_system_prompts_interface/interface.py",
+      "summary": "class Register(Enum) (contracts/contracts_src_transmogrifier_system_prompts_interface/interface.py:13)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-ad6b5890a5bd",
+      "type": "class",
+      "name": "Register",
+      "filePath": "contracts/src_transmogrifier_core/interface.py",
+      "summary": "class Register(Enum) (contracts/src_transmogrifier_core/interface.py:14)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-58842bdee19b",
+      "type": "class",
+      "name": "Register",
+      "filePath": "contracts/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "class Register(Enum) (contracts/contracts_src_transmogrifier_core_interface/interface.py:13)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-519e67e7f5e4",
+      "type": "class",
+      "name": "TranslationConfig",
+      "filePath": "contracts/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "class TranslationConfig (contracts/contracts_src_transmogrifier_core_interface/interface.py:42)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-3432753716f7",
+      "type": "class",
+      "name": "TranslationLevel",
+      "filePath": "contracts/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "class TranslationLevel(Enum) (contracts/contracts_src_transmogrifier_core_interface/interface.py:21)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-9165714442e4",
+      "type": "class",
+      "name": "TranslationResult",
+      "filePath": "contracts/contracts_src_transmogrifier_core_interface/interface.py",
+      "summary": "class TranslationResult (contracts/contracts_src_transmogrifier_core_interface/interface.py:27)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-5bf1fd94d8f5",
+      "type": "class",
+      "name": "ProfileDict",
+      "filePath": "src/contracts_src_transmogrifier_mcp_server_interface/interface.py",
+      "summary": "class ProfileDict (src/contracts_src_transmogrifier_mcp_server_interface/interface.py:21)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-69b82aa6d965",
+      "type": "class",
+      "name": "TransmogDetectResult",
+      "filePath": "src/contracts_src_transmogrifier_mcp_server_interface/interface.py",
+      "summary": "class TransmogDetectResult (src/contracts_src_transmogrifier_mcp_server_interface/interface.py:16)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-2c9505823f0d",
+      "type": "class",
+      "name": "TransmogTranslateResult",
+      "filePath": "src/contracts_src_transmogrifier_mcp_server_interface/interface.py",
+      "summary": "class TransmogTranslateResult (src/contracts_src_transmogrifier_mcp_server_interface/interface.py:12)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-e6a9aa22ea49",
+      "type": "class",
+      "name": "Register",
+      "filePath": "contracts/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py",
+      "summary": "class Register(Enum) (contracts/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py:13)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-d50543998bd8",
+      "type": "class",
+      "name": "ProfileDict",
+      "filePath": "contracts/src_transmogrifier_mcp_server/interface.py",
+      "summary": "class ProfileDict (contracts/src_transmogrifier_mcp_server/interface.py:21)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-19e06716df02",
+      "type": "class",
+      "name": "TransmogDetectResult",
+      "filePath": "contracts/src_transmogrifier_mcp_server/interface.py",
+      "summary": "class TransmogDetectResult (contracts/src_transmogrifier_mcp_server/interface.py:16)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-1befc3f78fb3",
+      "type": "class",
+      "name": "TransmogTranslateResult",
+      "filePath": "contracts/src_transmogrifier_mcp_server/interface.py",
+      "summary": "class TransmogTranslateResult (contracts/src_transmogrifier_mcp_server/interface.py:12)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-704acb31e513",
+      "type": "class",
+      "name": "OpenAIBackend",
+      "filePath": "contracts/src_transmogrifier_backends_openai/interface.py",
+      "summary": "class OpenAIBackend (contracts/src_transmogrifier_backends_openai/interface.py:11)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-a238ce079590",
+      "type": "class",
+      "name": "OpenAIBackend",
+      "filePath": "src/src_transmogrifier_backends_openai/openai.py",
+      "summary": "class OpenAIBackend (src/src_transmogrifier_backends_openai/openai.py:8) ## Methods - complete(self, system: str, messages: list[dict], max_tokens: int = 1024) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-92dfadc3c2d2",
+      "type": "class",
+      "name": "ModelProfile",
+      "filePath": "src/src_transmogrifier_profiles/profiles.py",
+      "summary": "class ModelProfile(BaseModel) (src/src_transmogrifier_profiles/profiles.py:42) ## Methods - best_register(self) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 7,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-1f8e581a2f05",
+      "type": "class",
+      "name": "ProfileCache",
+      "filePath": "src/src_transmogrifier_profiles/profiles.py",
+      "summary": "class ProfileCache (src/src_transmogrifier_profiles/profiles.py:237) ## Methods - get(self, model_name: str) -> ModelProfile|None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-cd3c302a0eb6",
+      "type": "class",
+      "name": "RegisterAccuracy",
+      "filePath": "src/src_transmogrifier_profiles/profiles.py",
+      "summary": "class RegisterAccuracy(BaseModel) (src/src_transmogrifier_profiles/profiles.py:15)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-9c5d206eca9f",
+      "type": "class",
+      "name": "TaskRegisterProfile",
+      "filePath": "src/src_transmogrifier_profiles/profiles.py",
+      "summary": "class TaskRegisterProfile(BaseModel) (src/src_transmogrifier_profiles/profiles.py:23) ## Methods - best_register(self) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-39f99071e5d2",
+      "type": "class",
+      "name": "ModelProfile",
+      "filePath": "contracts/src_transmogrifier_profiles/interface.py",
+      "summary": "class ModelProfile (contracts/src_transmogrifier_profiles/interface.py:27)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-b6f0b404ffe8",
+      "type": "class",
+      "name": "ProfileCache",
+      "filePath": "contracts/src_transmogrifier_profiles/interface.py",
+      "summary": "class ProfileCache (contracts/src_transmogrifier_profiles/interface.py:38)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-00b009517766",
+      "type": "class",
+      "name": "RegisterAccuracy",
+      "filePath": "contracts/src_transmogrifier_profiles/interface.py",
+      "summary": "class RegisterAccuracy (contracts/src_transmogrifier_profiles/interface.py:15)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-5dc87b4cd54e",
+      "type": "class",
+      "name": "TaskRegisterProfile",
+      "filePath": "contracts/src_transmogrifier_profiles/interface.py",
+      "summary": "class TaskRegisterProfile (contracts/src_transmogrifier_profiles/interface.py:22)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-75f74a7bde52",
+      "type": "class",
+      "name": "GeminiBackend",
+      "filePath": "contracts/src_transmogrifier_backends_gemini/interface.py",
+      "summary": "class GeminiBackend (contracts/src_transmogrifier_backends_gemini/interface.py:12)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-04fb739240e2",
+      "type": "class",
+      "name": "GeminiBackend",
+      "filePath": "src/src_transmogrifier_backends_gemini/gemini.py",
+      "summary": "class GeminiBackend (src/src_transmogrifier_backends_gemini/gemini.py:8) ## Methods - complete(self, system: str, messages: list[dict], max_tokens: int = 1024) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-8ca5326f190a",
+      "type": "class",
+      "name": "Backend",
+      "filePath": "src/src_transmogrifier_backends___init__/__init__.py",
+      "summary": "class Backend(Protocol) (src/src_transmogrifier_backends___init__/__init__.py:8) ## Methods - complete(self, system: str, messages: list[dict], max_tokens: int = 1024) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-17fde14ca92d",
+      "type": "class",
+      "name": "CalibrationRunner",
+      "filePath": "contracts/src_transmogrifier_calibrate/interface.py",
+      "summary": "class CalibrationRunner (contracts/src_transmogrifier_calibrate/interface.py:13)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-264d3db368fa",
+      "type": "class",
+      "name": "CalibrationRunner",
+      "filePath": "src/src_transmogrifier_calibrate/calibrate.py",
+      "summary": "class CalibrationRunner (src/src_transmogrifier_calibrate/calibrate.py:141) ## Methods - run( self, model_name: str, model_version: str = \"\", provider: str = \"\", tasks: list[dict] | None = None, registers: list[str] | None = None, delay: float = 0.3, verbose: bool = False, ) -> ModelProfile",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-63d7029ad85c",
+      "type": "class",
+      "name": "Backend",
+      "filePath": "contracts/src_transmogrifier_backends___init__/interface.py",
+      "summary": "class Backend (contracts/src_transmogrifier_backends___init__/interface.py:10)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-8e6e958ddcf2",
+      "type": "class",
+      "name": "RegisterDetector",
+      "filePath": "src/src_transmogrifier_detector/detector.py",
+      "summary": "class RegisterDetector (src/src_transmogrifier_detector/detector.py:59) ## Methods - detect(self, text: str) -> tuple",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-cc54d5055b7e",
+      "type": "class",
+      "name": "AnthropicBackend",
+      "filePath": "contracts/src_transmogrifier_backends_anthropic/interface.py",
+      "summary": "class AnthropicBackend (contracts/src_transmogrifier_backends_anthropic/interface.py:10)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-86ea136c391e",
+      "type": "class",
+      "name": "AnthropicBackend",
+      "filePath": "src/src_transmogrifier_backends_anthropic/anthropic.py",
+      "summary": "class AnthropicBackend (src/src_transmogrifier_backends_anthropic/anthropic.py:8) ## Methods - complete(self, system: str, messages: list[dict], max_tokens: int = 1024) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-1c965c5e8056",
+      "type": "file",
+      "name": "src/transmogrifier/backends/anthropic.py",
+      "filePath": "src/transmogrifier/backends/anthropic.py",
+      "summary": "Language: Python | Path: src/transmogrifier/backends/anthropic.py | ~19 lines ## Classes - AnthropicBackend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-96b0a11e3e3f",
+      "type": "file",
+      "name": "src/transmogrifier/backends/openai.py",
+      "filePath": "src/transmogrifier/backends/openai.py",
+      "summary": "Language: Python | Path: src/transmogrifier/backends/openai.py | ~19 lines ## Classes - OpenAIBackend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-bf39967120d5",
+      "type": "file",
+      "name": "src/transmogrifier/detector.py",
+      "filePath": "src/transmogrifier/detector.py",
+      "summary": "Language: Python | Path: src/transmogrifier/detector.py | ~96 lines ## Classes - RegisterDetector",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-983a27b9844a",
+      "type": "class",
+      "name": "RegisterDetector",
+      "filePath": "src/transmogrifier/detector.py",
+      "summary": "class RegisterDetector (src/transmogrifier/detector.py:59) ## Methods - detect(self, text: str) -> tuple",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-284d097aee03",
+      "type": "file",
+      "name": "src/transmogrifier/calibrate.py",
+      "filePath": "src/transmogrifier/calibrate.py",
+      "summary": "Language: Python | Path: src/transmogrifier/calibrate.py | ~148 lines ## Classes - CalibrationRunner",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-154a7fe8d9c8",
+      "type": "class",
+      "name": "CalibrationRunner",
+      "filePath": "src/transmogrifier/calibrate.py",
+      "summary": "class CalibrationRunner (src/transmogrifier/calibrate.py:141) ## Methods - run( self, model_name: str, model_version: str = \"\", provider: str = \"\", tasks: list[dict] | None = None, registers: list[str] | None = None, delay: float = 0.3, verbose: bool = False, ) -> ModelProfile",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-6a9d440fe45f",
+      "type": "file",
+      "name": "src/transmogrifier/backends/__init__.py",
+      "filePath": "src/transmogrifier/backends/__init__.py",
+      "summary": "Language: Python | Path: src/transmogrifier/backends/__init__.py | ~12 lines ## Classes - Backend(Protocol)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-226935c85939",
+      "type": "file",
+      "name": "src/transmogrifier/system_prompts.py",
+      "filePath": "src/transmogrifier/system_prompts.py",
+      "summary": "Language: Python | Path: src/transmogrifier/system_prompts.py | ~55 lines ## Functions - get_system_prompt(detected_register, target_register=None) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-3935db423823",
+      "type": "file",
+      "name": "src/transmogrifier/backends/gemini.py",
+      "filePath": "src/transmogrifier/backends/gemini.py",
+      "summary": "Language: Python | Path: src/transmogrifier/backends/gemini.py | ~22 lines ## Classes - GeminiBackend",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-1ee52e150cbb",
+      "type": "class",
+      "name": "GeminiBackend",
+      "filePath": "src/transmogrifier/backends/gemini.py",
+      "summary": "class GeminiBackend (src/transmogrifier/backends/gemini.py:8) ## Methods - complete(self, system: str, messages: list[dict], max_tokens: int = 1024) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-f38f26f64439",
+      "type": "file",
+      "name": "src/transmogrifier/profiles.py",
+      "filePath": "src/transmogrifier/profiles.py",
+      "summary": "Language: Python | Path: src/transmogrifier/profiles.py | ~299 lines ## Classes - ModelProfile(BaseModel)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-4a7fa58f8ef0",
+      "type": "class",
+      "name": "ModelProfile",
+      "filePath": "src/transmogrifier/profiles.py",
+      "summary": "class ModelProfile(BaseModel) (src/transmogrifier/profiles.py:42) ## Methods - best_register(self) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 7,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-dbcfb481ebf2",
+      "type": "class",
+      "name": "ProfileCache",
+      "filePath": "src/transmogrifier/profiles.py",
+      "summary": "class ProfileCache (src/transmogrifier/profiles.py:237) ## Methods - get(self, model_name: str) -> ModelProfile|None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 4,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-5ca0c6d95939",
+      "type": "class",
+      "name": "RegisterAccuracy",
+      "filePath": "src/transmogrifier/profiles.py",
+      "summary": "class RegisterAccuracy(BaseModel) (src/transmogrifier/profiles.py:15)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-fa48511cdfb4",
+      "type": "class",
+      "name": "TaskRegisterProfile",
+      "filePath": "src/transmogrifier/profiles.py",
+      "summary": "class TaskRegisterProfile(BaseModel) (src/transmogrifier/profiles.py:23) ## Methods - best_register(self) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-a10c14d6f7ec",
+      "type": "file",
+      "name": "src/transmogrifier/core.py",
+      "filePath": "src/transmogrifier/core.py",
+      "summary": "Language: Python | Path: src/transmogrifier/core.py | ~77 lines ## Classes - Register(str, enum.Enum)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 5,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-028d37f7918f",
+      "type": "class",
+      "name": "Register",
+      "filePath": "src/transmogrifier/core.py",
+      "summary": "class Register(str, enum.Enum) (src/transmogrifier/core.py:18)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-c02261883e94",
+      "type": "class",
+      "name": "TranslationConfig",
+      "filePath": "src/transmogrifier/core.py",
+      "summary": "class TranslationConfig(BaseModel) (src/transmogrifier/core.py:47)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-12d838655713",
+      "type": "class",
+      "name": "TranslationLevel",
+      "filePath": "src/transmogrifier/core.py",
+      "summary": "class TranslationLevel(int, enum.Enum) (src/transmogrifier/core.py:26)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-7e03f490b5c4",
+      "type": "class",
+      "name": "TranslationResult",
+      "filePath": "src/transmogrifier/core.py",
+      "summary": "class TranslationResult(BaseModel) (src/transmogrifier/core.py:32)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-8576ae89141d",
+      "type": "class",
+      "name": "Transmogrifier",
+      "filePath": "src/transmogrifier/core.py",
+      "summary": "class Transmogrifier (src/transmogrifier/core.py:56) ## Methods - translate( self, text: str, model: str = \"\", config: TranslationConfig | None = None, ) -> TranslationResult",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-223871e67c5c",
+      "type": "file",
+      "name": "src/transmogrifier/rules.py",
+      "filePath": "src/transmogrifier/rules.py",
+      "summary": "Language: Python | Path: src/transmogrifier/rules.py | ~75 lines ## Classes - RewriteRule",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-d0b93300e315",
+      "type": "class",
+      "name": "RewriteRule",
+      "filePath": "src/transmogrifier/rules.py",
+      "summary": "class RewriteRule (src/transmogrifier/rules.py:10)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-9b59376894e1",
+      "type": "class",
+      "name": "RuleEngine",
+      "filePath": "src/transmogrifier/rules.py",
+      "summary": "class RuleEngine (src/transmogrifier/rules.py:72) ## Methods - rewrite(self, text: str, source, target) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-9d1ef0db06ea",
+      "type": "file",
+      "name": "src/transmogrifier/validator.py",
+      "filePath": "src/transmogrifier/validator.py",
+      "summary": "Language: Python | Path: src/transmogrifier/validator.py | ~35 lines ## Classes - SemanticValidator",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-ff11d9cf214a",
+      "type": "class",
+      "name": "SemanticValidator",
+      "filePath": "src/transmogrifier/validator.py",
+      "summary": "class SemanticValidator (src/transmogrifier/validator.py:10) ## Methods - is_valid(self, input_text: str, output_text: str, threshold: float = 0.95) -> bool|None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-b368c2d71dfc",
+      "type": "file",
+      "name": "src/transmogrifier/task_classifier.py",
+      "filePath": "src/transmogrifier/task_classifier.py",
+      "summary": "Language: Python | Path: src/transmogrifier/task_classifier.py | ~82 lines ## Classes - TaskClassifier",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 2,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-daa948f848cf",
+      "type": "class",
+      "name": "TaskClassifier",
+      "filePath": "src/transmogrifier/task_classifier.py",
+      "summary": "class TaskClassifier (src/transmogrifier/task_classifier.py:79) ## Methods - classify(self, text: str) -> tuple[TaskType,float]",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-15712c48225c",
+      "type": "class",
+      "name": "TaskType",
+      "filePath": "src/transmogrifier/task_classifier.py",
+      "summary": "class TaskType(str, enum.Enum) (src/transmogrifier/task_classifier.py:9)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-be7b2432f0e2",
+      "type": "file",
+      "name": "src/transmogrifier/__init__.py",
+      "filePath": "src/transmogrifier/__init__.py",
+      "summary": "Language: Python | Path: src/transmogrifier/__init__.py | ~3 lines",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-d1f8df987270",
+      "type": "file",
+      "name": "src/transmogrifier/kindex_integration.py",
+      "filePath": "src/transmogrifier/kindex_integration.py",
+      "summary": "Language: Python | Path: src/transmogrifier/kindex_integration.py | ~34 lines ## Functions - close() -> None",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 3,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-17cf928204b0",
+      "type": "file",
+      "name": "src/transmogrifier/cli.py",
+      "filePath": "src/transmogrifier/cli.py",
+      "summary": "Language: Python | Path: src/transmogrifier/cli.py | ~124 lines ## Functions - classify(text: str)",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 8,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-mod-transmogrifier-6fdfbd949dc6",
+      "type": "file",
+      "name": "src/transmogrifier/mcp_server.py",
+      "filePath": "src/transmogrifier/mcp_server.py",
+      "summary": "Language: Python | Path: src/transmogrifier/mcp_server.py | ~44 lines ## Functions - main()",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "Python",
+        "kindexType": "artifact",
+        "toolTier": "C"
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-e72b5f0d0550",
+      "type": "concept",
+      "name": "AnthropicBackend",
+      "filePath": "/Users/jmcentire/Code/transmogrifier/src/transmogrifier/backends/anthropic.py:8",
+      "summary": "class AnthropicBackend (src/transmogrifier/backends/anthropic.py:8) ## Methods - complete(self, system: str, messages: list[dict], max_tokens: int = 1024) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-a90e9223d262",
+      "type": "concept",
+      "name": "OpenAIBackend",
+      "filePath": "/Users/jmcentire/Code/transmogrifier/src/transmogrifier/backends/openai.py:8",
+      "summary": "class OpenAIBackend (src/transmogrifier/backends/openai.py:8) ## Methods - complete(self, system: str, messages: list[dict], max_tokens: int = 1024) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    },
+    {
+      "id": "code-sym-transmogrifier-999dd0092246",
+      "type": "concept",
+      "name": "Backend",
+      "filePath": "/Users/jmcentire/Code/transmogrifier/src/transmogrifier/backends/__init__.py:8",
+      "summary": "class Backend(Protocol) (src/transmogrifier/backends/__init__.py:8) ## Methods - complete(self, system: str, messages: list[dict], max_tokens: int = 1024) -> str",
+      "tags": [
+        "code",
+        "python"
+      ],
+      "complexity": 1,
+      "languageNotes": {
+        "language": "python",
+        "kindexType": "concept",
+        "toolTier": ""
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "code-mod-transmogrifier-45065c66cf6f",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-45065c66cf6f",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-fa5da82d2741",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-167d92d21871",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-23f442c1cae7",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-26cd6a62979a",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-1557d6e60697",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-30dc6d22648f",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-db92376b3d0d",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-615e4ac3c348",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-83c4711a98b5",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-e25dd9e6894b",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-a37452e5cc17",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-82e382024a74",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-4a6ce1f096a3",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-877af20083eb",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-6a2a59f0f326",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-ed87fd7c5e70",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-07af41d348ca",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-717cf1a9e473",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-47b446829b14",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-109b34e79d85",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-0fa935be69fd",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-3e8bddbe98bb",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-76699ca63c3f",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-5f123814cd04",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-dad25b5b54c9",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-b9003a412546",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-e463ad7045d2",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-38240006887a",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-093e5bcea1c4",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-e42cae549a3f",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-e42cae549a3f",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-71f927c40ce1",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-3ec86660e582",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-94198c3a9d54",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-156e48450622",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-bdf88864d96e",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-a634a92f3c41",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-5f8f602cb0ec",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-51594107cd07",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-51594107cd07",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-aee42fe45410",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-3908edccfa01",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-b5d3fdd8973c",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-6bfff8171662",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-1d4fc79f9512",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-7260dac385ee",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-ff6d365509cb",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-a306945006f9",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-63d14f6c0217",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-274927e677c4",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-c20d684a047a",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-d00e1a504933",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-5e0e7b017cfc",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-1eb0ba684484",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-6bf0bb533916",
+      "target": "code-mod-transmogrifier-5f8f602cb0ec",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-6bf0bb533916",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-1f9388913937",
+      "target": "code-mod-transmogrifier-5f8f602cb0ec",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-1f9388913937",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-fa928ceace16",
+      "target": "code-mod-transmogrifier-51594107cd07",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-fa928ceace16",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-09953f725c2d",
+      "target": "code-mod-transmogrifier-51594107cd07",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-09953f725c2d",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-359cdd3243ef",
+      "target": "code-mod-transmogrifier-a634a92f3c41",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-359cdd3243ef",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-2bc64a531313",
+      "target": "code-mod-transmogrifier-a634a92f3c41",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-2bc64a531313",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-6c4beedbda40",
+      "target": "code-mod-transmogrifier-156e48450622",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-6c4beedbda40",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-00976a5e2373",
+      "target": "code-mod-transmogrifier-156e48450622",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-00976a5e2373",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-bc46d5d1b5e2",
+      "target": "code-mod-transmogrifier-bdf88864d96e",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-bc46d5d1b5e2",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-44c54cd87318",
+      "target": "code-mod-transmogrifier-bdf88864d96e",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-44c54cd87318",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-4e801fedcd94",
+      "target": "code-mod-transmogrifier-94198c3a9d54",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-4e801fedcd94",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-637e918b4447",
+      "target": "code-mod-transmogrifier-94198c3a9d54",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-637e918b4447",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-ac82a98fddae",
+      "target": "code-mod-transmogrifier-e42cae549a3f",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-ac82a98fddae",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-a76c7494ac13",
+      "target": "code-mod-transmogrifier-71f927c40ce1",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-a76c7494ac13",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-3c4e268a0636",
+      "target": "code-mod-transmogrifier-3ec86660e582",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-3c4e268a0636",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-ddc0d91a32de",
+      "target": "code-mod-transmogrifier-093e5bcea1c4",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-ddc0d91a32de",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-3496fe9aea49",
+      "target": "code-mod-transmogrifier-093e5bcea1c4",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-3496fe9aea49",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-68f389d7e893",
+      "target": "code-mod-transmogrifier-e42cae549a3f",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-68f389d7e893",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-349440cfd255",
+      "target": "code-mod-transmogrifier-e463ad7045d2",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-349440cfd255",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-0b31ddda9956",
+      "target": "code-mod-transmogrifier-38240006887a",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-0b31ddda9956",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-2417b70b2035",
+      "target": "code-mod-transmogrifier-38240006887a",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-2417b70b2035",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-b6696329d1f5",
+      "target": "code-mod-transmogrifier-b9003a412546",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-b6696329d1f5",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-01245ce44358",
+      "target": "code-mod-transmogrifier-b9003a412546",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-01245ce44358",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-5b8c39135a77",
+      "target": "code-mod-transmogrifier-e463ad7045d2",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-5b8c39135a77",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-302e63744859",
+      "target": "code-mod-transmogrifier-5f123814cd04",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-302e63744859",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-f9362b55cc5e",
+      "target": "code-mod-transmogrifier-dad25b5b54c9",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-f9362b55cc5e",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-f06e9e44a6af",
+      "target": "code-mod-transmogrifier-dad25b5b54c9",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-f06e9e44a6af",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-59b95ab925f6",
+      "target": "code-mod-transmogrifier-76699ca63c3f",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-59b95ab925f6",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-8a0f107e0920",
+      "target": "code-mod-transmogrifier-76699ca63c3f",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-8a0f107e0920",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-c8d24a2a938d",
+      "target": "code-mod-transmogrifier-5f123814cd04",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-c8d24a2a938d",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-1e439e6d0ee5",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-1e439e6d0ee5",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-1585e2447c17",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-1585e2447c17",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-311a7a9b9b7b",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-311a7a9b9b7b",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-5083cdb38201",
+      "target": "code-mod-transmogrifier-3e8bddbe98bb",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-5083cdb38201",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-a1e076b0a049",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-a1e076b0a049",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-ddd6ff0aac1d",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-ddd6ff0aac1d",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-fd4e3fe3d878",
+      "target": "code-mod-transmogrifier-0fa935be69fd",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-fd4e3fe3d878",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-a9d2bfaae240",
+      "target": "code-mod-transmogrifier-0fa935be69fd",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-a9d2bfaae240",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-685e757a2d7c",
+      "target": "code-mod-transmogrifier-0fa935be69fd",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-685e757a2d7c",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-ca1c450db9db",
+      "target": "code-mod-transmogrifier-0fa935be69fd",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-ca1c450db9db",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-74e88193ea77",
+      "target": "code-mod-transmogrifier-47b446829b14",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-74e88193ea77",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-620c9b67b70f",
+      "target": "code-mod-transmogrifier-109b34e79d85",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-620c9b67b70f",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-5ad9f4861416",
+      "target": "code-mod-transmogrifier-0fa935be69fd",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-5ad9f4861416",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-d0f933ec2a02",
+      "target": "code-mod-transmogrifier-47b446829b14",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-d0f933ec2a02",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-f2032704f158",
+      "target": "code-mod-transmogrifier-47b446829b14",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-f2032704f158",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-42d567c1071e",
+      "target": "code-mod-transmogrifier-47b446829b14",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-42d567c1071e",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-bbc79544996e",
+      "target": "code-mod-transmogrifier-717cf1a9e473",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-bbc79544996e",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-ad6b5890a5bd",
+      "target": "code-mod-transmogrifier-47b446829b14",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-ad6b5890a5bd",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-58842bdee19b",
+      "target": "code-mod-transmogrifier-07af41d348ca",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-58842bdee19b",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-519e67e7f5e4",
+      "target": "code-mod-transmogrifier-07af41d348ca",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-519e67e7f5e4",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-3432753716f7",
+      "target": "code-mod-transmogrifier-07af41d348ca",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-3432753716f7",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-9165714442e4",
+      "target": "code-mod-transmogrifier-07af41d348ca",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-9165714442e4",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-5bf1fd94d8f5",
+      "target": "code-mod-transmogrifier-6a2a59f0f326",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-5bf1fd94d8f5",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-69b82aa6d965",
+      "target": "code-mod-transmogrifier-6a2a59f0f326",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-69b82aa6d965",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-2c9505823f0d",
+      "target": "code-mod-transmogrifier-6a2a59f0f326",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-2c9505823f0d",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-e6a9aa22ea49",
+      "target": "code-mod-transmogrifier-ed87fd7c5e70",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-e6a9aa22ea49",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-d50543998bd8",
+      "target": "code-mod-transmogrifier-877af20083eb",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-d50543998bd8",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-19e06716df02",
+      "target": "code-mod-transmogrifier-877af20083eb",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-19e06716df02",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-1befc3f78fb3",
+      "target": "code-mod-transmogrifier-877af20083eb",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-1befc3f78fb3",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-704acb31e513",
+      "target": "code-mod-transmogrifier-82e382024a74",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-704acb31e513",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-a238ce079590",
+      "target": "code-mod-transmogrifier-4a6ce1f096a3",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-a238ce079590",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-92dfadc3c2d2",
+      "target": "code-mod-transmogrifier-a37452e5cc17",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-92dfadc3c2d2",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-1f8e581a2f05",
+      "target": "code-mod-transmogrifier-a37452e5cc17",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-1f8e581a2f05",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-cd3c302a0eb6",
+      "target": "code-mod-transmogrifier-a37452e5cc17",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-cd3c302a0eb6",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-9c5d206eca9f",
+      "target": "code-mod-transmogrifier-a37452e5cc17",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-9c5d206eca9f",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-39f99071e5d2",
+      "target": "code-mod-transmogrifier-e25dd9e6894b",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-39f99071e5d2",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-b6f0b404ffe8",
+      "target": "code-mod-transmogrifier-e25dd9e6894b",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-b6f0b404ffe8",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-00b009517766",
+      "target": "code-mod-transmogrifier-e25dd9e6894b",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-00b009517766",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-5dc87b4cd54e",
+      "target": "code-mod-transmogrifier-e25dd9e6894b",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-5dc87b4cd54e",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-75f74a7bde52",
+      "target": "code-mod-transmogrifier-615e4ac3c348",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-75f74a7bde52",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-04fb739240e2",
+      "target": "code-mod-transmogrifier-83c4711a98b5",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-04fb739240e2",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-8ca5326f190a",
+      "target": "code-mod-transmogrifier-1557d6e60697",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-8ca5326f190a",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-17fde14ca92d",
+      "target": "code-mod-transmogrifier-30dc6d22648f",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-17fde14ca92d",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-264d3db368fa",
+      "target": "code-mod-transmogrifier-23f442c1cae7",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-264d3db368fa",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-63d7029ad85c",
+      "target": "code-mod-transmogrifier-26cd6a62979a",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-63d7029ad85c",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-8e6e958ddcf2",
+      "target": "code-mod-transmogrifier-45065c66cf6f",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-8e6e958ddcf2",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-cc54d5055b7e",
+      "target": "code-mod-transmogrifier-fa5da82d2741",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-cc54d5055b7e",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-sym-transmogrifier-86ea136c391e",
+      "target": "code-mod-transmogrifier-167d92d21871",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.6
+    },
+    {
+      "source": "code-sym-transmogrifier-86ea136c391e",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-1c965c5e8056",
+      "target": "code-mod-transmogrifier-167d92d21871",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-1c965c5e8056",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-1c965c5e8056",
+      "target": "code-mod-transmogrifier-96b0a11e3e3f",
+      "type": "related",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-96b0a11e3e3f",
+      "target": "code-mod-transmogrifier-4a6ce1f096a3",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-96b0a11e3e3f",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-96b0a11e3e3f",
+      "target": "code-mod-transmogrifier-1c965c5e8056",
+      "type": "related",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-bf39967120d5",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-bf39967120d5",
+      "target": "code-mod-transmogrifier-a10c14d6f7ec",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-bf39967120d5",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-983a27b9844a",
+      "target": "code-mod-transmogrifier-bf39967120d5",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-983a27b9844a",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-284d097aee03",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-154a7fe8d9c8",
+      "target": "code-mod-transmogrifier-284d097aee03",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-154a7fe8d9c8",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-6a9d440fe45f",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-226935c85939",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-3935db423823",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-1ee52e150cbb",
+      "target": "code-mod-transmogrifier-3935db423823",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-1ee52e150cbb",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-f38f26f64439",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-4a7fa58f8ef0",
+      "target": "code-mod-transmogrifier-f38f26f64439",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-4a7fa58f8ef0",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-dbcfb481ebf2",
+      "target": "code-mod-transmogrifier-f38f26f64439",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-dbcfb481ebf2",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-5ca0c6d95939",
+      "target": "code-mod-transmogrifier-f38f26f64439",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-5ca0c6d95939",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-fa48511cdfb4",
+      "target": "code-mod-transmogrifier-f38f26f64439",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-fa48511cdfb4",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-a10c14d6f7ec",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-028d37f7918f",
+      "target": "code-mod-transmogrifier-a10c14d6f7ec",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-028d37f7918f",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-c02261883e94",
+      "target": "code-mod-transmogrifier-a10c14d6f7ec",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-c02261883e94",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-12d838655713",
+      "target": "code-mod-transmogrifier-a10c14d6f7ec",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-12d838655713",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-7e03f490b5c4",
+      "target": "code-mod-transmogrifier-a10c14d6f7ec",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-7e03f490b5c4",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-8576ae89141d",
+      "target": "code-mod-transmogrifier-a10c14d6f7ec",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-8576ae89141d",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-223871e67c5c",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-223871e67c5c",
+      "target": "code-mod-transmogrifier-a10c14d6f7ec",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-223871e67c5c",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-d0b93300e315",
+      "target": "code-mod-transmogrifier-223871e67c5c",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-d0b93300e315",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-9b59376894e1",
+      "target": "code-mod-transmogrifier-223871e67c5c",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-9b59376894e1",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-9d1ef0db06ea",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-ff11d9cf214a",
+      "target": "code-mod-transmogrifier-9d1ef0db06ea",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-ff11d9cf214a",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-b368c2d71dfc",
+      "target": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.5
+    },
+    {
+      "source": "code-mod-transmogrifier-b368c2d71dfc",
+      "target": "code-mod-transmogrifier-a10c14d6f7ec",
+      "type": "depends_on",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-b368c2d71dfc",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-daa948f848cf",
+      "target": "code-mod-transmogrifier-b368c2d71dfc",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-daa948f848cf",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-15712c48225c",
+      "target": "code-mod-transmogrifier-b368c2d71dfc",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-15712c48225c",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-be7b2432f0e2",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-d1f8df987270",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-17cf928204b0",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-mod-transmogrifier-6fdfbd949dc6",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-e72b5f0d0550",
+      "target": "code-mod-transmogrifier-1c965c5e8056",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-e72b5f0d0550",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-a90e9223d262",
+      "target": "code-mod-transmogrifier-96b0a11e3e3f",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-a90e9223d262",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-999dd0092246",
+      "target": "code-mod-transmogrifier-6a9d440fe45f",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    },
+    {
+      "source": "code-sym-transmogrifier-999dd0092246",
+      "target": "code-sym-transmogrifier-8576ae89141d",
+      "type": "contains",
+      "direction": "outbound",
+      "weight": 0.0108
+    }
+  ],
+  "layers": [
+    {
+      "id": "core",
+      "name": "Core",
+      "description": "Kindex-inferred core layer.",
+      "nodeIds": [
+        "code-mod-transmogrifier-07af41d348ca",
+        "code-mod-transmogrifier-093e5bcea1c4",
+        "code-mod-transmogrifier-0fa935be69fd",
+        "code-mod-transmogrifier-109b34e79d85",
+        "code-mod-transmogrifier-1557d6e60697",
+        "code-mod-transmogrifier-156e48450622",
+        "code-mod-transmogrifier-167d92d21871",
+        "code-mod-transmogrifier-17cf928204b0",
+        "code-mod-transmogrifier-1c965c5e8056",
+        "code-mod-transmogrifier-1d4fc79f9512",
+        "code-mod-transmogrifier-1eb0ba684484",
+        "code-mod-transmogrifier-223871e67c5c",
+        "code-mod-transmogrifier-226935c85939",
+        "code-mod-transmogrifier-23f442c1cae7",
+        "code-mod-transmogrifier-26cd6a62979a",
+        "code-mod-transmogrifier-274927e677c4",
+        "code-mod-transmogrifier-284d097aee03",
+        "code-mod-transmogrifier-30dc6d22648f",
+        "code-mod-transmogrifier-38240006887a",
+        "code-mod-transmogrifier-3908edccfa01",
+        "code-mod-transmogrifier-3935db423823",
+        "code-mod-transmogrifier-3e8bddbe98bb",
+        "code-mod-transmogrifier-3ec86660e582",
+        "code-mod-transmogrifier-45065c66cf6f",
+        "code-mod-transmogrifier-47b446829b14",
+        "code-mod-transmogrifier-4a6ce1f096a3",
+        "code-mod-transmogrifier-51594107cd07",
+        "code-mod-transmogrifier-5e0e7b017cfc",
+        "code-mod-transmogrifier-5f123814cd04",
+        "code-mod-transmogrifier-5f8f602cb0ec",
+        "code-mod-transmogrifier-615e4ac3c348",
+        "code-mod-transmogrifier-63d14f6c0217",
+        "code-mod-transmogrifier-6a2a59f0f326",
+        "code-mod-transmogrifier-6a9d440fe45f",
+        "code-mod-transmogrifier-6bfff8171662",
+        "code-mod-transmogrifier-6fdfbd949dc6",
+        "code-mod-transmogrifier-717cf1a9e473",
+        "code-mod-transmogrifier-71f927c40ce1",
+        "code-mod-transmogrifier-7260dac385ee",
+        "code-mod-transmogrifier-76699ca63c3f",
+        "code-mod-transmogrifier-82e382024a74",
+        "code-mod-transmogrifier-83c4711a98b5",
+        "code-mod-transmogrifier-877af20083eb",
+        "code-mod-transmogrifier-94198c3a9d54",
+        "code-mod-transmogrifier-96b0a11e3e3f",
+        "code-mod-transmogrifier-9d1ef0db06ea",
+        "code-mod-transmogrifier-a10c14d6f7ec",
+        "code-mod-transmogrifier-a306945006f9",
+        "code-mod-transmogrifier-a37452e5cc17",
+        "code-mod-transmogrifier-a634a92f3c41",
+        "code-mod-transmogrifier-aee42fe45410",
+        "code-mod-transmogrifier-b368c2d71dfc",
+        "code-mod-transmogrifier-b5d3fdd8973c",
+        "code-mod-transmogrifier-b9003a412546",
+        "code-mod-transmogrifier-bdf88864d96e",
+        "code-mod-transmogrifier-be7b2432f0e2",
+        "code-mod-transmogrifier-bf39967120d5",
+        "code-mod-transmogrifier-c20d684a047a",
+        "code-mod-transmogrifier-d00e1a504933",
+        "code-mod-transmogrifier-d1f8df987270",
+        "code-mod-transmogrifier-dad25b5b54c9",
+        "code-mod-transmogrifier-db92376b3d0d",
+        "code-mod-transmogrifier-e25dd9e6894b",
+        "code-mod-transmogrifier-e42cae549a3f",
+        "code-mod-transmogrifier-e463ad7045d2",
+        "code-mod-transmogrifier-ed87fd7c5e70",
+        "code-mod-transmogrifier-f38f26f64439",
+        "code-mod-transmogrifier-f7dbe78d4eb6",
+        "code-mod-transmogrifier-fa5da82d2741",
+        "code-mod-transmogrifier-ff6d365509cb",
+        "code-sym-transmogrifier-999dd0092246",
+        "code-sym-transmogrifier-a90e9223d262",
+        "code-sym-transmogrifier-e72b5f0d0550"
+      ]
+    },
+    {
+      "id": "domain",
+      "name": "Domain",
+      "description": "Kindex-inferred domain layer.",
+      "nodeIds": [
+        "code-sym-transmogrifier-00976a5e2373",
+        "code-sym-transmogrifier-00b009517766",
+        "code-sym-transmogrifier-01245ce44358",
+        "code-sym-transmogrifier-028d37f7918f",
+        "code-sym-transmogrifier-04fb739240e2",
+        "code-sym-transmogrifier-09953f725c2d",
+        "code-sym-transmogrifier-0b31ddda9956",
+        "code-sym-transmogrifier-12d838655713",
+        "code-sym-transmogrifier-154a7fe8d9c8",
+        "code-sym-transmogrifier-15712c48225c",
+        "code-sym-transmogrifier-1585e2447c17",
+        "code-sym-transmogrifier-17fde14ca92d",
+        "code-sym-transmogrifier-19e06716df02",
+        "code-sym-transmogrifier-1befc3f78fb3",
+        "code-sym-transmogrifier-1e439e6d0ee5",
+        "code-sym-transmogrifier-1ee52e150cbb",
+        "code-sym-transmogrifier-1f8e581a2f05",
+        "code-sym-transmogrifier-1f9388913937",
+        "code-sym-transmogrifier-2417b70b2035",
+        "code-sym-transmogrifier-264d3db368fa",
+        "code-sym-transmogrifier-2bc64a531313",
+        "code-sym-transmogrifier-2c9505823f0d",
+        "code-sym-transmogrifier-302e63744859",
+        "code-sym-transmogrifier-311a7a9b9b7b",
+        "code-sym-transmogrifier-3432753716f7",
+        "code-sym-transmogrifier-349440cfd255",
+        "code-sym-transmogrifier-3496fe9aea49",
+        "code-sym-transmogrifier-359cdd3243ef",
+        "code-sym-transmogrifier-39f99071e5d2",
+        "code-sym-transmogrifier-3c4e268a0636",
+        "code-sym-transmogrifier-42d567c1071e",
+        "code-sym-transmogrifier-44c54cd87318",
+        "code-sym-transmogrifier-4a7fa58f8ef0",
+        "code-sym-transmogrifier-4e801fedcd94",
+        "code-sym-transmogrifier-5083cdb38201",
+        "code-sym-transmogrifier-519e67e7f5e4",
+        "code-sym-transmogrifier-58842bdee19b",
+        "code-sym-transmogrifier-59b95ab925f6",
+        "code-sym-transmogrifier-5ad9f4861416",
+        "code-sym-transmogrifier-5b8c39135a77",
+        "code-sym-transmogrifier-5bf1fd94d8f5",
+        "code-sym-transmogrifier-5ca0c6d95939",
+        "code-sym-transmogrifier-5dc87b4cd54e",
+        "code-sym-transmogrifier-620c9b67b70f",
+        "code-sym-transmogrifier-637e918b4447",
+        "code-sym-transmogrifier-63d7029ad85c",
+        "code-sym-transmogrifier-685e757a2d7c",
+        "code-sym-transmogrifier-68f389d7e893",
+        "code-sym-transmogrifier-69b82aa6d965",
+        "code-sym-transmogrifier-6bf0bb533916",
+        "code-sym-transmogrifier-6c4beedbda40",
+        "code-sym-transmogrifier-704acb31e513",
+        "code-sym-transmogrifier-74e88193ea77",
+        "code-sym-transmogrifier-75f74a7bde52",
+        "code-sym-transmogrifier-7e03f490b5c4",
+        "code-sym-transmogrifier-8576ae89141d",
+        "code-sym-transmogrifier-86ea136c391e",
+        "code-sym-transmogrifier-8a0f107e0920",
+        "code-sym-transmogrifier-8ca5326f190a",
+        "code-sym-transmogrifier-8e6e958ddcf2",
+        "code-sym-transmogrifier-9165714442e4",
+        "code-sym-transmogrifier-92dfadc3c2d2",
+        "code-sym-transmogrifier-983a27b9844a",
+        "code-sym-transmogrifier-9b59376894e1",
+        "code-sym-transmogrifier-9c5d206eca9f",
+        "code-sym-transmogrifier-a1e076b0a049",
+        "code-sym-transmogrifier-a238ce079590",
+        "code-sym-transmogrifier-a76c7494ac13",
+        "code-sym-transmogrifier-a9d2bfaae240",
+        "code-sym-transmogrifier-ac82a98fddae",
+        "code-sym-transmogrifier-ad6b5890a5bd",
+        "code-sym-transmogrifier-b6696329d1f5",
+        "code-sym-transmogrifier-b6f0b404ffe8",
+        "code-sym-transmogrifier-bbc79544996e",
+        "code-sym-transmogrifier-bc46d5d1b5e2",
+        "code-sym-transmogrifier-c02261883e94",
+        "code-sym-transmogrifier-c8d24a2a938d",
+        "code-sym-transmogrifier-ca1c450db9db",
+        "code-sym-transmogrifier-cc54d5055b7e",
+        "code-sym-transmogrifier-cd3c302a0eb6",
+        "code-sym-transmogrifier-d0b93300e315",
+        "code-sym-transmogrifier-d0f933ec2a02",
+        "code-sym-transmogrifier-d50543998bd8",
+        "code-sym-transmogrifier-daa948f848cf",
+        "code-sym-transmogrifier-dbcfb481ebf2",
+        "code-sym-transmogrifier-ddc0d91a32de",
+        "code-sym-transmogrifier-ddd6ff0aac1d",
+        "code-sym-transmogrifier-e6a9aa22ea49",
+        "code-sym-transmogrifier-f06e9e44a6af",
+        "code-sym-transmogrifier-f2032704f158",
+        "code-sym-transmogrifier-f9362b55cc5e",
+        "code-sym-transmogrifier-fa48511cdfb4",
+        "code-sym-transmogrifier-fa928ceace16",
+        "code-sym-transmogrifier-fd4e3fe3d878",
+        "code-sym-transmogrifier-ff11d9cf214a"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "Core",
+      "description": "Review 73 node(s) in the Core layer.",
+      "nodeIds": [
+        "code-mod-transmogrifier-07af41d348ca",
+        "code-mod-transmogrifier-093e5bcea1c4",
+        "code-mod-transmogrifier-0fa935be69fd",
+        "code-mod-transmogrifier-109b34e79d85",
+        "code-mod-transmogrifier-1557d6e60697",
+        "code-mod-transmogrifier-156e48450622",
+        "code-mod-transmogrifier-167d92d21871",
+        "code-mod-transmogrifier-17cf928204b0",
+        "code-mod-transmogrifier-1c965c5e8056",
+        "code-mod-transmogrifier-1d4fc79f9512",
+        "code-mod-transmogrifier-1eb0ba684484",
+        "code-mod-transmogrifier-223871e67c5c",
+        "code-mod-transmogrifier-226935c85939",
+        "code-mod-transmogrifier-23f442c1cae7",
+        "code-mod-transmogrifier-26cd6a62979a",
+        "code-mod-transmogrifier-274927e677c4",
+        "code-mod-transmogrifier-284d097aee03",
+        "code-mod-transmogrifier-30dc6d22648f",
+        "code-mod-transmogrifier-38240006887a",
+        "code-mod-transmogrifier-3908edccfa01",
+        "code-mod-transmogrifier-3935db423823",
+        "code-mod-transmogrifier-3e8bddbe98bb",
+        "code-mod-transmogrifier-3ec86660e582",
+        "code-mod-transmogrifier-45065c66cf6f",
+        "code-mod-transmogrifier-47b446829b14"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "Domain",
+      "description": "Review 95 node(s) in the Domain layer.",
+      "nodeIds": [
+        "code-sym-transmogrifier-00976a5e2373",
+        "code-sym-transmogrifier-00b009517766",
+        "code-sym-transmogrifier-01245ce44358",
+        "code-sym-transmogrifier-028d37f7918f",
+        "code-sym-transmogrifier-04fb739240e2",
+        "code-sym-transmogrifier-09953f725c2d",
+        "code-sym-transmogrifier-0b31ddda9956",
+        "code-sym-transmogrifier-12d838655713",
+        "code-sym-transmogrifier-154a7fe8d9c8",
+        "code-sym-transmogrifier-15712c48225c",
+        "code-sym-transmogrifier-1585e2447c17",
+        "code-sym-transmogrifier-17fde14ca92d",
+        "code-sym-transmogrifier-19e06716df02",
+        "code-sym-transmogrifier-1befc3f78fb3",
+        "code-sym-transmogrifier-1e439e6d0ee5",
+        "code-sym-transmogrifier-1ee52e150cbb",
+        "code-sym-transmogrifier-1f8e581a2f05",
+        "code-sym-transmogrifier-1f9388913937",
+        "code-sym-transmogrifier-2417b70b2035",
+        "code-sym-transmogrifier-264d3db368fa",
+        "code-sym-transmogrifier-2bc64a531313",
+        "code-sym-transmogrifier-2c9505823f0d",
+        "code-sym-transmogrifier-302e63744859",
+        "code-sym-transmogrifier-311a7a9b9b7b",
+        "code-sym-transmogrifier-3432753716f7"
+      ]
+    }
+  ]
+}
