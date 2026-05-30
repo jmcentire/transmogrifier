@@ -1,0 +1,1838 @@
+{
+  "domains": [
+    "code",
+    "python"
+  ],
+  "node_count": 166,
+  "nodes": [
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-07af41d348ca",
+      "title": "contracts/contracts_src_transmogrifier_core_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-093e5bcea1c4",
+      "title": "src/contracts_src_transmogrifier_rules_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-0fa935be69fd",
+      "title": "src/contracts_src_transmogrifier_core_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-109b34e79d85",
+      "title": "src/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-1557d6e60697",
+      "title": "src/src_transmogrifier_backends___init__/__init__.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-156e48450622",
+      "title": "contracts/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-167d92d21871",
+      "title": "src/src_transmogrifier_backends_anthropic/anthropic.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-17cf928204b0",
+      "title": "src/transmogrifier/cli.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-1c965c5e8056",
+      "title": "src/transmogrifier/backends/anthropic.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-1d4fc79f9512",
+      "title": "contracts/contracts_contracts_src_transmogrifier_cli_interface_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-1eb0ba684484",
+      "title": "src/src_transmogrifier_mcp_server/mcp_server.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-223871e67c5c",
+      "title": "src/transmogrifier/rules.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-226935c85939",
+      "title": "src/transmogrifier/system_prompts.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-23f442c1cae7",
+      "title": "src/src_transmogrifier_calibrate/calibrate.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-26cd6a62979a",
+      "title": "contracts/src_transmogrifier_backends___init__/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-274927e677c4",
+      "title": "src/src_transmogrifier_cli/cli.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-284d097aee03",
+      "title": "src/transmogrifier/calibrate.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-30dc6d22648f",
+      "title": "contracts/src_transmogrifier_calibrate/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-38240006887a",
+      "title": "src/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-3908edccfa01",
+      "title": "contracts/contracts_src_transmogrifier_kindex_integration_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-3935db423823",
+      "title": "src/transmogrifier/backends/gemini.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-3e8bddbe98bb",
+      "title": "contracts/contracts_src_transmogrifier_detector_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-3ec86660e582",
+      "title": "src/src_transmogrifier_validator/validator.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-45065c66cf6f",
+      "title": "src/src_transmogrifier_detector/detector.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-47b446829b14",
+      "title": "contracts/src_transmogrifier_core/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-4a6ce1f096a3",
+      "title": "src/src_transmogrifier_backends_openai/openai.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-51594107cd07",
+      "title": "src/src_transmogrifier_task_classifier/task_classifier.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-5e0e7b017cfc",
+      "title": "contracts/contracts_src_transmogrifier_mcp_server_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-5f123814cd04",
+      "title": "src/contracts_src_transmogrifier_detector_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-5f8f602cb0ec",
+      "title": "src/contracts_src_transmogrifier_task_classifier_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-615e4ac3c348",
+      "title": "contracts/src_transmogrifier_backends_gemini/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-63d14f6c0217",
+      "title": "src/contracts_src_transmogrifier_cli_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-6a2a59f0f326",
+      "title": "src/contracts_src_transmogrifier_mcp_server_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-6a9d440fe45f",
+      "title": "src/transmogrifier/backends/__init__.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-6bfff8171662",
+      "title": "src/contracts_src_transmogrifier_kindex_integration_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-6fdfbd949dc6",
+      "title": "src/transmogrifier/mcp_server.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-717cf1a9e473",
+      "title": "contracts/contracts_src_transmogrifier_system_prompts_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-71f927c40ce1",
+      "title": "contracts/src_transmogrifier_validator/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-7260dac385ee",
+      "title": "contracts/contracts_src_transmogrifier_cli_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-76699ca63c3f",
+      "title": "contracts/src_transmogrifier_detector/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-82e382024a74",
+      "title": "contracts/src_transmogrifier_backends_openai/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-83c4711a98b5",
+      "title": "src/src_transmogrifier_backends_gemini/gemini.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-877af20083eb",
+      "title": "contracts/src_transmogrifier_mcp_server/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-94198c3a9d54",
+      "title": "contracts/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-96b0a11e3e3f",
+      "title": "src/transmogrifier/backends/openai.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-a10c14d6f7ec",
+      "title": "src/transmogrifier/core.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-a306945006f9",
+      "title": "src/contracts_contracts_src_transmogrifier_cli_interface_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-a37452e5cc17",
+      "title": "src/src_transmogrifier_profiles/profiles.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-a634a92f3c41",
+      "title": "src/contracts_contracts_src_transmogrifier_task_classifier_interface_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-aee42fe45410",
+      "title": "src/src_transmogrifier_kindex_integration/kindex_integration.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-b368c2d71dfc",
+      "title": "src/transmogrifier/task_classifier.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-b5d3fdd8973c",
+      "title": "contracts/src_transmogrifier_kindex_integration/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-b9003a412546",
+      "title": "contracts/contracts_src_transmogrifier_rules_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-bdf88864d96e",
+      "title": "contracts/src_transmogrifier_task_classifier/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-be7b2432f0e2",
+      "title": "src/transmogrifier/__init__.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-bf39967120d5",
+      "title": "src/transmogrifier/detector.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-c20d684a047a",
+      "title": "contracts/src_transmogrifier_system_prompts/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-d00e1a504933",
+      "title": "src/contracts_src_transmogrifier_system_prompts_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-d1f8df987270",
+      "title": "src/transmogrifier/kindex_integration.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-dad25b5b54c9",
+      "title": "contracts/contracts_contracts_src_transmogrifier_rules_interface_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-db92376b3d0d",
+      "title": "src/src_transmogrifier_system_prompts/system_prompts.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-e25dd9e6894b",
+      "title": "contracts/src_transmogrifier_profiles/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-e42cae549a3f",
+      "title": "src/src_transmogrifier_rules/rules.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-e463ad7045d2",
+      "title": "contracts/src_transmogrifier_rules/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-ed87fd7c5e70",
+      "title": "contracts/contracts_contracts_src_transmogrifier_system_prompts_interface_interface/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-f38f26f64439",
+      "title": "src/transmogrifier/profiles.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-f7dbe78d4eb6",
+      "title": "src/src_transmogrifier_core/core.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-fa5da82d2741",
+      "title": "contracts/src_transmogrifier_backends_anthropic/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-mod-transmogrifier-ff6d365509cb",
+      "title": "contracts/src_transmogrifier_cli/interface.py",
+      "type": "artifact",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-00976a5e2373",
+      "title": "TaskType",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-00b009517766",
+      "title": "RegisterAccuracy",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-01245ce44358",
+      "title": "RuleEngine",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-028d37f7918f",
+      "title": "Register",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-04fb739240e2",
+      "title": "GeminiBackend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-09953f725c2d",
+      "title": "TaskType",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-0b31ddda9956",
+      "title": "RewriteRule",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-12d838655713",
+      "title": "TranslationLevel",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-154a7fe8d9c8",
+      "title": "CalibrationRunner",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-15712c48225c",
+      "title": "TaskType",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-1585e2447c17",
+      "title": "TranslationResult",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-17fde14ca92d",
+      "title": "CalibrationRunner",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-19e06716df02",
+      "title": "TransmogDetectResult",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-1befc3f78fb3",
+      "title": "TransmogTranslateResult",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-1e439e6d0ee5",
+      "title": "TranslationLevel",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-1ee52e150cbb",
+      "title": "GeminiBackend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-1f8e581a2f05",
+      "title": "ProfileCache",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-1f9388913937",
+      "title": "TaskType",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-2417b70b2035",
+      "title": "RuleEngine",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-264d3db368fa",
+      "title": "CalibrationRunner",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-2bc64a531313",
+      "title": "TaskType",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-2c9505823f0d",
+      "title": "TransmogTranslateResult",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-302e63744859",
+      "title": "tuple",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-311a7a9b9b7b",
+      "title": "Transmogrifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-3432753716f7",
+      "title": "TranslationLevel",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-349440cfd255",
+      "title": "RuleEngine",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-3496fe9aea49",
+      "title": "RuleEngine",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-359cdd3243ef",
+      "title": "TaskClassifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-39f99071e5d2",
+      "title": "ModelProfile",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-3c4e268a0636",
+      "title": "SemanticValidator",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-42d567c1071e",
+      "title": "TranslationResult",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-44c54cd87318",
+      "title": "TaskType",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-4a7fa58f8ef0",
+      "title": "ModelProfile",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-4e801fedcd94",
+      "title": "TaskClassifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-5083cdb38201",
+      "title": "RegisterDetector",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-519e67e7f5e4",
+      "title": "TranslationConfig",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-58842bdee19b",
+      "title": "Register",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-59b95ab925f6",
+      "title": "RegisterDetector",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-5ad9f4861416",
+      "title": "Register",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-5b8c39135a77",
+      "title": "RewriteRule",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-5bf1fd94d8f5",
+      "title": "ProfileDict",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-5ca0c6d95939",
+      "title": "RegisterAccuracy",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-5dc87b4cd54e",
+      "title": "TaskRegisterProfile",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-620c9b67b70f",
+      "title": "Register",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-637e918b4447",
+      "title": "TaskType",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-63d7029ad85c",
+      "title": "Backend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-685e757a2d7c",
+      "title": "TranslationResult",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-68f389d7e893",
+      "title": "RewriteRule",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-69b82aa6d965",
+      "title": "TransmogDetectResult",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-6bf0bb533916",
+      "title": "TaskClassifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-6c4beedbda40",
+      "title": "TaskClassifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-704acb31e513",
+      "title": "OpenAIBackend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-74e88193ea77",
+      "title": "Transmogrifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-75f74a7bde52",
+      "title": "GeminiBackend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-7e03f490b5c4",
+      "title": "TranslationResult",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-8576ae89141d",
+      "title": "Transmogrifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-86ea136c391e",
+      "title": "AnthropicBackend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-8a0f107e0920",
+      "title": "tuple",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-8ca5326f190a",
+      "title": "Backend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-8e6e958ddcf2",
+      "title": "RegisterDetector",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-9165714442e4",
+      "title": "TranslationResult",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-92dfadc3c2d2",
+      "title": "ModelProfile",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-983a27b9844a",
+      "title": "RegisterDetector",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-999dd0092246",
+      "title": "Backend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-9b59376894e1",
+      "title": "RuleEngine",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-9c5d206eca9f",
+      "title": "TaskRegisterProfile",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-a1e076b0a049",
+      "title": "Register",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-a238ce079590",
+      "title": "OpenAIBackend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-a76c7494ac13",
+      "title": "SemanticValidator",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-a90e9223d262",
+      "title": "OpenAIBackend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-a9d2bfaae240",
+      "title": "TranslationLevel",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-ac82a98fddae",
+      "title": "RuleEngine",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-ad6b5890a5bd",
+      "title": "Register",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-b6696329d1f5",
+      "title": "RewriteRule",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-b6f0b404ffe8",
+      "title": "ProfileCache",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-bbc79544996e",
+      "title": "Register",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-bc46d5d1b5e2",
+      "title": "TaskClassifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-c02261883e94",
+      "title": "TranslationConfig",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-c8d24a2a938d",
+      "title": "RegisterDetector",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-ca1c450db9db",
+      "title": "Transmogrifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-cc54d5055b7e",
+      "title": "AnthropicBackend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-cd3c302a0eb6",
+      "title": "RegisterAccuracy",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-d0b93300e315",
+      "title": "RewriteRule",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-d0f933ec2a02",
+      "title": "TranslationConfig",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-d50543998bd8",
+      "title": "ProfileDict",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-daa948f848cf",
+      "title": "TaskClassifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-dbcfb481ebf2",
+      "title": "ProfileCache",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-ddc0d91a32de",
+      "title": "RewriteRule",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-ddd6ff0aac1d",
+      "title": "TranslationConfig",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-e6a9aa22ea49",
+      "title": "Register",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-e72b5f0d0550",
+      "title": "AnthropicBackend",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-f06e9e44a6af",
+      "title": "RuleEngine",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-f2032704f158",
+      "title": "TranslationLevel",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-f9362b55cc5e",
+      "title": "RewriteRule",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-fa48511cdfb4",
+      "title": "TaskRegisterProfile",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-fa928ceace16",
+      "title": "TaskClassifier",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    },
+    {
+      "domains": [
+        "code",
+        "python"
+      ],
+      "id": "code-sym-transmogrifier-fd4e3fe3d878",
+      "title": "TranslationConfig",
+      "type": "concept",
+      "updated_at": "2026-05-30T14:50:57",
+      "weight": 0.5
+    }
+  ],
+  "repo": "transmogrifier",
+  "source_updated_at": "2026-05-30T14:50:57",
+  "version": 1
+}
