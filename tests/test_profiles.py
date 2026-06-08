@@ -3,6 +3,14 @@
 from transmogrifier.profiles import ModelProfile, ProfileCache, RegisterAccuracy
 
 
+def test_register_accuracy_preserves_register_interface():
+    accuracy = RegisterAccuracy(register="direct", accuracy=0.9)
+
+    assert accuracy.register == "direct"
+    assert accuracy.model_dump()["register"] == "direct"
+    assert RegisterAccuracy.model_validate_json(accuracy.model_dump_json()).register == "direct"
+
+
 def test_model_profile_spread():
     p = ModelProfile(
         model_name="test",

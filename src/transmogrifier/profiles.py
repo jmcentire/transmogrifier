@@ -7,17 +7,21 @@ import logging
 from datetime import datetime, timezone
 from pathlib import Path
 
-from pydantic import BaseModel, computed_field
+from pydantic import BaseModel, ConfigDict, Field, computed_field
 
 logger = logging.getLogger(__name__)
 
 
 class RegisterAccuracy(BaseModel):
-    model_config = {"ignored_types": ()}
-    register: str  # noqa: shadows BaseModel.register (benign)
+    register_value: str = Field(alias="register", exclude=True)
     accuracy: float
     sample_size: int = 16
     task_type: str = ""  # empty = aggregate across all tasks
+
+    @computed_field
+    @property
+    def register(self) -> str:
+        return self.register_value
 
 
 class TaskRegisterProfile(BaseModel):
@@ -40,6 +44,8 @@ class TaskRegisterProfile(BaseModel):
 
 
 class ModelProfile(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
+
     model_name: str
     model_version: str = ""
     provider: str = ""
